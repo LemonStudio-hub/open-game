@@ -1,0 +1,40 @@
+# Rust / Cargo
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# WASM / Trunk
+/dist/
+/pkg/
+wasm-pack.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS
+.DS_Store
+.Trashes
+._*
+.Spotlight-V100
+
+# Node (if used for tooling)
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# Test / Coverage
+*.profraw
+*.profdata
+lcov.info
+tarpaulin-report.html
+
+# novaterm (separate project)
+/novaterm/

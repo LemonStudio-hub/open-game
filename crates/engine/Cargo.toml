@@ -1,0 +1,72 @@
+[package]
+name = "opengame-engine"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+wasm-bindgen = { workspace = true }
+web-sys = { workspace = true, features = [
+    "Window",
+    "Document",
+    "HtmlCanvasElement",
+    "CanvasRenderingContext2d",
+    "WebGl2RenderingContext",
+    "WebGlProgram",
+    "WebGlShader",
+    "WebGlBuffer",
+    "WebGlTexture",
+    "WebGlUniformLocation",
+    "WebGlVertexArrayObject",
+    "WebGlFramebuffer",
+    "WebGlRenderbuffer",
+    "ImageBitmap",
+    "ImageData",
+    "HtmlImageElement",
+    "Performance",
+    "KeyboardEvent",
+    "MouseEvent",
+    "TouchEvent",
+    "Touch",
+    "TouchList",
+    "Gamepad",
+    "GamepadEvent",
+    "GamepadButton",
+    "Navigator",
+    "AudioContext",
+    "AudioContextState",
+    "AudioBuffer",
+    "AudioBufferSourceNode",
+    "GainNode",
+    "AudioDestinationNode",
+    "AudioParam",
+    "Response",
+    "Request",
+    "RequestInit",
+    "RequestMode",
+    "Url",
+    "Location",
+    "EventTarget",
+    "AddEventListenerOptions",
+    "EventListener",
+    "Event",
+    "FocusEvent",
+    "WheelEvent",
+    "PointerEvent",
+    "console",
+    "DomRect",
+    "Element",
+    "Node",
+    "CssStyleDeclaration",
+    "MediaQueryList",
+    "EventSource",
+] }
+js-sys = { workspace = true }
+glow = { workspace = true }
+glam = { workspace = true }
+log = { workspace = true }
+wasm-bindgen-futures = { workspace = true }
+console_error_panic_hook = { workspace = true }
+generational-arena = "0.2"
