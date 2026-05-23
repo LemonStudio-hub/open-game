@@ -55,6 +55,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - uses: jetli/trunk-action@v0.5.0
       - run: trunk build --release
+        working-directory: crates/examples/pong
       - uses: actions/upload-artifact@v4
         with:
           name: dist
