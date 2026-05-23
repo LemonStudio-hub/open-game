@@ -3,10 +3,12 @@ use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
-use opengame_engine::renderer::{GlBackend, ShapeRenderer, Camera2D};
-use opengame_engine::input::{InputManager, keys::KeyCode};
+type AnimationFrameClosure = Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>>;
+
 use opengame_engine::color::Color;
+use opengame_engine::input::{keys::KeyCode, InputManager};
 use opengame_engine::math::Vec2;
+use opengame_engine::renderer::{Camera2D, GlBackend, ShapeRenderer};
 use opengame_engine::time::Time;
 
 const PLAYER_SIZE: f32 = 24.0;
@@ -62,28 +64,114 @@ impl PlatformerGame {
         let width = gl.width() as f32;
 
         let platforms = vec![
-            Platform { x: 0.0, y: GROUND_Y, width: width * 3.0, height: 20.0 },
-            Platform { x: 200.0, y: 250.0, width: 150.0, height: 20.0 },
-            Platform { x: 450.0, y: 350.0, width: 150.0, height: 20.0 },
-            Platform { x: 700.0, y: 250.0, width: 200.0, height: 20.0 },
-            Platform { x: 1000.0, y: 400.0, width: 180.0, height: 20.0 },
-            Platform { x: 1300.0, y: 300.0, width: 150.0, height: 20.0 },
-            Platform { x: 1600.0, y: 200.0, width: 200.0, height: 20.0 },
-            Platform { x: 1900.0, y: 350.0, width: 180.0, height: 20.0 },
-            Platform { x: 2200.0, y: 250.0, width: 200.0, height: 20.0 },
-            Platform { x: 2500.0, y: 400.0, width: 150.0, height: 20.0 },
+            Platform {
+                x: 0.0,
+                y: GROUND_Y,
+                width: width * 3.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 200.0,
+                y: 250.0,
+                width: 150.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 450.0,
+                y: 350.0,
+                width: 150.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 700.0,
+                y: 250.0,
+                width: 200.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 1000.0,
+                y: 400.0,
+                width: 180.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 1300.0,
+                y: 300.0,
+                width: 150.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 1600.0,
+                y: 200.0,
+                width: 200.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 1900.0,
+                y: 350.0,
+                width: 180.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 2200.0,
+                y: 250.0,
+                width: 200.0,
+                height: 20.0,
+            },
+            Platform {
+                x: 2500.0,
+                y: 400.0,
+                width: 150.0,
+                height: 20.0,
+            },
         ];
 
         let collectibles = vec![
-            Collectible { x: 250.0, y: 290.0, collected: false },
-            Collectible { x: 500.0, y: 390.0, collected: false },
-            Collectible { x: 750.0, y: 290.0, collected: false },
-            Collectible { x: 1050.0, y: 440.0, collected: false },
-            Collectible { x: 1350.0, y: 340.0, collected: false },
-            Collectible { x: 1650.0, y: 240.0, collected: false },
-            Collectible { x: 1950.0, y: 390.0, collected: false },
-            Collectible { x: 2250.0, y: 290.0, collected: false },
-            Collectible { x: 2550.0, y: 440.0, collected: false },
+            Collectible {
+                x: 250.0,
+                y: 290.0,
+                collected: false,
+            },
+            Collectible {
+                x: 500.0,
+                y: 390.0,
+                collected: false,
+            },
+            Collectible {
+                x: 750.0,
+                y: 290.0,
+                collected: false,
+            },
+            Collectible {
+                x: 1050.0,
+                y: 440.0,
+                collected: false,
+            },
+            Collectible {
+                x: 1350.0,
+                y: 340.0,
+                collected: false,
+            },
+            Collectible {
+                x: 1650.0,
+                y: 240.0,
+                collected: false,
+            },
+            Collectible {
+                x: 1950.0,
+                y: 390.0,
+                collected: false,
+            },
+            Collectible {
+                x: 2250.0,
+                y: 290.0,
+                collected: false,
+            },
+            Collectible {
+                x: 2550.0,
+                y: 440.0,
+                collected: false,
+            },
         ];
 
         Ok(Self {
@@ -115,7 +203,11 @@ impl PlatformerGame {
             self.player_vx = PLAYER_SPEED;
         }
 
-        if (self.input.is_key_pressed(KeyCode::Space) || self.input.is_key_pressed(KeyCode::KeyW) || self.input.is_key_pressed(KeyCode::ArrowUp)) && self.on_ground {
+        if (self.input.is_key_pressed(KeyCode::Space)
+            || self.input.is_key_pressed(KeyCode::KeyW)
+            || self.input.is_key_pressed(KeyCode::ArrowUp))
+            && self.on_ground
+        {
             self.player_vy = JUMP_FORCE;
             self.on_ground = false;
         }
@@ -135,15 +227,17 @@ impl PlatformerGame {
 
             let plat_left = platform.x;
             let plat_right = platform.x + platform.width;
-            let plat_bottom = platform.y;
             let plat_top = platform.y + platform.height;
 
-            if player_right > plat_left && player_left < plat_right && player_bottom < plat_top && player_top > plat_bottom {
-                if self.player_vy <= 0.0 && player_bottom < plat_top && player_top > plat_top {
-                    self.player_y = plat_top + PLAYER_SIZE;
-                    self.player_vy = 0.0;
-                    self.on_ground = true;
-                }
+            if player_right > plat_left
+                && player_left < plat_right
+                && player_bottom < plat_top
+                && player_top > plat_top
+                && self.player_vy <= 0.0
+            {
+                self.player_y = plat_top + PLAYER_SIZE;
+                self.player_vy = 0.0;
+                self.on_ground = true;
             }
         }
 
@@ -186,13 +280,15 @@ impl PlatformerGame {
 
         self.shapes.set_color(Color::new(0.2, 0.8, 0.3, 1.0));
         for platform in &self.platforms {
-            self.shapes.draw_rect(platform.x, platform.y, platform.width, platform.height);
+            self.shapes
+                .draw_rect(platform.x, platform.y, platform.width, platform.height);
         }
 
         self.shapes.set_color(Color::new(1.0, 0.85, 0.2, 1.0));
         for collectible in &self.collectibles {
             if !collectible.collected {
-                self.shapes.draw_rect(collectible.x - 8.0, collectible.y - 8.0, 16.0, 16.0);
+                self.shapes
+                    .draw_rect(collectible.x - 8.0, collectible.y - 8.0, 16.0, 16.0);
             }
         }
 
@@ -214,7 +310,7 @@ pub fn main() {
     game.time.init();
 
     let game = Rc::new(RefCell::new(game));
-    let f: Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>> = Rc::new(RefCell::new(None));
+    let f: AnimationFrameClosure = Rc::new(RefCell::new(None));
     let g = f.clone();
     let game_clone = game.clone();
 

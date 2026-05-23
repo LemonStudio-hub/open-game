@@ -28,7 +28,8 @@ impl EventBus {
     }
 
     pub fn subscribe<T: 'static>(&mut self, mut callback: impl FnMut(&T) + 'static) {
-        let channel = self.channels
+        let channel = self
+            .channels
             .entry(TypeId::of::<T>())
             .or_insert_with(EventChannel::new);
 
@@ -85,8 +86,12 @@ mod tests {
         let c1 = count.clone();
         let c2 = count.clone();
 
-        bus.subscribe::<i32>(move |_: &i32| { c1.set(c1.get() + 1); });
-        bus.subscribe::<i32>(move |_: &i32| { c2.set(c2.get() + 1); });
+        bus.subscribe::<i32>(move |_: &i32| {
+            c1.set(c1.get() + 1);
+        });
+        bus.subscribe::<i32>(move |_: &i32| {
+            c2.set(c2.get() + 1);
+        });
 
         bus.emit(&1);
         assert_eq!(count.get(), 2);
@@ -101,8 +106,12 @@ mod tests {
         let int_clone = int_val.clone();
         let str_clone = str_val.clone();
 
-        bus.subscribe::<i32>(move |v| { int_clone.set(*v); });
-        bus.subscribe::<String>(move |v| { *str_clone.borrow_mut() = v.clone(); });
+        bus.subscribe::<i32>(move |v| {
+            int_clone.set(*v);
+        });
+        bus.subscribe::<String>(move |v| {
+            *str_clone.borrow_mut() = v.clone();
+        });
 
         bus.emit(&99);
         bus.emit(&"hello".to_string());
@@ -119,7 +128,10 @@ mod tests {
 
     #[test]
     fn test_window_resize_event() {
-        let event = WindowResizeEvent { width: 1920, height: 1080 };
+        let event = WindowResizeEvent {
+            width: 1920,
+            height: 1080,
+        };
         assert_eq!(event.width, 1920);
         assert_eq!(event.height, 1080);
     }

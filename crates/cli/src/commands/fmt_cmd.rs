@@ -8,11 +8,7 @@ pub fn run(check: bool) -> Result<()> {
     if check {
         print_header("Checking code formatting");
         print_step("Running cargo fmt --check...");
-        let exit_code = run_cmd_inherit(
-            "cargo",
-            &["fmt", "--all", "--", "--check"],
-            &root,
-        )?;
+        let exit_code = run_cmd_inherit("cargo", &["fmt", "--all", "--", "--check"], &root)?;
         if exit_code != 0 {
             bail!("Code is not properly formatted. Run `og fmt` to fix.");
         }

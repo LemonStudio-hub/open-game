@@ -21,11 +21,7 @@ pub fn run(port: u16, address: Option<&str>, open: bool) -> Result<()> {
     println!("  {}", "Hot reload enabled. Press Ctrl+C to stop.".dimmed());
     println!();
 
-    let mut args = vec![
-        "serve",
-        "--address", addr,
-        "--port", &port_str,
-    ];
+    let mut args = vec!["serve", "--address", addr, "--port", &port_str];
     if open {
         args.push("--open");
     }

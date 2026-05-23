@@ -95,6 +95,10 @@ impl GamepadManager {
     }
 
     pub fn connected_count(&self) -> usize {
-        self.gamepads.iter().filter_map(|gp| gp.as_ref()).filter(|gp| gp.connected).count()
+        self.gamepads
+            .iter()
+            .filter_map(|gp| gp.as_ref())
+            .filter(|gp| gp.connected)
+            .count()
     }
 }

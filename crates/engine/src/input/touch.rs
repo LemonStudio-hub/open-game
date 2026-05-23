@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use crate::math::Vec2;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 pub struct TouchPoint {

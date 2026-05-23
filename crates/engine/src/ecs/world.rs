@@ -1,9 +1,9 @@
-use std::any::{Any, TypeId};
-use std::collections::HashMap;
-use generational_arena::Arena;
 use super::builder::EntityBuilder;
 use super::component::{ComponentStorage, TypedStorage};
 use super::entity::Entity;
+use generational_arena::Arena;
+use std::any::{Any, TypeId};
+use std::collections::HashMap;
 
 struct EntityData {
     alive: bool,
@@ -52,7 +52,7 @@ impl World {
     }
 
     pub fn is_alive(&self, entity: Entity) -> bool {
-        self.entities.get(entity.index).map_or(false, |d| d.alive)
+        self.entities.get(entity.index).is_some_and(|d| d.alive)
     }
 
     pub fn entity_count(&self) -> usize {
@@ -60,7 +60,8 @@ impl World {
     }
 
     pub fn insert_component<T: 'static>(&mut self, entity: Entity, component: T) {
-        let storage = self.storages
+        let storage = self
+            .storages
             .entry(TypeId::of::<T>())
             .or_insert_with(|| Box::new(TypedStorage::<T>::new()));
 
@@ -84,7 +85,7 @@ impl World {
             storage
                 .as_any()
                 .downcast_ref::<TypedStorage<T>>()
-                .map_or(false, |s| s.get(entity.index).is_some())
+                .is_some_and(|s| s.get(entity.index).is_some())
         } else {
             false
         }
@@ -125,7 +126,9 @@ impl World {
     }
 
     pub fn get_resource_mut<T: 'static>(&mut self) -> Option<&mut T> {
-        self.resources.get_mut(&TypeId::of::<T>())?.downcast_mut::<T>()
+        self.resources
+            .get_mut(&TypeId::of::<T>())?
+            .downcast_mut::<T>()
     }
 
     pub fn remove_resource<T: 'static>(&mut self) -> Option<T> {
@@ -318,12 +321,13 @@ mod tests {
     #[test]
     fn test_spawn_builder() {
         let mut world = World::new();
-        let e = world.spawn()
+        let e = world
+            .spawn()
             .with(100_i32)
-            .with(3.14_f64)
+            .with(std::f64::consts::PI)
             .build();
 
         assert_eq!(world.get_component::<i32>(e), Some(&100));
-        assert_eq!(world.get_component::<f64>(e), Some(&3.14));
+        assert_eq!(world.get_component::<f64>(e), Some(&std::f64::consts::PI));
     }
 }

@@ -54,10 +54,7 @@ pub fn check_tool(name: &str) -> bool {
 }
 
 pub fn tool_version(name: &str) -> Option<String> {
-    let output = Command::new(name)
-        .arg("--version")
-        .output()
-        .ok()?;
+    let output = Command::new(name).arg("--version").output().ok()?;
     let stdout = String::from_utf8_lossy(&output.stdout);
     Some(stdout.trim().to_string())
 }
@@ -103,11 +100,7 @@ pub fn count_files(dir: &Path, extension: &str) -> usize {
     walkdir::WalkDir::new(dir)
         .into_iter()
         .filter_map(|e| e.ok())
-        .filter(|e| {
-            e.path()
-                .extension()
-                .map_or(false, |ext| ext == extension)
-        })
+        .filter(|e| e.path().extension().is_some_and(|ext| ext == extension))
         .count()
 }
 
@@ -115,11 +108,7 @@ pub fn count_lines(dir: &Path, extension: &str) -> usize {
     walkdir::WalkDir::new(dir)
         .into_iter()
         .filter_map(|e| e.ok())
-        .filter(|e| {
-            e.path()
-                .extension()
-                .map_or(false, |ext| ext == extension)
-        })
+        .filter(|e| e.path().extension().is_some_and(|ext| ext == extension))
         .filter_map(|e| std::fs::read_to_string(e.path()).ok())
         .map(|c| c.lines().count())
         .sum()

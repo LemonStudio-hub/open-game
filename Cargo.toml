@@ -4,6 +4,7 @@ members = [
     "crates/engine",
     "crates/examples/pong",
     "crates/examples/platformer",
+    "crates/examples/space-blitz",
     "crates/cli",
 ]
 

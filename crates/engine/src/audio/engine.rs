@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use web_sys::{AudioContext, AudioBuffer, AudioBufferSourceNode, GainNode};
+use web_sys::{AudioBuffer, AudioBufferSourceNode, AudioContext, GainNode};
 
 use super::source::AudioHandle;
 
@@ -21,15 +21,22 @@ struct PlayingSource {
 
 impl AudioEngine {
     pub fn new() -> Result<Self, String> {
-        let context = AudioContext::new().map_err(|e| format!("Failed to create AudioContext: {:?}", e))?;
+        let context =
+            AudioContext::new().map_err(|e| format!("Failed to create AudioContext: {:?}", e))?;
 
-        let master_gain = context.create_gain().map_err(|e| format!("Failed to create master gain: {:?}", e))?;
+        let master_gain = context
+            .create_gain()
+            .map_err(|e| format!("Failed to create master gain: {:?}", e))?;
         let _ = master_gain.connect_with_audio_node(&context.destination());
 
-        let music_gain = context.create_gain().map_err(|e| format!("Failed to create music gain: {:?}", e))?;
+        let music_gain = context
+            .create_gain()
+            .map_err(|e| format!("Failed to create music gain: {:?}", e))?;
         let _ = music_gain.connect_with_audio_node(&master_gain);
 
-        let sfx_gain = context.create_gain().map_err(|e| format!("Failed to create sfx gain: {:?}", e))?;
+        let sfx_gain = context
+            .create_gain()
+            .map_err(|e| format!("Failed to create sfx gain: {:?}", e))?;
         let _ = sfx_gain.connect_with_audio_node(&master_gain);
 
         Ok(Self {
@@ -125,5 +132,4 @@ impl AudioEngine {
     pub fn is_resumed(&self) -> bool {
         self.context.state() == web_sys::AudioContextState::Running
     }
-
 }

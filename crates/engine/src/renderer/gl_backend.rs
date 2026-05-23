@@ -84,7 +84,8 @@ impl GlBackend {
     pub fn enable_blend(&self) {
         unsafe {
             self.gl.enable(glow::BLEND);
-            self.gl.blend_func(glow::SRC_ALPHA, glow::ONE_MINUS_SRC_ALPHA);
+            self.gl
+                .blend_func(glow::SRC_ALPHA, glow::ONE_MINUS_SRC_ALPHA);
         }
     }
 

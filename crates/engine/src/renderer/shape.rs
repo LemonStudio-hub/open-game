@@ -1,7 +1,7 @@
-use glow::HasContext;
+use super::shader::Shader;
 use crate::color::Color;
 use crate::math::Mat4;
-use super::shader::Shader;
+use glow::HasContext;
 
 const MAX_VERTICES: usize = 65536;
 const FLOATS_PER_VERTEX: usize = 2;
@@ -75,14 +75,7 @@ impl ShapeRenderer {
         let y2 = y + height;
         let color = self.current_color;
 
-        let vertices = [
-            x, y,
-            x2, y,
-            x2, y2,
-            x, y,
-            x2, y2,
-            x, y2,
-        ];
+        let vertices = [x, y, x2, y, x2, y2, x, y, x2, y2, x, y2];
 
         let offset = (self.vertex_count) as i32;
         self.vertices.extend_from_slice(&vertices);
@@ -100,7 +93,12 @@ impl ShapeRenderer {
         self.draw_rect(x, y, width, thickness);
         self.draw_rect(x, y + height - thickness, width, thickness);
         self.draw_rect(x, y + thickness, thickness, height - 2.0 * thickness);
-        self.draw_rect(x + width - thickness, y + thickness, thickness, height - 2.0 * thickness);
+        self.draw_rect(
+            x + width - thickness,
+            y + thickness,
+            thickness,
+            height - 2.0 * thickness,
+        );
     }
 
     pub fn draw_line(&mut self, x1: f32, y1: f32, x2: f32, y2: f32, thickness: f32) {
@@ -115,12 +113,18 @@ impl ShapeRenderer {
         let ny = dx / len * thickness * 0.5;
 
         let vertices = [
-            x1 + nx, y1 + ny,
-            x1 - nx, y1 - ny,
-            x2 + nx, y2 + ny,
-            x1 - nx, y1 - ny,
-            x2 - nx, y2 - ny,
-            x2 + nx, y2 + ny,
+            x1 + nx,
+            y1 + ny,
+            x1 - nx,
+            y1 - ny,
+            x2 + nx,
+            y2 + ny,
+            x1 - nx,
+            y1 - ny,
+            x2 - nx,
+            y2 - ny,
+            x2 + nx,
+            y2 + ny,
         ];
 
         let offset = self.vertex_count as i32;
@@ -146,14 +150,10 @@ impl ShapeRenderer {
             let angle2 = ((i + 1) as f32 / segments as f32) * std::f32::consts::TAU;
 
             self.vertices.extend_from_slice(&[cx, cy]);
-            self.vertices.extend_from_slice(&[
-                cx + radius * angle1.cos(),
-                cy + radius * angle1.sin(),
-            ]);
-            self.vertices.extend_from_slice(&[
-                cx + radius * angle2.cos(),
-                cy + radius * angle2.sin(),
-            ]);
+            self.vertices
+                .extend_from_slice(&[cx + radius * angle1.cos(), cy + radius * angle1.sin()]);
+            self.vertices
+                .extend_from_slice(&[cx + radius * angle2.cos(), cy + radius * angle2.sin()]);
             count += 3;
             self.vertex_count += 3;
         }
@@ -166,7 +166,14 @@ impl ShapeRenderer {
         });
     }
 
-    pub fn draw_circle_outline(&mut self, cx: f32, cy: f32, radius: f32, thickness: f32, segments: u32) {
+    pub fn draw_circle_outline(
+        &mut self,
+        cx: f32,
+        cy: f32,
+        radius: f32,
+        thickness: f32,
+        segments: u32,
+    ) {
         let segments = segments.max(3);
         let color = self.current_color;
         let offset = self.vertex_count as i32;
@@ -188,8 +195,10 @@ impl ShapeRenderer {
             let o2x = cx + outer * angle2.cos();
             let o2y = cy + outer * angle2.sin();
 
-            self.vertices.extend_from_slice(&[i1x, i1y, o1x, o1y, i2x, i2y]);
-            self.vertices.extend_from_slice(&[o1x, o1y, o2x, o2y, i2x, i2y]);
+            self.vertices
+                .extend_from_slice(&[i1x, i1y, o1x, o1y, i2x, i2y]);
+            self.vertices
+                .extend_from_slice(&[o1x, o1y, o2x, o2y, i2x, i2y]);
             count += 6;
             self.vertex_count += 6;
         }

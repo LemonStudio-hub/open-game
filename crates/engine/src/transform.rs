@@ -86,9 +86,15 @@ impl Transform2D {
         let ty = self.position.y;
 
         self.local_matrix = Mat3::from_cols_array(&[
-            cos * sx, sin * sx, 0.0,
-            -sin * sy, cos * sy, 0.0,
-            tx, ty, 1.0,
+            cos * sx,
+            sin * sx,
+            0.0,
+            -sin * sy,
+            cos * sy,
+            0.0,
+            tx,
+            ty,
+            1.0,
         ]);
 
         self.world_matrix = self.local_matrix;

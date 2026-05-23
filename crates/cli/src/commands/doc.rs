@@ -15,7 +15,10 @@ pub fn run(open: bool) -> Result<()> {
 
     let exit_code = run_cmd_inherit("cargo", &args, &root)?;
     if exit_code != 0 {
-        bail!("Documentation generation failed with exit code {}", exit_code);
+        bail!(
+            "Documentation generation failed with exit code {}",
+            exit_code
+        );
     }
 
     print_success("Documentation generated!");

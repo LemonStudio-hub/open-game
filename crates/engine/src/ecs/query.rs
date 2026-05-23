@@ -1,6 +1,6 @@
+use super::component::TypedStorage;
 use super::entity::Entity;
 use super::world::World;
-use super::component::TypedStorage;
 use generational_arena::Index;
 
 pub struct QuerySingle<'a, T: 'static> {
@@ -18,7 +18,10 @@ impl<'a, T: 'static> QuerySingle<'a, T> {
     }
 
     pub fn iter(&self) -> impl Iterator<Item = (Entity, &T)> {
-        self.storage.data.iter().map(|(idx, comp)| (Entity::new(*idx), comp))
+        self.storage
+            .data
+            .iter()
+            .map(|(idx, comp)| (Entity::new(*idx), comp))
     }
 
     pub fn len(&self) -> usize {
@@ -49,11 +52,17 @@ impl<'a, T: 'static> QuerySingleMut<'a, T> {
     }
 
     pub fn iter(&self) -> impl Iterator<Item = (Entity, &T)> {
-        self.storage.data.iter().map(|(idx, comp)| (Entity::new(*idx), comp))
+        self.storage
+            .data
+            .iter()
+            .map(|(idx, comp)| (Entity::new(*idx), comp))
     }
 
     pub fn iter_mut(&mut self) -> impl Iterator<Item = (Entity, &mut T)> {
-        self.storage.data.iter_mut().map(|(idx, comp)| (Entity::new(*idx), comp))
+        self.storage
+            .data
+            .iter_mut()
+            .map(|(idx, comp)| (Entity::new(*idx), comp))
     }
 
     pub fn len(&self) -> usize {
@@ -74,7 +83,10 @@ impl<'a, A: 'static, B: 'static> QueryDouble<'a, A, B> {
     pub fn new(world: &'a World) -> Option<Self> {
         let storage_a = world.get_storage::<A>()?;
         let storage_b = world.get_storage::<B>()?;
-        Some(Self { storage_a, storage_b })
+        Some(Self {
+            storage_a,
+            storage_b,
+        })
     }
 
     pub fn iter(&self) -> impl Iterator<Item = (Entity, &A, &B)> {
@@ -118,9 +130,13 @@ impl<'a, A: 'static, B: 'static> QueryDoubleMut<'a, A, B> {
             }
         }
 
-        ptrs.into_iter().map(|(idx, a_ptr, b_ptr)| {
-            (Entity::new(idx), unsafe { &mut *a_ptr }, unsafe { &mut *b_ptr })
-        }).collect()
+        ptrs.into_iter()
+            .map(|(idx, a_ptr, b_ptr)| {
+                (Entity::new(idx), unsafe { &mut *a_ptr }, unsafe {
+                    &mut *b_ptr
+                })
+            })
+            .collect()
     }
 }
 
@@ -172,12 +188,12 @@ mod tests {
         let e = world.spawn_empty();
         world.insert_component(e, 10_i32);
 
-        let mut query = QuerySingleMut::<i32>::new(&mut world).unwrap();
-        if let Some(val) = query.get_mut(e) {
-            *val = 99;
+        {
+            let mut query = QuerySingleMut::<i32>::new(&mut world).unwrap();
+            if let Some(val) = query.get_mut(e) {
+                *val = 99;
+            }
         }
-
-        drop(query);
         assert_eq!(world.get_component::<i32>(e), Some(&99));
     }
 
@@ -189,12 +205,12 @@ mod tests {
         world.insert_component(e1, 1_i32);
         world.insert_component(e2, 2_i32);
 
-        let mut query = QuerySingleMut::<i32>::new(&mut world).unwrap();
-        for (_entity, val) in query.iter_mut() {
-            *val *= 10;
+        {
+            let mut query = QuerySingleMut::<i32>::new(&mut world).unwrap();
+            for (_entity, val) in query.iter_mut() {
+                *val *= 10;
+            }
         }
-
-        drop(query);
         assert_eq!(world.get_component::<i32>(e1), Some(&10));
         assert_eq!(world.get_component::<i32>(e2), Some(&20));
     }
@@ -230,11 +246,11 @@ mod tests {
         world.insert_component(e, 1_i32);
         world.insert_component(e, 10.0_f64);
 
-        let mut query = QueryDoubleMut::<i32, f64>::new(&mut world).unwrap();
-        let results = query.iter();
-        assert_eq!(results.len(), 1);
-
-        drop(query);
+        {
+            let mut query = QueryDoubleMut::<i32, f64>::new(&mut world).unwrap();
+            let results = query.iter();
+            assert_eq!(results.len(), 1);
+        }
         assert_eq!(world.get_component::<i32>(e), Some(&1));
         assert_eq!(world.get_component::<f64>(e), Some(&10.0));
     }

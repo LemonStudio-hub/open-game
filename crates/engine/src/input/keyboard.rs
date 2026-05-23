@@ -1,5 +1,5 @@
-use std::collections::HashSet;
 use super::keys::KeyCode;
+use std::collections::HashSet;
 
 pub struct KeyboardState {
     pub(crate) keys_down: HashSet<KeyCode>,

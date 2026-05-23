@@ -3,15 +3,17 @@ use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
-use crate::ecs::world::World;
-use crate::ecs::system::SystemScheduler;
-use crate::renderer::{GlBackend, Camera2D, SpriteRenderer, ShapeRenderer, TextureManager};
-use crate::input::InputManager;
 use crate::audio::AudioEngine;
-use crate::time::Time;
-use crate::event::EventBus;
-use crate::scene::{SceneManager, SceneContext};
 use crate::color::Color;
+use crate::ecs::system::SystemScheduler;
+use crate::ecs::world::World;
+use crate::event::EventBus;
+use crate::input::InputManager;
+use crate::renderer::{Camera2D, GlBackend, ShapeRenderer, SpriteRenderer, TextureManager};
+use crate::scene::{SceneContext, SceneManager};
+use crate::time::Time;
+
+type AnimationFrameClosure = Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>>;
 
 pub struct App {
     pub world: World,
@@ -124,7 +126,7 @@ impl App {
         self.time.init();
 
         let app = Rc::new(RefCell::new(self));
-        let f: Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>> = Rc::new(RefCell::new(None));
+        let f: AnimationFrameClosure = Rc::new(RefCell::new(None));
         let g = f.clone();
         let app_clone = app.clone();
 
@@ -149,7 +151,12 @@ impl App {
             }
 
             let alpha = app.time.alpha();
-            let (cr, cg, cb, ca) = (app.clear_color.r, app.clear_color.g, app.clear_color.b, app.clear_color.a);
+            let (cr, cg, cb, ca) = (
+                app.clear_color.r,
+                app.clear_color.g,
+                app.clear_color.b,
+                app.clear_color.a,
+            );
 
             app.renderer.gl.resize();
             let width = app.renderer.gl.width() as f32;

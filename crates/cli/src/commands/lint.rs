@@ -8,11 +8,7 @@ pub fn run() -> Result<()> {
     print_header("Running lint checks");
 
     print_step("Checking code formatting...");
-    let fmt_code = run_cmd_inherit(
-        "cargo",
-        &["fmt", "--all", "--", "--check"],
-        &root,
-    )?;
+    let fmt_code = run_cmd_inherit("cargo", &["fmt", "--all", "--", "--check"], &root)?;
     if fmt_code != 0 {
         bail!("Format check failed. Run `og fmt` to fix.");
     }

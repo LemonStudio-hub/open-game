@@ -1,15 +1,15 @@
-pub mod keys;
+pub mod gamepad;
 pub mod keyboard;
+pub mod keys;
 pub mod mouse;
 pub mod touch;
-pub mod gamepad;
 
 use crate::math::Vec2;
-use keys::{KeyCode, MouseButton};
+use gamepad::GamepadManager;
 use keyboard::KeyboardState;
+use keys::{KeyCode, MouseButton};
 use mouse::MouseState;
 use touch::TouchState;
-use gamepad::GamepadManager;
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -76,8 +76,10 @@ impl InputManager {
             let m = mouse.clone();
             add_listener(&document, "mousemove", &mut closures, move |event| {
                 let event = event.unchecked_ref::<web_sys::MouseEvent>();
-                m.borrow_mut().on_move(event.offset_x() as f32, event.offset_y() as f32);
-                m.borrow_mut().on_move_delta(event.movement_x() as f32, event.movement_y() as f32);
+                m.borrow_mut()
+                    .on_move(event.offset_x() as f32, event.offset_y() as f32);
+                m.borrow_mut()
+                    .on_move_delta(event.movement_x() as f32, event.movement_y() as f32);
             });
         }
 

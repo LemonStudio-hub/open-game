@@ -1,6 +1,6 @@
+use super::transition::Transition;
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
-use super::transition::Transition;
 
 pub trait Scene: Any {
     fn on_enter(&mut self, _ctx: &mut SceneContext) {}
@@ -11,6 +11,12 @@ pub trait Scene: Any {
 
 pub struct SceneContext {
     pub data: HashMap<TypeId, Box<dyn Any>>,
+}
+
+impl Default for SceneContext {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl SceneContext {

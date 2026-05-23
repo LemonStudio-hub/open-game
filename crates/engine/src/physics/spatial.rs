@@ -1,6 +1,6 @@
-use std::collections::HashMap;
-use crate::math::Vec2;
 use crate::ecs::entity::Entity;
+use crate::math::Vec2;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 struct CellCoord(i32, i32);
@@ -30,10 +30,7 @@ impl SpatialGrid {
 
         for x in min_x..=max_x {
             for y in min_y..=max_y {
-                self.cells
-                    .entry(CellCoord(x, y))
-                    .or_insert_with(Vec::new)
-                    .push(entity);
+                self.cells.entry(CellCoord(x, y)).or_default().push(entity);
             }
         }
     }

@@ -1,21 +1,21 @@
-pub mod rigid_body;
 pub mod collider;
 pub mod collision;
+pub mod rigid_body;
 pub mod solver;
 pub mod spatial;
 
 use crate::math::Vec2;
 use crate::transform::Transform2D;
-use collision::{CollisionInfo, test_collision};
+use collision::{test_collision, CollisionInfo};
 use spatial::SpatialGrid;
 
-pub use rigid_body::RigidBody;
 pub use collider::Collider;
+pub use rigid_body::RigidBody;
 pub use solver::Solver;
 
-use crate::ecs::world::World;
 use crate::ecs::entity::Entity;
 use crate::ecs::system::System;
+use crate::ecs::world::World;
 
 pub struct PhysicsSystem {
     solver: Solver,
@@ -81,8 +81,7 @@ impl PhysicsSystem {
             }
         }
 
-        for i in 0..entities.len() {
-            let entity_a = entities[i];
+        for &entity_a in &entities {
             let (transform_a, collider_a) = match (
                 world.get_component::<Transform2D>(entity_a),
                 world.get_component::<Collider>(entity_a),
@@ -109,8 +108,10 @@ impl PhysicsSystem {
                 };
 
                 if let Some((normal, depth)) = test_collision(
-                    transform_a.position, &collider_a,
-                    transform_b.position, &collider_b,
+                    transform_a.position,
+                    &collider_a,
+                    transform_b.position,
+                    &collider_b,
                 ) {
                     let mut info = CollisionInfo::new(entity_a, entity_b, normal, depth);
                     info.point = transform_a.position + normal * depth * 0.5;
@@ -122,10 +123,12 @@ impl PhysicsSystem {
         let collisions = self.collisions.clone();
         for collision in &collisions {
             let is_trigger = {
-                let trigger_a = world.get_component::<Collider>(collision.entity_a)
-                    .map_or(false, |c| c.is_trigger);
-                let trigger_b = world.get_component::<Collider>(collision.entity_b)
-                    .map_or(false, |c| c.is_trigger);
+                let trigger_a = world
+                    .get_component::<Collider>(collision.entity_a)
+                    .is_some_and(|c| c.is_trigger);
+                let trigger_b = world
+                    .get_component::<Collider>(collision.entity_b)
+                    .is_some_and(|c| c.is_trigger);
                 trigger_a || trigger_b
             };
 
@@ -142,14 +145,17 @@ impl PhysicsSystem {
                 None => continue,
             };
 
-            let mut rb_a = world.get_component::<RigidBody>(collision.entity_a)
+            let mut rb_a = world
+                .get_component::<RigidBody>(collision.entity_a)
                 .cloned()
                 .unwrap_or(RigidBody::static_body());
-            let mut rb_b = world.get_component::<RigidBody>(collision.entity_b)
+            let mut rb_b = world
+                .get_component::<RigidBody>(collision.entity_b)
                 .cloned()
                 .unwrap_or(RigidBody::static_body());
 
-            self.solver.resolve_collision(collision, &mut rb_a, &mut pos_a, &mut rb_b, &mut pos_b);
+            self.solver
+                .resolve_collision(collision, &mut rb_a, &mut pos_a, &mut rb_b, &mut pos_b);
 
             if let Some(t) = world.get_component_mut::<Transform2D>(collision.entity_a) {
                 t.position = pos_a;

@@ -71,7 +71,8 @@ impl Profiler {
         self.frame_times.push(frame_time);
 
         for (name, duration) in &self.current_frame.entries {
-            let stats = self.scopes
+            let stats = self
+                .scopes
                 .entry(name.clone())
                 .or_insert_with(|| ScopeStats {
                     total_time_us: 0.0,
@@ -90,7 +91,9 @@ impl Profiler {
     }
 
     pub fn record_scope(&mut self, name: &str, duration_us: f64) {
-        self.current_frame.entries.push((name.to_string(), duration_us));
+        self.current_frame
+            .entries
+            .push((name.to_string(), duration_us));
     }
 
     pub fn begin_scope(&self, name: &str) -> ScopeGuard {
@@ -112,7 +115,8 @@ impl Profiler {
 
         let total_time: f64 = self.scopes.values().map(|s| s.last_time_us).sum();
 
-        let mut scopes: Vec<ScopeEntry> = self.scopes
+        let mut scopes: Vec<ScopeEntry> = self
+            .scopes
             .iter()
             .map(|(name, stats)| {
                 let avg = if stats.call_count > 0 {
@@ -136,7 +140,11 @@ impl Profiler {
             })
             .collect();
 
-        scopes.sort_by(|a, b| b.last_us.partial_cmp(&a.last_us).unwrap_or(std::cmp::Ordering::Equal));
+        scopes.sort_by(|a, b| {
+            b.last_us
+                .partial_cmp(&a.last_us)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
 
         ProfileReport {
             scopes,
@@ -160,7 +168,11 @@ impl Profiler {
 
     pub fn fps(&self) -> f32 {
         let avg = self.avg_frame_time_ms();
-        if avg > 0.0 { 1000.0 / avg } else { 0.0 }
+        if avg > 0.0 {
+            1000.0 / avg
+        } else {
+            0.0
+        }
     }
 
     pub fn frame_history(&self) -> &[f32] {
@@ -214,8 +226,10 @@ fn now_us() -> f64 {
 impl ProfileReport {
     pub fn format_text(&self) -> String {
         let mut out = String::new();
-        out.push_str(&format!("FPS: {:.1} | Frame: {:.2}ms | Avg: {:.2}ms\n",
-            self.fps, self.frame_time_ms, self.avg_frame_time_ms));
+        out.push_str(&format!(
+            "FPS: {:.1} | Frame: {:.2}ms | Avg: {:.2}ms\n",
+            self.fps, self.frame_time_ms, self.avg_frame_time_ms
+        ));
         out.push_str("--- Profiler ---\n");
         for entry in &self.scopes {
             out.push_str(&format!(

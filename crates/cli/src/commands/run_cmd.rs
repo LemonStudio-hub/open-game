@@ -9,7 +9,7 @@ pub fn run(example: &str, release: bool) -> Result<()> {
 
     if !example_dir.exists() {
         bail!(
-            "Example `{}` not found. Available examples: pong, platformer",
+            "Example `{}` not found. Available examples: pong, platformer, space-blitz",
             example
         );
     }
@@ -29,15 +29,20 @@ pub fn run(example: &str, release: bool) -> Result<()> {
 
     print_step("Starting dev server for example...");
     println!();
-    println!("  {}", format!("http://localhost:8080/{}", example).cyan().bold());
+    println!(
+        "  {}",
+        format!("http://localhost:8080/{}", example).cyan().bold()
+    );
     println!("  {}", "Hot reload enabled. Press Ctrl+C to stop.".dimmed());
     println!();
 
     let dist = format!("dist/{}", example);
     let mut args = vec![
         "serve",
-        "--dist", &dist,
-        "--port", "8080",
+        "--dist",
+        &dist,
+        "--port",
+        "8080",
         manifest.to_str().unwrap(),
     ];
     if release {

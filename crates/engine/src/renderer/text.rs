@@ -1,3 +1,4 @@
+use super::sprite::SpriteParams;
 use crate::color::Color;
 use crate::math::Vec2;
 
@@ -74,17 +75,14 @@ impl BitmapFont {
             let char_size = Vec2::new(self.char_width * scale, self.char_height * scale);
             let position = Vec2::new(cursor_x + char_size.x * 0.5, y + char_size.y * 0.5);
 
-            renderer.draw_sprite(
+            renderer.draw_sprite(&SpriteParams {
                 position,
-                char_size,
-                0.0,
-                Vec2::new(0.5, 0.5),
+                size: char_size,
                 color,
                 uv_min,
                 uv_max,
-                false,
-                false,
-            );
+                ..Default::default()
+            });
 
             cursor_x += char_size.x;
         }

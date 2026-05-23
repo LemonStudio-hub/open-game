@@ -1,8 +1,8 @@
-use glow::HasContext;
-use crate::color::Color;
-use crate::math::{Mat4, Vec2};
 use super::shader::Shader;
 use super::texture::{TextureHandle, TextureManager};
+use crate::color::Color;
+use crate::math::{Mat4, Vec2};
+use glow::HasContext;
 
 const MAX_SPRITES: usize = 10000;
 const VERTICES_PER_SPRITE: usize = 6;
@@ -14,6 +14,34 @@ struct SpriteVertex {
     position: [f32; 2],
     texcoord: [f32; 2],
     color: [f32; 4],
+}
+
+pub struct SpriteParams {
+    pub position: Vec2,
+    pub size: Vec2,
+    pub rotation: f32,
+    pub anchor: Vec2,
+    pub color: Color,
+    pub uv_min: Vec2,
+    pub uv_max: Vec2,
+    pub flip_x: bool,
+    pub flip_y: bool,
+}
+
+impl Default for SpriteParams {
+    fn default() -> Self {
+        Self {
+            position: Vec2::ZERO,
+            size: Vec2::ONE,
+            rotation: 0.0,
+            anchor: Vec2::new(0.5, 0.5),
+            color: Color::WHITE,
+            uv_min: Vec2::ZERO,
+            uv_max: Vec2::ONE,
+            flip_x: false,
+            flip_y: false,
+        }
+    }
 }
 
 pub struct SpriteRenderer {
@@ -70,26 +98,15 @@ impl SpriteRenderer {
         self.sprite_count = 0;
     }
 
-    pub fn draw_sprite(
-        &mut self,
-        position: Vec2,
-        size: Vec2,
-        rotation: f32,
-        anchor: Vec2,
-        color: Color,
-        uv_min: Vec2,
-        uv_max: Vec2,
-        flip_x: bool,
-        flip_y: bool,
-    ) {
+    pub fn draw_sprite(&mut self, params: &SpriteParams) {
         if self.sprite_count >= MAX_SPRITES {
             return;
         }
 
-        let hw = size.x * 0.5;
-        let hh = size.y * 0.5;
-        let ax = (anchor.x - 0.5) * size.x;
-        let ay = (anchor.y - 0.5) * size.y;
+        let hw = params.size.x * 0.5;
+        let hh = params.size.y * 0.5;
+        let ax = (params.anchor.x - 0.5) * params.size.x;
+        let ay = (params.anchor.y - 0.5) * params.size.y;
 
         let corners = [
             Vec2::new(-hw - ax, -hh - ay),
@@ -98,27 +115,26 @@ impl SpriteRenderer {
             Vec2::new(-hw - ax, hh - ay),
         ];
 
-        let cos_r = rotation.cos();
-        let sin_r = rotation.sin();
+        let cos_r = params.rotation.cos();
+        let sin_r = params.rotation.sin();
 
-        let rotate = |v: Vec2| -> Vec2 {
-            Vec2::new(v.x * cos_r - v.y * sin_r, v.x * sin_r + v.y * cos_r)
-        };
+        let rotate =
+            |v: Vec2| -> Vec2 { Vec2::new(v.x * cos_r - v.y * sin_r, v.x * sin_r + v.y * cos_r) };
 
         let world_corners: Vec<Vec2> = corners
             .iter()
-            .map(|c| rotate(*c) + position)
+            .map(|c| rotate(*c) + params.position)
             .collect();
 
-        let mut u_min = uv_min.x;
-        let mut u_max = uv_max.x;
-        let mut v_min = uv_min.y;
-        let mut v_max = uv_max.y;
+        let mut u_min = params.uv_min.x;
+        let mut u_max = params.uv_max.x;
+        let mut v_min = params.uv_min.y;
+        let mut v_max = params.uv_max.y;
 
-        if flip_x {
+        if params.flip_x {
             std::mem::swap(&mut u_min, &mut u_max);
         }
-        if flip_y {
+        if params.flip_y {
             std::mem::swap(&mut v_min, &mut v_max);
         }
 
@@ -129,7 +145,7 @@ impl SpriteRenderer {
             [u_min, v_max],
         ];
 
-        let col = color.to_array();
+        let col = params.color.to_array();
         let indices = [0, 1, 2, 0, 2, 3];
 
         for &i in &indices {
@@ -143,15 +159,13 @@ impl SpriteRenderer {
         self.sprite_count += 1;
     }
 
-    pub fn draw_rect(
-        &mut self,
-        position: Vec2,
-        size: Vec2,
-        color: Color,
-    ) {
-        let white = Vec2::ZERO;
-        let white_max = Vec2::ONE;
-        self.draw_sprite(position, size, 0.0, Vec2::new(0.5, 0.5), color, white, white_max, false, false);
+    pub fn draw_rect(&mut self, position: Vec2, size: Vec2, color: Color) {
+        self.draw_sprite(&SpriteParams {
+            position,
+            size,
+            color,
+            ..Default::default()
+        });
     }
 
     pub fn flush(
@@ -181,7 +195,11 @@ impl SpriteRenderer {
             );
             gl.buffer_sub_data_u8_slice(glow::ARRAY_BUFFER, 0, bytes);
 
-            gl.draw_arrays(glow::TRIANGLES, 0, (self.sprite_count * VERTICES_PER_SPRITE) as i32);
+            gl.draw_arrays(
+                glow::TRIANGLES,
+                0,
+                (self.sprite_count * VERTICES_PER_SPRITE) as i32,
+            );
             gl.bind_vertex_array(None);
         }
     }

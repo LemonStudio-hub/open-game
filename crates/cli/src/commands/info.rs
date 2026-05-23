@@ -1,7 +1,10 @@
 use anyhow::Result;
 use std::path::Path;
 
-use crate::util::{count_files, count_lines, dir_size, file_size_display, find_project_root, print_header, print_kv, print_step};
+use crate::util::{
+    count_files, count_lines, dir_size, file_size_display, find_project_root, print_header,
+    print_kv, print_step,
+};
 
 pub fn run() -> Result<()> {
     let root = find_project_root()?;
@@ -77,8 +80,14 @@ pub fn run() -> Result<()> {
     print_step("Engine Modules");
     let modules = [
         ("ecs", "Entity Component System"),
-        ("renderer", "WebGL2 rendering (sprites, shapes, text, camera)"),
-        ("physics", "2D physics (rigid body, collision, spatial hash)"),
+        (
+            "renderer",
+            "WebGL2 rendering (sprites, shapes, text, camera)",
+        ),
+        (
+            "physics",
+            "2D physics (rigid body, collision, spatial hash)",
+        ),
         ("input", "Input handling (keyboard, mouse, touch, gamepad)"),
         ("audio", "Audio engine (Web Audio API, music/SFX mixer)"),
         ("scene", "Scene management (stack, transitions)"),

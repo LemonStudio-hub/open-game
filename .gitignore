@@ -38,3 +38,6 @@ tarpaulin-report.html
 
 # novaterm (separate project)
 /novaterm/
+
+# open-particle (separate project)
+/open-particle/

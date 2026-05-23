@@ -2,7 +2,10 @@ use anyhow::{bail, Result};
 use colored::Colorize;
 use std::path::Path;
 
-use crate::util::{file_size_display, find_project_root, print_header, print_kv, print_step, print_success, print_warn};
+use crate::util::{
+    file_size_display, find_project_root, print_header, print_kv, print_step, print_success,
+    print_warn,
+};
 
 pub fn run_list(filter_type: Option<&str>) -> Result<()> {
     let root = find_project_root()?;
@@ -46,10 +49,7 @@ pub fn run_list(filter_type: Option<&str>) -> Result<()> {
             let size = entry.metadata().map_or(0, |m| m.len());
             total_count += 1;
             total_size += size;
-            print_kv(
-                &relative.display().to_string(),
-                &file_size_display(size),
-            );
+            print_kv(&relative.display().to_string(), &file_size_display(size));
         }
     }
 

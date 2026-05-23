@@ -52,7 +52,11 @@ impl Shader {
         }
     }
 
-    pub fn get_uniform_location(&mut self, gl: &glow::Context, name: &str) -> Option<&glow::UniformLocation> {
+    pub fn get_uniform_location(
+        &mut self,
+        gl: &glow::Context,
+        name: &str,
+    ) -> Option<&glow::UniformLocation> {
         if !self.uniforms.contains_key(name) {
             let loc = unsafe { gl.get_uniform_location(self.program, name) };
             if let Some(loc) = loc {
@@ -64,19 +68,33 @@ impl Shader {
 
     pub fn set_uniform_1f(&mut self, gl: &glow::Context, name: &str, value: f32) {
         if let Some(loc) = self.get_uniform_location(gl, name) {
-            unsafe { gl.uniform_1_f32(Some(loc), value); }
+            unsafe {
+                gl.uniform_1_f32(Some(loc), value);
+            }
         }
     }
 
     pub fn set_uniform_2f(&mut self, gl: &glow::Context, name: &str, x: f32, y: f32) {
         if let Some(loc) = self.get_uniform_location(gl, name) {
-            unsafe { gl.uniform_2_f32(Some(loc), x, y); }
+            unsafe {
+                gl.uniform_2_f32(Some(loc), x, y);
+            }
         }
     }
 
-    pub fn set_uniform_4f(&mut self, gl: &glow::Context, name: &str, x: f32, y: f32, z: f32, w: f32) {
+    pub fn set_uniform_4f(
+        &mut self,
+        gl: &glow::Context,
+        name: &str,
+        x: f32,
+        y: f32,
+        z: f32,
+        w: f32,
+    ) {
         if let Some(loc) = self.get_uniform_location(gl, name) {
-            unsafe { gl.uniform_4_f32(Some(loc), x, y, z, w); }
+            unsafe {
+                gl.uniform_4_f32(Some(loc), x, y, z, w);
+            }
         }
     }
 
@@ -98,17 +116,22 @@ impl Shader {
 
     pub fn set_uniform_1i(&mut self, gl: &glow::Context, name: &str, value: i32) {
         if let Some(loc) = self.get_uniform_location(gl, name) {
-            unsafe { gl.uniform_1_i32(Some(loc), value); }
+            unsafe {
+                gl.uniform_1_i32(Some(loc), value);
+            }
         }
     }
 }
 
 impl Drop for Shader {
-    fn drop(&mut self) {
-    }
+    fn drop(&mut self) {}
 }
 
-fn compile_shader(gl: &glow::Context, shader_type: u32, source: &str) -> Result<glow::Shader, String> {
+fn compile_shader(
+    gl: &glow::Context,
+    shader_type: u32,
+    source: &str,
+) -> Result<glow::Shader, String> {
     unsafe {
         let shader = gl.create_shader(shader_type).map_err(|e| e.to_string())?;
         gl.shader_source(shader, source);

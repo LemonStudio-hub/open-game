@@ -9,7 +9,14 @@ pub fn run(verbose: bool, doc: bool) -> Result<()> {
 
     let exit_code = if doc {
         print_step("Running doc tests...");
-        let mut args = vec!["test", "-p", "engine", "--doc", "--target", "x86_64-unknown-linux-gnu"];
+        let mut args = vec![
+            "test",
+            "-p",
+            "engine",
+            "--doc",
+            "--target",
+            "x86_64-unknown-linux-gnu",
+        ];
         if verbose {
             args.push("--");
             args.push("--nocapture");
@@ -17,7 +24,13 @@ pub fn run(verbose: bool, doc: bool) -> Result<()> {
         run_cmd_inherit("cargo", &args, &root)?
     } else {
         print_step("Running unit tests...");
-        let mut args = vec!["test", "-p", "engine", "--target", "x86_64-unknown-linux-gnu"];
+        let mut args = vec![
+            "test",
+            "-p",
+            "engine",
+            "--target",
+            "x86_64-unknown-linux-gnu",
+        ];
         if verbose {
             args.push("--");
             args.push("--nocapture");
@@ -30,7 +43,14 @@ pub fn run(verbose: bool, doc: bool) -> Result<()> {
         print_step("Running doc tests...");
         run_cmd_inherit(
             "cargo",
-            &["test", "-p", "opengame-engine", "--doc", "--target", "x86_64-unknown-linux-gnu"],
+            &[
+                "test",
+                "-p",
+                "opengame-engine",
+                "--doc",
+                "--target",
+                "x86_64-unknown-linux-gnu",
+            ],
             &root,
         )?
     };

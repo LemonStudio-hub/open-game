@@ -1,6 +1,6 @@
-use crate::math::Vec2;
 use super::collision::CollisionInfo;
 use super::rigid_body::RigidBody;
+use crate::math::Vec2;
 
 pub struct Solver {
     pub gravity: Vec2,

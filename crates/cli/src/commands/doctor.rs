@@ -26,10 +26,16 @@ pub fn run() -> Result<()> {
         } else if *required {
             all_ok = false;
             print_step(&format!("{} ({})", name, desc));
-            print_kv("", &format!("NOT INSTALLED - required").red().to_string());
+            print_kv(
+                "",
+                &"NOT INSTALLED - required".to_string().red().to_string(),
+            );
         } else {
             print_step(&format!("{} ({})", name, desc));
-            print_kv("", &format!("not installed (optional)").dimmed().to_string());
+            print_kv(
+                "",
+                &"not installed (optional)".to_string().dimmed().to_string(),
+            );
         }
     }
 
@@ -44,7 +50,13 @@ pub fn run() -> Result<()> {
                 print_kv("", &format!("{}", "installed".green()));
             } else {
                 all_ok = false;
-                print_kv("", &format!("{}", "NOT INSTALLED - run: rustup target add wasm32-unknown-unknown".red()));
+                print_kv(
+                    "",
+                    &format!(
+                        "{}",
+                        "NOT INSTALLED - run: rustup target add wasm32-unknown-unknown".red()
+                    ),
+                );
             }
         }
         Err(_) => {
@@ -55,9 +67,17 @@ pub fn run() -> Result<()> {
 
     println!();
     if all_ok {
-        println!("  {}", "All checks passed! Environment is ready.".green().bold());
+        println!(
+            "  {}",
+            "All checks passed! Environment is ready.".green().bold()
+        );
     } else {
-        println!("  {}", "Some required tools are missing. Run `make install-tools` to install them.".yellow().bold());
+        println!(
+            "  {}",
+            "Some required tools are missing. Run `make install-tools` to install them."
+                .yellow()
+                .bold()
+        );
     }
 
     Ok(())

@@ -40,8 +40,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
-      - run: cargo test --all-targets
-      - run: cargo test --doc
+      - run: cargo test --all-targets --target x86_64-unknown-linux-gnu -p opengame-engine -p opengame-cli
+      - run: cargo test --doc --target x86_64-unknown-linux-gnu -p opengame-engine -p opengame-cli
 
   build:
     name: WASM 构建

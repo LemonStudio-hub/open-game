@@ -1,6 +1,6 @@
-use std::collections::HashSet;
-use crate::math::Vec2;
 use super::keys::MouseButton;
+use crate::math::Vec2;
+use std::collections::HashSet;
 
 pub struct MouseState {
     pub(crate) position: Vec2,

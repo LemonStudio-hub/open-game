@@ -1,4 +1,4 @@
-use crate::math::{Mat4, Vec2, ortho_matrix};
+use crate::math::{ortho_matrix, Mat4, Vec2};
 
 #[derive(Debug, Clone)]
 pub struct Camera2D {

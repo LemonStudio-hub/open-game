@@ -3,9 +3,11 @@ use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
-use opengame_engine::renderer::{GlBackend, ShapeRenderer, Camera2D};
-use opengame_engine::input::{InputManager, keys::KeyCode};
+type AnimationFrameClosure = Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>>;
+
 use opengame_engine::color::Color;
+use opengame_engine::input::{keys::KeyCode, InputManager};
+use opengame_engine::renderer::{Camera2D, GlBackend, ShapeRenderer};
 use opengame_engine::time::Time;
 
 const PADDLE_WIDTH: f32 = 12.0;
@@ -75,7 +77,11 @@ impl PongGame {
         let height = self.gl.height() as f32;
         self.ball_x = width / 2.0;
         self.ball_y = height / 2.0;
-        self.ball_vx = if self.ball_vx > 0.0 { -BALL_SPEED } else { BALL_SPEED };
+        self.ball_vx = if self.ball_vx > 0.0 {
+            -BALL_SPEED
+        } else {
+            BALL_SPEED
+        };
         self.ball_vy = BALL_SPEED * 0.5 * if rand_bool() { 1.0 } else { -1.0 };
     }
 
@@ -187,7 +193,8 @@ impl PongGame {
         let dash_gap = 10.0;
         let mut y = 0.0;
         while y < height {
-            self.shapes.draw_rect(width / 2.0 - 2.0, y, 4.0, dash_height);
+            self.shapes
+                .draw_rect(width / 2.0 - 2.0, y, 4.0, dash_height);
             y += dash_height + dash_gap;
         }
 
@@ -228,7 +235,7 @@ pub fn main() {
     game.time.init();
 
     let game = Rc::new(RefCell::new(game));
-    let f: Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>> = Rc::new(RefCell::new(None));
+    let f: AnimationFrameClosure = Rc::new(RefCell::new(None));
     let g = f.clone();
     let game_clone = game.clone();
 

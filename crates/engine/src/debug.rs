@@ -49,7 +49,13 @@ impl DebugOverlay {
         }
     }
 
-    pub fn update_stats(&mut self, fps: f32, frame_time_ms: f32, entity_count: usize, component_type_count: usize) {
+    pub fn update_stats(
+        &mut self,
+        fps: f32,
+        frame_time_ms: f32,
+        entity_count: usize,
+        component_type_count: usize,
+    ) {
         self.fps = fps;
         self.frame_time_ms = frame_time_ms;
         self.entity_count = entity_count;
@@ -76,7 +82,10 @@ impl DebugOverlay {
         }
 
         if self.show_entity_count {
-            lines.push(format!("Entities: {} | Components: {}", self.entity_count, self.component_type_count));
+            lines.push(format!(
+                "Entities: {} | Components: {}",
+                self.entity_count, self.component_type_count
+            ));
         }
 
         if self.show_profiler {
@@ -105,11 +114,18 @@ impl DebugOverlay {
             DebugPosition::TopLeft => Vec2::new(0.0, 0.0),
             DebugPosition::TopRight => Vec2::new(screen_width - bg_size.x, 0.0),
             DebugPosition::BottomLeft => Vec2::new(0.0, screen_height - bg_size.y),
-            DebugPosition::BottomRight => Vec2::new(screen_width - bg_size.x, screen_height - bg_size.y),
+            DebugPosition::BottomRight => {
+                Vec2::new(screen_width - bg_size.x, screen_height - bg_size.y)
+            }
         }
     }
 
-    pub fn text_start_position(&self, screen_width: f32, screen_height: f32, bg_size: Vec2) -> Vec2 {
+    pub fn text_start_position(
+        &self,
+        screen_width: f32,
+        screen_height: f32,
+        bg_size: Vec2,
+    ) -> Vec2 {
         let bg_pos = self.bg_position(screen_width, screen_height, bg_size);
         Vec2::new(bg_pos.x + self.padding, bg_pos.y + self.padding)
     }

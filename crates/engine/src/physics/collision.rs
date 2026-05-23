@@ -1,6 +1,6 @@
-use crate::math::Vec2;
-use crate::ecs::entity::Entity;
 use super::collider::{Collider, ColliderShape};
+use crate::ecs::entity::Entity;
+use crate::math::Vec2;
 
 #[derive(Debug, Clone)]
 pub struct CollisionInfo {
@@ -23,10 +23,7 @@ impl CollisionInfo {
     }
 }
 
-pub fn test_aabb_aabb(
-    pos_a: Vec2, half_a: Vec2,
-    pos_b: Vec2, half_b: Vec2,
-) -> Option<(Vec2, f32)> {
+pub fn test_aabb_aabb(pos_a: Vec2, half_a: Vec2, pos_b: Vec2, half_b: Vec2) -> Option<(Vec2, f32)> {
     let dx = pos_b.x - pos_a.x;
     let dy = pos_b.y - pos_a.y;
     let ox = (half_a.x + half_b.x) - dx.abs();
@@ -46,8 +43,10 @@ pub fn test_aabb_aabb(
 }
 
 pub fn test_circle_circle(
-    pos_a: Vec2, radius_a: f32,
-    pos_b: Vec2, radius_b: f32,
+    pos_a: Vec2,
+    radius_a: f32,
+    pos_b: Vec2,
+    radius_b: f32,
 ) -> Option<(Vec2, f32)> {
     let diff = pos_b - pos_a;
     let dist_sq = diff.length_squared();
@@ -68,8 +67,10 @@ pub fn test_circle_circle(
 }
 
 pub fn test_aabb_circle(
-    aabb_pos: Vec2, aabb_half: Vec2,
-    circle_pos: Vec2, circle_radius: f32,
+    aabb_pos: Vec2,
+    aabb_half: Vec2,
+    circle_pos: Vec2,
+    circle_radius: f32,
 ) -> Option<(Vec2, f32)> {
     let diff = circle_pos - aabb_pos;
     let clamped = Vec2::new(
@@ -102,8 +103,10 @@ pub fn test_aabb_circle(
 }
 
 pub fn test_collision(
-    pos_a: Vec2, collider_a: &Collider,
-    pos_b: Vec2, collider_b: &Collider,
+    pos_a: Vec2,
+    collider_a: &Collider,
+    pos_b: Vec2,
+    collider_b: &Collider,
 ) -> Option<(Vec2, f32)> {
     let center_a = pos_a + collider_a.offset;
     let center_b = pos_b + collider_b.offset;
@@ -113,23 +116,28 @@ pub fn test_collision(
     }
 
     match (&collider_a.shape, &collider_b.shape) {
-        (ColliderShape::Rectangle { width: w1, height: h1 },
-         ColliderShape::Rectangle { width: w2, height: h2 }) => {
+        (
+            ColliderShape::Rectangle {
+                width: w1,
+                height: h1,
+            },
+            ColliderShape::Rectangle {
+                width: w2,
+                height: h2,
+            },
+        ) => {
             let half_a = Vec2::new(*w1 * 0.5, *h1 * 0.5);
             let half_b = Vec2::new(*w2 * 0.5, *h2 * 0.5);
             test_aabb_aabb(center_a, half_a, center_b, half_b)
         }
-        (ColliderShape::Circle { radius: r1 },
-         ColliderShape::Circle { radius: r2 }) => {
+        (ColliderShape::Circle { radius: r1 }, ColliderShape::Circle { radius: r2 }) => {
             test_circle_circle(center_a, *r1, center_b, *r2)
         }
-        (ColliderShape::Rectangle { width, height },
-         ColliderShape::Circle { radius }) => {
+        (ColliderShape::Rectangle { width, height }, ColliderShape::Circle { radius }) => {
             let half = Vec2::new(*width * 0.5, *height * 0.5);
             test_aabb_circle(center_a, half, center_b, *radius)
         }
-        (ColliderShape::Circle { radius },
-         ColliderShape::Rectangle { width, height }) => {
+        (ColliderShape::Circle { radius }, ColliderShape::Rectangle { width, height }) => {
             let half = Vec2::new(*width * 0.5, *height * 0.5);
             test_aabb_circle(center_b, half, center_a, *radius).map(|(n, d)| (-n, d))
         }
@@ -143,8 +151,10 @@ mod tests {
     #[test]
     fn test_aabb_overlap() {
         let result = test_aabb_aabb(
-            Vec2::ZERO, Vec2::new(1.0, 1.0),
-            Vec2::new(1.5, 0.0), Vec2::new(1.0, 1.0),
+            Vec2::ZERO,
+            Vec2::new(1.0, 1.0),
+            Vec2::new(1.5, 0.0),
+            Vec2::new(1.0, 1.0),
         );
         assert!(result.is_some());
         let (normal, depth) = result.unwrap();
@@ -155,8 +165,10 @@ mod tests {
     #[test]
     fn test_aabb_no_overlap() {
         let result = test_aabb_aabb(
-            Vec2::ZERO, Vec2::new(1.0, 1.0),
-            Vec2::new(5.0, 5.0), Vec2::new(1.0, 1.0),
+            Vec2::ZERO,
+            Vec2::new(1.0, 1.0),
+            Vec2::new(5.0, 5.0),
+            Vec2::new(1.0, 1.0),
         );
         assert!(result.is_none());
     }
@@ -164,18 +176,17 @@ mod tests {
     #[test]
     fn test_aabb_touching() {
         let result = test_aabb_aabb(
-            Vec2::ZERO, Vec2::new(1.0, 1.0),
-            Vec2::new(2.0, 0.0), Vec2::new(1.0, 1.0),
+            Vec2::ZERO,
+            Vec2::new(1.0, 1.0),
+            Vec2::new(2.0, 0.0),
+            Vec2::new(1.0, 1.0),
         );
         assert!(result.is_none());
     }
 
     #[test]
     fn test_circle_overlap() {
-        let result = test_circle_circle(
-            Vec2::ZERO, 2.0,
-            Vec2::new(3.0, 0.0), 2.0,
-        );
+        let result = test_circle_circle(Vec2::ZERO, 2.0, Vec2::new(3.0, 0.0), 2.0);
         assert!(result.is_some());
         let (_normal, depth) = result.unwrap();
         assert!((depth - 1.0).abs() < f32::EPSILON);
@@ -183,19 +194,13 @@ mod tests {
 
     #[test]
     fn test_circle_no_overlap() {
-        let result = test_circle_circle(
-            Vec2::ZERO, 1.0,
-            Vec2::new(5.0, 0.0), 1.0,
-        );
+        let result = test_circle_circle(Vec2::ZERO, 1.0, Vec2::new(5.0, 0.0), 1.0);
         assert!(result.is_none());
     }
 
     #[test]
     fn test_circle_concentric() {
-        let result = test_circle_circle(
-            Vec2::ZERO, 2.0,
-            Vec2::ZERO, 2.0,
-        );
+        let result = test_circle_circle(Vec2::ZERO, 2.0, Vec2::ZERO, 2.0);
         assert!(result.is_some());
         let (_normal, depth) = result.unwrap();
         assert!((depth - 4.0).abs() < f32::EPSILON);
@@ -203,19 +208,13 @@ mod tests {
 
     #[test]
     fn test_aabb_circle_overlap() {
-        let result = test_aabb_circle(
-            Vec2::ZERO, Vec2::new(1.0, 1.0),
-            Vec2::new(1.5, 0.0), 1.0,
-        );
+        let result = test_aabb_circle(Vec2::ZERO, Vec2::new(1.0, 1.0), Vec2::new(1.5, 0.0), 1.0);
         assert!(result.is_some());
     }
 
     #[test]
     fn test_aabb_circle_no_overlap() {
-        let result = test_aabb_circle(
-            Vec2::ZERO, Vec2::new(1.0, 1.0),
-            Vec2::new(5.0, 0.0), 1.0,
-        );
+        let result = test_aabb_circle(Vec2::ZERO, Vec2::new(1.0, 1.0), Vec2::new(5.0, 0.0), 1.0);
         assert!(result.is_none());
     }
 

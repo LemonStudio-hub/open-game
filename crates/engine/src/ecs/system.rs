@@ -1,5 +1,7 @@
 use super::world::World;
 
+type RenderSystemFn = Box<dyn FnMut(&mut World, f32)>;
+
 pub trait System {
     fn update(&mut self, world: &mut World, dt: f32);
     fn name(&self) -> &str {
@@ -10,7 +12,7 @@ pub trait System {
 pub struct SystemScheduler {
     startup_systems: Vec<Box<dyn FnMut(&mut World)>>,
     update_systems: Vec<Box<dyn System>>,
-    render_systems: Vec<Box<dyn FnMut(&mut World, f32)>>,
+    render_systems: Vec<RenderSystemFn>,
 }
 
 impl SystemScheduler {

@@ -1,12 +1,12 @@
-pub mod entity;
+pub mod builder;
 pub mod component;
-pub mod world;
+pub mod entity;
 pub mod query;
 pub mod system;
-pub mod builder;
+pub mod world;
 
-pub use entity::Entity;
-pub use world::World;
-pub use system::{System, SystemScheduler};
 pub use builder::EntityBuilder;
-pub use query::{QuerySingle, QuerySingleMut, QueryDouble, QueryDoubleMut};
+pub use entity::Entity;
+pub use query::{QueryDouble, QueryDoubleMut, QuerySingle, QuerySingleMut};
+pub use system::{System, SystemScheduler};
+pub use world::World;

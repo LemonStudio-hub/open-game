@@ -1,7 +1,10 @@
 use anyhow::{bail, Result};
 use colored::Colorize;
 
-use crate::util::{dir_size, file_size_display, find_project_root, print_header, print_step, print_success, run_cmd_inherit};
+use crate::util::{
+    dir_size, file_size_display, find_project_root, print_header, print_step, print_success,
+    run_cmd_inherit,
+};
 
 pub fn run(release: bool, example: Option<&str>) -> Result<()> {
     let root = find_project_root()?;
