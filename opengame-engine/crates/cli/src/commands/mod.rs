@@ -1,0 +1,14 @@
+pub mod assets;
+pub mod build;
+pub mod check;
+pub mod clean;
+pub mod clippy;
+pub mod doc;
+pub mod doctor;
+pub mod fmt_cmd;
+pub mod info;
+pub mod lint;
+pub mod new_cmd;
+pub mod run_cmd;
+pub mod serve;
+pub mod test_cmd;
