@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>SCP Shooter</title>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0a0a14;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            image-rendering: pixelated;
+            pointer-events: none;
+        }
+
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .screen.interactive {
+            pointer-events: auto;
+        }
+
+        /* ── Start Screen ─────────────────────────────────────────────── */
+        .start-screen {
+            background: rgba(5, 5, 15, 0.75);
+        }
+
+        .game-title {
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            color: #4db8ff;
+            text-shadow: 0 0 30px rgba(77, 184, 255, 0.5), 0 0 60px rgba(77, 184, 255, 0.2);
+            margin-bottom: 0.2em;
+        }
+
+        .game-subtitle {
+            font-size: clamp(0.9rem, 2.5vw, 1.6rem);
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            color: #ff6b4a;
+            text-shadow: 0 0 20px rgba(255, 107, 74, 0.4);
+            margin-bottom: 2.5em;
+        }
+
+        .btn {
+            padding: 0.8em 2.5em;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            border: 2px solid;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            background: transparent;
+            outline: none;
+        }
+
+        .btn-primary {
+            color: #4db8ff;
+            border-color: #4db8ff;
+            box-shadow: 0 0 15px rgba(77, 184, 255, 0.3), inset 0 0 15px rgba(77, 184, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            background: rgba(77, 184, 255, 0.15);
+            box-shadow: 0 0 25px rgba(77, 184, 255, 0.5), inset 0 0 25px rgba(77, 184, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .btn-danger {
+            color: #ff4d4d;
+            border-color: #ff4d4d;
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.3), inset 0 0 15px rgba(255, 77, 77, 0.1);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 77, 77, 0.15);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 0.5), inset 0 0 25px rgba(255, 77, 77, 0.15);
+            transform: scale(1.05);
+        }
+
+        .controls-info {
+            margin-top: 2.5em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5em;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 0.8em;
+            font-size: clamp(0.7rem, 1.5vw, 0.95rem);
+            color: rgba(180, 190, 210, 0.7);
+        }
+
+        .key-badge {
+            display: inline-block;
+            padding: 0.15em 0.6em;
+            border: 1px solid rgba(180, 190, 210, 0.4);
+            border-radius: 3px;
+            font-size: 0.85em;
+            color: rgba(200, 210, 230, 0.9);
+            background: rgba(255, 255, 255, 0.05);
+            min-width: 2em;
+            text-align: center;
+        }
+
+        /* ── HUD Overlay ──────────────────────────────────────────────── */
+        .hud-overlay {
+            pointer-events: none;
+        }
+
+        .hud-score {
+            position: absolute;
+            top: 12px;
+            right: 20px;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 700;
+            color: #50fa7b;
+            text-shadow: 0 0 10px rgba(80, 250, 123, 0.4);
+        }
+
+        .hud-lives {
+            position: absolute;
+            top: 12px;
+            left: 20px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .life-icon {
+            width: clamp(14px, 2vw, 20px);
+            height: clamp(14px, 2vw, 20px);
+            background: #ffd740;
+            border: 2px solid #c8a400;
+            box-shadow: 0 0 8px rgba(255, 215, 64, 0.4);
+        }
+
+        .hud-high-score {
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            font-size: clamp(0.65rem, 1.3vw, 0.85rem);
+            color: rgba(255, 215, 64, 0.6);
+        }
+
+        /* ── Game Over Screen ─────────────────────────────────────────── */
+        .gameover-screen {
+            background: rgba(5, 5, 15, 0.7);
+        }
+
+        .gameover-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: #ff4d4d;
+            text-shadow: 0 0 30px rgba(255, 77, 77, 0.5), 0 0 60px rgba(255, 77, 77, 0.2);
+            margin-bottom: 0.5em;
+        }
+
+        .gameover-score {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 600;
+            color: #ffd740;
+            text-shadow: 0 0 15px rgba(255, 215, 64, 0.4);
+            margin-bottom: 0.3em;
+        }
+
+        .gameover-high {
+            font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+            color: rgba(255, 215, 64, 0.6);
+            margin-bottom: 2em;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delay-1 { animation-delay: 0.2s; opacity: 0; }
+        .delay-2 { animation-delay: 0.4s; opacity: 0; }
+        .delay-3 { animation-delay: 0.6s; opacity: 0; }
+        .delay-4 { animation-delay: 1.2s; opacity: 0; }
+    </style>
+    <link data-trunk rel="rust" data-wasm-opt="z" data-type="main" />
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        <div id="ui-overlay"></div>
+    </div>
+
+    <script type="module">
+        // ── Vue 3 CDN ──────────────────────────────────────────────────────
+        const vueUrl = 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
+        const { createApp, ref, computed, onMounted, onUnmounted } = await import(vueUrl);
+
+        // Trunk stores WASM exports on window.wasmBindings
+        const wasm = () => window.wasmBindings || {};
+        const safeCall = (name, fallback) => {
+            try {
+                const fn = wasm()[name];
+                return typeof fn === 'function' ? fn() : fallback;
+            } catch { return fallback; }
+        };
+
+        const App = {
+            setup() {
+                const gameState = ref(0);   // 0=Title, 1=Playing, 2=GameOver
+                const score = ref(0);
+                const lives = ref(3);
+                const highScore = ref(0);
+
+                let pollInterval = null;
+
+                const isTitle = computed(() => gameState.value === 0);
+                const isPlaying = computed(() => gameState.value === 1);
+                const isGameOver = computed(() => gameState.value === 2);
+
+                const lifeIcons = computed(() => {
+                    const arr = [];
+                    for (let i = 0; i < lives.value; i++) arr.push(i);
+                    return arr;
+                });
+
+                function poll() {
+                    gameState.value = safeCall('get_game_state', 0);
+                    score.value = safeCall('get_score', 0);
+                    lives.value = safeCall('get_lives', 3);
+                    highScore.value = safeCall('get_high_score', 0);
+                }
+
+                function handleStart() {
+                    const fn = wasm().start_game;
+                    if (typeof fn === 'function') fn();
+                }
+
+                function handleRestart() {
+                    const fn = wasm().restart_game;
+                    if (typeof fn === 'function') fn();
+                }
+
+                function handleKeydown(e) {
+                    if (e.code === 'Space' || e.code === 'Enter') {
+                        if (gameState.value === 0) handleStart();
+                        else if (gameState.value === 2) handleRestart();
+                    }
+                }
+
+                onMounted(() => {
+                    pollInterval = setInterval(poll, 100);
+                    window.addEventListener('keydown', handleKeydown);
+                });
+
+                onUnmounted(() => {
+                    if (pollInterval) clearInterval(pollInterval);
+                    window.removeEventListener('keydown', handleKeydown);
+                });
+
+                return {
+                    gameState, score, lives, highScore,
+                    isTitle, isPlaying, isGameOver,
+                    lifeIcons,
+                    handleStart, handleRestart,
+                };
+            },
+
+            template: `
+                <!-- HUD (during play) -->
+                <div v-if="isPlaying" class="screen hud-overlay">
+                    <div class="hud-lives">
+                        <div v-for="i in lifeIcons" :key="i" class="life-icon"></div>
+                    </div>
+                    <div class="hud-score">{{ score }}</div>
+                    <div v-if="highScore > 0" class="hud-high-score">HI {{ highScore }}</div>
+                </div>
+
+                <!-- Start Screen -->
+                <div v-if="isTitle" class="screen start-screen interactive">
+                    <div class="game-title">SCP SHOOTER</div>
+                    <div class="game-subtitle">SIDE-SCROLLING COMBAT</div>
+                    <button class="btn btn-primary" @click="handleStart">START MISSION</button>
+                    <div class="controls-info">
+                        <div class="control-row">
+                            <span class="key-badge">A</span><span class="key-badge">D</span>
+                            <span>/ Arrow Keys — Move</span>
+                        </div>
+                        <div class="control-row">
+                            <span class="key-badge">W</span><span class="key-badge">↑</span><span class="key-badge">SPACE</span>
+                            <span>— Jump</span>
+                        </div>
+                        <div class="control-row">
+                            <span class="key-badge">J</span><span class="key-badge">Z</span>
+                            <span>— Shoot</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Over Screen -->
+                <div v-if="isGameOver" class="screen gameover-screen interactive">
+                    <div class="gameover-title fade-in">MISSION FAILED</div>
+                    <div class="gameover-score fade-in delay-1">SCORE: {{ score }}</div>
+                    <div v-if="score >= highScore && score > 0" class="gameover-high fade-in delay-2">★ NEW HIGH SCORE ★</div>
+                    <div v-else-if="highScore > 0" class="gameover-high fade-in delay-2">BEST: {{ highScore }}</div>
+                    <button class="btn btn-danger fade-in delay-3" @click="handleRestart">REPLAY</button>
+                </div>
+            `,
+        };
+
+        createApp(App).mount('#ui-overlay');
+    </script>
+</body>
+</html>

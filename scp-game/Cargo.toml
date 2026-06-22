@@ -1,0 +1,18 @@
+[package]
+name = "scp-game"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+opengame-engine = { path = "../crates/engine" }
+wasm-bindgen = { workspace = true }
+js-sys = { workspace = true }
+web-sys = { workspace = true, features = [
+    "Window",
+    "Performance",
+    "PerformanceTiming",
+] }
