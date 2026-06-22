@@ -11,11 +11,12 @@ type AnimationFrameClosure = Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>>;
 
 use opengame_engine::color::Color;
 use opengame_engine::ecs::{QuerySingle, World};
-use opengame_engine::ecs::system::SystemScheduler;
 use opengame_engine::input::{keys::KeyCode, InputManager};
-use opengame_engine::math::{Mat4, Vec3};
+use opengame_engine::math::{Mat4, Vec2, Vec3};
+use opengame_engine::physics::{PhysicsSystem, RigidBody, Collider, collider::ColliderShape};
 use opengame_engine::renderer::{GlBackend, ShapeRenderer};
 use opengame_engine::time::Time;
+use opengame_engine::transform::Transform2D;
 
 use components::*;
 use resources::*;
@@ -44,6 +45,13 @@ pub(crate) const LEVEL_W: f32 = 3200.0;
 pub(crate) const CAM_DEAD_ZONE_X: f32 = 120.0;
 pub(crate) const CAM_SMOOTH: f32 = 4.0;
 
+// ── Collision Layers ──────────────────────────────────────────────────────────
+const LAYER_PLAYER: u32 = 1;
+const LAYER_ENEMY: u32 = 2;
+const LAYER_PLAYER_BULLET: u32 = 4;
+const LAYER_ENEMY_BULLET: u32 = 8;
+const LAYER_GROUND: u32 = 16;
+
 // ── Utility ────────────────────────────────────────────────────────────────────
 pub(crate) fn rand() -> f32 {
     js_sys::Math::random() as f32
@@ -71,7 +79,7 @@ thread_local! {
 }
 
 // ── ECS World Setup ────────────────────────────────────────────────────────────
-fn init_world(world: &mut World) {
+fn init_world(world: &mut World, physics: &mut PhysicsSystem) {
     world.insert_resource(GameStateRes::default());
     world.insert_resource(ScoreRes::default());
     world.insert_resource(LivesRes::default());
@@ -79,17 +87,46 @@ fn init_world(world: &mut World) {
     world.insert_resource(SpawnRes::default());
     world.insert_resource(InputState::default());
 
-    // Spawn player entity
+    // Configure physics gravity
+    physics.set_gravity(Vec2::new(0.0, GRAVITY));
+
+    // Ground entity — static collider (no RigidBody → auto-static)
+    let ground_collider_height = 64.0;
+    world.spawn()
+        .with(Ground)
+        .with(Transform2D::new(Vec2::new(LEVEL_W * 0.5, GROUND_Y + ground_collider_height * 0.5)))
+        .with(Collider {
+            shape: ColliderShape::Rectangle { width: LEVEL_W, height: ground_collider_height },
+            layer: LAYER_GROUND,
+            mask: LAYER_PLAYER | LAYER_ENEMY | LAYER_PLAYER_BULLET | LAYER_ENEMY_BULLET,
+            friction: 0.0,
+            restitution: 0.0,
+            is_trigger: false,
+            offset: Vec2::ZERO,
+        })
+        .build();
+
+    // Player entity — dynamic body
     world.spawn()
         .with(Player {
-            x: 100.0,
-            y: GROUND_Y - PLAYER_SIZE,
-            vy: 0.0,
-            on_ground: true,
             facing_right: true,
             invincible: 0.0,
             flash: 0.0,
             shoot_timer: 0.0,
+            on_ground: true,
+        })
+        .with(Transform2D::new(Vec2::new(100.0, GROUND_Y - PLAYER_SIZE)))
+        .with(RigidBody::dynamic()
+            .with_mass(1.0)
+            .with_gravity_scale(1.0))
+        .with(Collider {
+            shape: ColliderShape::Rectangle { width: PLAYER_SIZE, height: PLAYER_SIZE },
+            layer: LAYER_PLAYER,
+            mask: LAYER_ENEMY | LAYER_GROUND,
+            friction: 0.0,
+            restitution: 0.0,
+            is_trigger: false,
+            offset: Vec2::ZERO,
         })
         .build();
 }
@@ -101,7 +138,7 @@ struct ScpGame {
     input: InputManager,
     time: Time,
     world: World,
-    scheduler: SystemScheduler,
+    physics: PhysicsSystem,
 }
 
 impl ScpGame {
@@ -117,10 +154,8 @@ impl ScpGame {
         let time = Time::new(performance);
 
         let mut world = World::new();
-        init_world(&mut world);
-
-        let mut scheduler = SystemScheduler::new();
-        systems::register_systems(&mut scheduler);
+        let mut physics = PhysicsSystem::new(Vec2::new(0.0, GRAVITY));
+        init_world(&mut world, &mut physics);
 
         Ok(Self {
             gl,
@@ -128,21 +163,19 @@ impl ScpGame {
             input,
             time,
             world,
-            scheduler,
+            physics,
         })
     }
 
     fn reset_game(&mut self) {
-        // Save high score
         let high = self.world.get_resource::<ScoreRes>()
             .map(|s| s.high_score.max(s.score))
             .unwrap_or(0);
 
-        // Clear all entities and resources, re-init
         self.world.clear();
-        init_world(&mut self.world);
+        self.physics = PhysicsSystem::new(Vec2::new(0.0, GRAVITY));
+        init_world(&mut self.world, &mut self.physics);
 
-        // Restore high score
         if let Some(score) = self.world.get_resource_mut::<ScoreRes>() {
             score.high_score = high;
         }
@@ -150,8 +183,7 @@ impl ScpGame {
 
     // ── Input ──────────────────────────────────────────────────────────────────
     fn poll_input(&mut self) {
-        let state = self.world.get_resource::<GameStateRes>().unwrap();
-        let gs = state.state;
+        let gs = self.world.get_resource::<GameStateRes>().unwrap().state;
 
         let input_state = InputState {
             left: self.input.is_key_down(KeyCode::KeyA) || self.input.is_key_down(KeyCode::ArrowLeft),
@@ -165,7 +197,6 @@ impl ScpGame {
         };
         self.world.insert_resource(input_state);
 
-        // Handle state transitions in main loop (before systems)
         match gs {
             GameState::Title => {
                 if self.world.get_resource::<InputState>().unwrap().start_pressed {
@@ -186,7 +217,7 @@ impl ScpGame {
 
     // ── Update ─────────────────────────────────────────────────────────────────
     fn update(&mut self, dt: f32) {
-        // Update title/game-over timers
+        // Update timers
         {
             let gs = self.world.get_resource_mut::<GameStateRes>().unwrap();
             match gs.state {
@@ -196,13 +227,31 @@ impl ScpGame {
             }
         }
 
-        // Run all ECS systems
         let state = self.world.get_resource::<GameStateRes>().unwrap().state;
         if state == GameState::Playing {
-            self.scheduler.run_update(&mut self.world, dt);
+            // Physics step: gravity, integration, collision detection/resolution
+            use opengame_engine::ecs::system::System;
+            self.physics.update(&mut self.world, dt);
+
+            // Post-physics: sync Transform2D back, detect ground contacts
+            systems::physics_sync_down(&mut self.world, &self.physics);
+
+            // Game systems
+            systems::player_move_system(&mut self.world, dt);
+            systems::player_shoot_system(&mut self.world, dt);
+            systems::enemy_spawn_system(&mut self.world, dt);
+            systems::enemy_ai_system(&mut self.world, dt);
+            systems::bullet_move_system(&mut self.world, dt);
+            systems::particle_update_system(&mut self.world, dt);
+
+            // Collision handler: read physics collisions for game logic
+            systems::collision_handler(&mut self.world, &self.physics);
+
+            systems::camera_system(&mut self.world, dt);
+            systems::cleanup_system(&mut self.world);
         } else if state == GameState::GameOver {
-            // Still update particles and camera during game over
-            self.scheduler.run_update(&mut self.world, dt);
+            systems::particle_update_system(&mut self.world, dt);
+            systems::camera_system(&mut self.world, dt);
         }
     }
 
@@ -210,11 +259,9 @@ impl ScpGame {
     fn render(&mut self, _alpha: f32) {
         self.gl.resize();
 
-        // Dark blue background
         self.gl.clear(0.04, 0.06, 0.18, 1.0);
         self.gl.enable_blend();
 
-        // Camera projection
         let cam = self.world.get_resource::<CameraRes>().unwrap();
         let cam_x = cam.camera_x;
         let shake_amount = cam.shake_amount;
@@ -226,7 +273,7 @@ impl ScpGame {
 
         self.shapes.begin();
 
-        // Background stars
+        // Stars
         self.shapes.set_color(Color::new(0.6, 0.6, 0.8, 0.3));
         let cam_left = cam_x;
         let cam_right = cam_x + WORLD_W;
@@ -279,20 +326,23 @@ impl ScpGame {
 
     fn render_player(&mut self) {
         let query = QuerySingle::<Player>::new(&self.world);
-        let player = match query {
+        let data = match query {
             Some(q) => {
                 match q.iter().next() {
-                    Some((_e, p)) => (p.x, p.y, p.invincible, p.flash),
+                    Some((e, p)) => {
+                        let pos = self.world.get_component::<Transform2D>(e)
+                            .map(|t| (t.position.x, t.position.y))
+                            .unwrap_or((100.0, GROUND_Y - PLAYER_SIZE));
+                        (pos.0, pos.1, p.invincible, p.flash)
+                    }
                     None => return,
                 }
             }
             None => return,
         };
-        let (px, py, invincible, flash) = player;
+        let (px, py, invincible, flash) = data;
 
-        if invincible > 0.0 && (flash * 0.5).sin() > 0.3 {
-            return;
-        }
+        if invincible > 0.0 && (flash * 0.5).sin() > 0.3 { return; }
 
         let t = self.time.elapsed();
         let breathe = (t * 3.0).sin() * 0.5 + 0.5;
@@ -310,15 +360,18 @@ impl ScpGame {
         let t = self.time.elapsed();
         let query = QuerySingle::<Enemy>::new(&self.world);
         if let Some(q) = query {
-            for (_e, enemy) in q.iter() {
+            for (e, enemy) in q.iter() {
                 if !enemy.alive { continue; }
+                let (ex, ey) = self.world.get_component::<Transform2D>(e)
+                    .map(|t| (t.position.x, t.position.y))
+                    .unwrap_or((0.0, 0.0));
                 let s = enemy.size;
-                let phase = (enemy.x * 0.05 + t * 2.8).sin() * 0.5 + 0.5;
+                let phase = (ex * 0.05 + t * 2.8).sin() * 0.5 + 0.5;
                 let glow_expand = 2.0 + phase * 3.0;
                 let glow_alpha = 0.06 + phase * 0.08;
 
                 self.shapes.set_color(Color::new(1.0, 0.45, 0.0, glow_alpha));
-                self.shapes.draw_rect(enemy.x - glow_expand, enemy.y - glow_expand, s + glow_expand * 2.0, s + glow_expand * 2.0);
+                self.shapes.draw_rect(ex - glow_expand, ey - glow_expand, s + glow_expand * 2.0, s + glow_expand * 2.0);
 
                 let c = if enemy.flash > 0.0 {
                     Color::lerp(Color::new(1.0, 0.45, 0.0, 1.0), Color::WHITE, enemy.flash * 0.7)
@@ -326,7 +379,7 @@ impl ScpGame {
                     Color::new(1.0, 0.45, 0.0, 1.0)
                 };
                 self.shapes.set_color(c);
-                self.shapes.draw_rect(enemy.x, enemy.y, s, s);
+                self.shapes.draw_rect(ex, ey, s, s);
             }
         }
     }
@@ -399,7 +452,6 @@ impl ScpGame {
         let cx = WORLD_W * 0.5;
         let ty = WORLD_H * 0.28;
 
-        // "S"
         self.shapes.set_color(Color::new(0.3, 0.7, 1.0, pulse));
         self.shapes.draw_rect(cx - 100.0, ty, 30.0, 8.0);
         self.shapes.draw_rect(cx - 108.0, ty + 8.0, 8.0, 16.0);
@@ -407,24 +459,20 @@ impl ScpGame {
         self.shapes.draw_rect(cx - 78.0, ty + 32.0, 8.0, 16.0);
         self.shapes.draw_rect(cx - 100.0, ty + 48.0, 30.0, 8.0);
 
-        // "C"
         self.shapes.draw_rect(cx - 40.0, ty, 30.0, 8.0);
         self.shapes.draw_rect(cx - 48.0, ty + 8.0, 8.0, 40.0);
         self.shapes.draw_rect(cx - 40.0, ty + 48.0, 30.0, 8.0);
 
-        // "P"
         self.shapes.draw_rect(cx + 10.0, ty, 30.0, 8.0);
         self.shapes.draw_rect(cx + 2.0, ty + 8.0, 8.0, 48.0);
         self.shapes.draw_rect(cx + 40.0, ty + 8.0, 8.0, 20.0);
         self.shapes.draw_rect(cx + 10.0, ty + 28.0, 30.0, 8.0);
 
-        // "SHOOTER" subtitle
         self.shapes.set_color(Color::new(1.0, 0.4, 0.2, pulse * 0.8));
         self.shapes.draw_rect(cx - 70.0, ty + 72.0, 140.0, 6.0);
         self.shapes.set_color(Color::new(1.0, 0.6, 0.3, pulse * 0.6));
         self.shapes.draw_rect(cx - 50.0, ty + 82.0, 100.0, 4.0);
 
-        // Floating enemies decoration
         let title_pulse = self.world.get_resource::<GameStateRes>().unwrap().title_pulse;
         for i in 0..5 {
             let angle = title_pulse * 0.8 + i as f32 * std::f32::consts::TAU / 5.0;
@@ -435,14 +483,12 @@ impl ScpGame {
             self.shapes.draw_rect(dx - 8.0, dy - 8.0, 16.0, 16.0);
         }
 
-        // Blink
         let blink = (title_pulse * 1.5).sin();
         if blink > -0.3 {
             self.shapes.set_color(Color::new(0.9, 0.9, 1.0, 0.5 + blink * 0.4));
             self.shapes.draw_rect(cx - 90.0, WORLD_H * 0.72, 180.0, 4.0);
         }
 
-        // Controls hint
         self.shapes.set_color(Color::new(0.5, 0.5, 0.6, 0.5));
         self.shapes.draw_rect(cx - 70.0, WORLD_H * 0.80, 140.0, 2.0);
         self.shapes.draw_rect(cx - 70.0, WORLD_H * 0.80 + 18.0, 140.0, 2.0);
@@ -493,13 +539,12 @@ impl ScpGame {
     }
 }
 
-// ── WASM Exports for Vue ───────────────────────────────────────────────────────
+// ── WASM Exports ──────────────────────────────────────────────────────────────
 #[wasm_bindgen]
 pub fn get_score() -> i32 {
     GAME_REF.with(|g| {
         if let Some(ref game) = *g.borrow() {
-            game.borrow().world.get_resource::<ScoreRes>()
-                .map(|s| s.score).unwrap_or(0)
+            game.borrow().world.get_resource::<ScoreRes>().map(|s| s.score).unwrap_or(0)
         } else { 0 }
     })
 }
@@ -508,8 +553,7 @@ pub fn get_score() -> i32 {
 pub fn get_lives() -> i32 {
     GAME_REF.with(|g| {
         if let Some(ref game) = *g.borrow() {
-            game.borrow().world.get_resource::<LivesRes>()
-                .map(|l| l.lives).unwrap_or(0)
+            game.borrow().world.get_resource::<LivesRes>().map(|l| l.lives).unwrap_or(0)
         } else { 0 }
     })
 }
@@ -520,9 +564,7 @@ pub fn get_game_state() -> u8 {
         if let Some(ref game) = *g.borrow() {
             match game.borrow().world.get_resource::<GameStateRes>() {
                 Some(gs) => match gs.state {
-                    GameState::Title => 0,
-                    GameState::Playing => 1,
-                    GameState::GameOver => 2,
+                    GameState::Title => 0, GameState::Playing => 1, GameState::GameOver => 2,
                 },
                 None => 0,
             }
@@ -534,8 +576,7 @@ pub fn get_game_state() -> u8 {
 pub fn get_high_score() -> i32 {
     GAME_REF.with(|g| {
         if let Some(ref game) = *g.borrow() {
-            game.borrow().world.get_resource::<ScoreRes>()
-                .map(|s| s.high_score).unwrap_or(0)
+            game.borrow().world.get_resource::<ScoreRes>().map(|s| s.high_score).unwrap_or(0)
         } else { 0 }
     })
 }
@@ -545,8 +586,7 @@ pub fn start_game() {
     GAME_REF.with(|g| {
         if let Some(ref game) = *g.borrow() {
             let mut game = game.borrow_mut();
-            let current = game.world.get_resource::<GameStateRes>()
-                .map(|gs| gs.state).unwrap_or(GameState::Title);
+            let current = game.world.get_resource::<GameStateRes>().map(|gs| gs.state).unwrap_or(GameState::Title);
             if current == GameState::Title {
                 game.world.get_resource_mut::<GameStateRes>().unwrap().state = GameState::Playing;
                 game.reset_game();
@@ -560,8 +600,7 @@ pub fn restart_game() {
     GAME_REF.with(|g| {
         if let Some(ref game) = *g.borrow() {
             let mut game = game.borrow_mut();
-            let current = game.world.get_resource::<GameStateRes>()
-                .map(|gs| gs.state).unwrap_or(GameState::GameOver);
+            let current = game.world.get_resource::<GameStateRes>().map(|gs| gs.state).unwrap_or(GameState::GameOver);
             if current == GameState::GameOver {
                 game.world.get_resource_mut::<GameStateRes>().unwrap().state = GameState::Playing;
                 game.reset_game();
@@ -585,11 +624,7 @@ pub fn main() {
     let mut last_time = 0.0_f64;
 
     *g.borrow_mut() = Some(Closure::new(move |timestamp: f64| {
-        let dt = if last_time == 0.0 {
-            1.0 / 60.0
-        } else {
-            ((timestamp - last_time) / 1000.0).min(0.05)
-        };
+        let dt = if last_time == 0.0 { 1.0 / 60.0 } else { ((timestamp - last_time) / 1000.0).min(0.05) };
         last_time = timestamp;
 
         let mut game = game_clone.borrow_mut();
@@ -607,8 +642,5 @@ pub fn main() {
 }
 
 fn request_animation_frame(f: &Closure<dyn FnMut(f64)>) {
-    web_sys::window()
-        .unwrap()
-        .request_animation_frame(f.as_ref().unchecked_ref())
-        .unwrap();
+    web_sys::window().unwrap().request_animation_frame(f.as_ref().unchecked_ref()).unwrap();
 }

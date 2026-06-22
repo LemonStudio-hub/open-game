@@ -1,7 +1,6 @@
 use crate::components::GameState;
 
-/// Snapshot of input state, populated once per frame by input_system.
-/// Other systems read this instead of InputManager directly to avoid borrow conflicts.
+/// Snapshot of input state, populated once per frame.
 pub struct InputState {
     pub left: bool,
     pub right: bool,
@@ -67,7 +66,7 @@ impl Default for LivesRes {
     }
 }
 
-/// Camera state: position, shake, follow parameters.
+/// Camera state.
 pub struct CameraRes {
     pub camera_x: f32,
     pub camera_y: f32,
