@@ -336,10 +336,20 @@
             }
         }
 
-        btnStart.addEventListener('click', function() {
+        btnStart.addEventListener('mousedown', function(e) {
+            e.stopPropagation();
             callWasm('start_game');
         });
-        btnRestart.addEventListener('click', function() {
+        btnRestart.addEventListener('mousedown', function(e) {
+            e.stopPropagation();
+            callWasm('restart_game');
+        });
+
+        // Fallback: click anywhere on overlay screens
+        startScreen.addEventListener('mousedown', function() {
+            callWasm('start_game');
+        });
+        gameoverScreen.addEventListener('mousedown', function() {
             callWasm('restart_game');
         });
 
