@@ -240,124 +240,110 @@
         <div id="ui-overlay"></div>
     </div>
 
-    <script type="module">
-        // ── Vue 3 CDN ──────────────────────────────────────────────────────
-        const vueUrl = 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
-        const { createApp, ref, computed, onMounted, onUnmounted } = await import(vueUrl);
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen start-screen interactive">
+        <div class="game-title">SCP SHOOTER</div>
+        <div class="game-subtitle">SIDE-SCROLLING COMBAT</div>
+        <button id="btn-start" class="btn btn-primary">START MISSION</button>
+        <div class="controls-info">
+            <div class="control-row">
+                <span class="key-badge">A</span><span class="key-badge">D</span>
+                <span>/ Arrow Keys — Move</span>
+            </div>
+            <div class="control-row">
+                <span class="key-badge">W</span><span class="key-badge">↑</span><span class="key-badge">SPACE</span>
+                <span>— Jump</span>
+            </div>
+            <div class="control-row">
+                <span class="key-badge">J</span><span class="key-badge">Z</span>
+                <span>— Shoot</span>
+            </div>
+        </div>
+    </div>
 
+    <!-- HUD (during play) -->
+    <div id="hud-screen" class="screen hud-overlay" style="display:none;">
+        <div id="hud-lives" class="hud-lives"></div>
+        <div id="hud-score" class="hud-score">0</div>
+        <div id="hud-high" class="hud-high-score" style="display:none;"></div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="screen gameover-screen interactive" style="display:none;">
+        <div class="gameover-title fade-in">MISSION FAILED</div>
+        <div id="gameover-score" class="gameover-score fade-in delay-1">SCORE: 0</div>
+        <div id="gameover-high" class="gameover-high fade-in delay-2" style="display:none;"></div>
+        <button id="btn-restart" class="btn btn-danger fade-in delay-3">REPLAY</button>
+    </div>
+
+    <script>
         // Trunk stores WASM exports on window.wasmBindings
-        const wasm = () => window.wasmBindings || {};
-        const safeCall = (name, fallback) => {
+        function wasm() { return window.wasmBindings || {}; }
+        function callWasm(name, fallback) {
             try {
-                const fn = wasm()[name];
+                var fn = wasm()[name];
                 return typeof fn === 'function' ? fn() : fallback;
-            } catch { return fallback; }
-        };
+            } catch(e) { return fallback; }
+        }
 
-        const App = {
-            setup() {
-                const gameState = ref(0);   // 0=Title, 1=Playing, 2=GameOver
-                const score = ref(0);
-                const lives = ref(3);
-                const highScore = ref(0);
+        var startScreen = document.getElementById('start-screen');
+        var hudScreen = document.getElementById('hud-screen');
+        var gameoverScreen = document.getElementById('gameover-screen');
+        var btnStart = document.getElementById('btn-start');
+        var btnRestart = document.getElementById('btn-restart');
+        var hudLives = document.getElementById('hud-lives');
+        var hudScore = document.getElementById('hud-score');
+        var hudHigh = document.getElementById('hud-high');
+        var gameoverScore = document.getElementById('gameover-score');
+        var gameoverHigh = document.getElementById('gameover-high');
 
-                let pollInterval = null;
+        function showScreen(state) {
+            startScreen.style.display = state === 0 ? '' : 'none';
+            hudScreen.style.display = state === 1 ? '' : 'none';
+            gameoverScreen.style.display = state === 2 ? '' : 'none';
+        }
 
-                const isTitle = computed(() => gameState.value === 0);
-                const isPlaying = computed(() => gameState.value === 1);
-                const isGameOver = computed(() => gameState.value === 2);
+        function poll() {
+            var state = callWasm('get_game_state', 0);
+            var score = callWasm('get_score', 0);
+            var lives = callWasm('get_lives', 3);
+            var high = callWasm('get_high_score', 0);
 
-                const lifeIcons = computed(() => {
-                    const arr = [];
-                    for (let i = 0; i < lives.value; i++) arr.push(i);
-                    return arr;
-                });
+            showScreen(state);
 
-                function poll() {
-                    gameState.value = safeCall('get_game_state', 0);
-                    score.value = safeCall('get_score', 0);
-                    lives.value = safeCall('get_lives', 3);
-                    highScore.value = safeCall('get_high_score', 0);
-                }
+            // HUD
+            var icons = '';
+            for (var i = 0; i < lives; i++) icons += '<div class="life-icon"></div>';
+            hudLives.innerHTML = icons;
+            hudScore.textContent = score;
+            if (high > 0) {
+                hudHigh.style.display = '';
+                hudHigh.textContent = 'HI ' + high;
+            } else {
+                hudHigh.style.display = 'none';
+            }
 
-                function handleStart() {
-                    const fn = wasm().start_game;
-                    if (typeof fn === 'function') fn();
-                }
+            // Game over
+            gameoverScore.textContent = 'SCORE: ' + score;
+            if (score >= high && score > 0) {
+                gameoverHigh.style.display = '';
+                gameoverHigh.textContent = '★ NEW HIGH SCORE ★';
+            } else if (high > 0) {
+                gameoverHigh.style.display = '';
+                gameoverHigh.textContent = 'BEST: ' + high;
+            } else {
+                gameoverHigh.style.display = 'none';
+            }
+        }
 
-                function handleRestart() {
-                    const fn = wasm().restart_game;
-                    if (typeof fn === 'function') fn();
-                }
+        btnStart.addEventListener('click', function() {
+            callWasm('start_game');
+        });
+        btnRestart.addEventListener('click', function() {
+            callWasm('restart_game');
+        });
 
-                function handleKeydown(e) {
-                    if (e.code === 'Space' || e.code === 'Enter') {
-                        if (gameState.value === 0) handleStart();
-                        else if (gameState.value === 2) handleRestart();
-                    }
-                }
-
-                onMounted(() => {
-                    pollInterval = setInterval(poll, 100);
-                    window.addEventListener('keydown', handleKeydown);
-                });
-
-                onUnmounted(() => {
-                    if (pollInterval) clearInterval(pollInterval);
-                    window.removeEventListener('keydown', handleKeydown);
-                });
-
-                return {
-                    gameState, score, lives, highScore,
-                    isTitle, isPlaying, isGameOver,
-                    lifeIcons,
-                    handleStart, handleRestart,
-                };
-            },
-
-            template: `
-                <!-- HUD (during play) -->
-                <div v-if="isPlaying" class="screen hud-overlay">
-                    <div class="hud-lives">
-                        <div v-for="i in lifeIcons" :key="i" class="life-icon"></div>
-                    </div>
-                    <div class="hud-score">{{ score }}</div>
-                    <div v-if="highScore > 0" class="hud-high-score">HI {{ highScore }}</div>
-                </div>
-
-                <!-- Start Screen -->
-                <div v-if="isTitle" class="screen start-screen interactive">
-                    <div class="game-title">SCP SHOOTER</div>
-                    <div class="game-subtitle">SIDE-SCROLLING COMBAT</div>
-                    <button class="btn btn-primary" @click="handleStart">START MISSION</button>
-                    <div class="controls-info">
-                        <div class="control-row">
-                            <span class="key-badge">A</span><span class="key-badge">D</span>
-                            <span>/ Arrow Keys — Move</span>
-                        </div>
-                        <div class="control-row">
-                            <span class="key-badge">W</span><span class="key-badge">↑</span><span class="key-badge">SPACE</span>
-                            <span>— Jump</span>
-                        </div>
-                        <div class="control-row">
-                            <span class="key-badge">J</span><span class="key-badge">Z</span>
-                            <span>— Shoot</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Game Over Screen -->
-                <div v-if="isGameOver" class="screen gameover-screen interactive">
-                    <div class="gameover-title fade-in">MISSION FAILED</div>
-                    <div class="gameover-score fade-in delay-1">SCORE: {{ score }}</div>
-                    <div v-if="score >= highScore && score > 0" class="gameover-high fade-in delay-2">★ NEW HIGH SCORE ★</div>
-                    <div v-else-if="highScore > 0" class="gameover-high fade-in delay-2">BEST: {{ highScore }}</div>
-                    <button class="btn btn-danger fade-in delay-3" @click="handleRestart">REPLAY</button>
-                </div>
-            `,
-        };
-
-        createApp(App).mount('#ui-overlay');
+        setInterval(poll, 100);
     </script>
 </body>
 </html>
