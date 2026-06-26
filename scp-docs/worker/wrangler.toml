@@ -4,7 +4,7 @@ compatibility_date = "2024-12-01"
 
 [vars]
 JWT_SECRET = "scp-latom-node-change-me-in-production"
-CORS_ORIGINS = "https://scp-docs.pages.dev,https://*.scp-docs.pages.dev,http://localhost:5173,http://localhost:8085"
+CORS_ORIGINS = "https://node.scp.lat,https://api.scp.lat,https://scp-docs.pages.dev,https://*.scp-docs.pages.dev,http://localhost:5173,http://localhost:8085"
 
 [[d1_databases]]
 binding = "DB"
