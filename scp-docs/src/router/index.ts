@@ -33,6 +33,24 @@ const routes: RouteRecordRaw[] = [
     meta: { titleKey: 'nav.about' },
   },
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/LoginView.vue'),
+    meta: { titleKey: 'auth.loginTitle', requiresGuest: true },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('@/views/RegisterView.vue'),
+    meta: { titleKey: 'auth.registerTitle', requiresGuest: true },
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('@/views/ProfileView.vue'),
+    meta: { titleKey: 'auth.profile', requiresAuth: true },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('@/views/NotFoundView.vue'),

@@ -2,6 +2,7 @@
 import { useTheme } from '@/composables/useTheme'
 import { useLocale } from '@/composables/useLocale'
 import { useSearchStore } from '@/stores/search'
+import { useAuthStore } from '@/stores/auth'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -10,6 +11,7 @@ const { theme, toggle: toggleTheme } = useTheme()
 const { toggleLocale } = useLocale()
 const { t } = useI18n()
 const search = useSearchStore()
+const auth = useAuthStore()
 const route = useRoute()
 
 const breadcrumbs = computed(() => {
@@ -69,6 +71,17 @@ const breadcrumbs = computed(() => {
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       </button>
+
+      <!-- Auth: logged in -->
+      <router-link v-if="auth.isAuthenticated" to="/profile" class="user-btn" :title="t('auth.profile')">
+        <div class="user-avatar">{{ auth.user?.codename?.charAt(0).toUpperCase() }}</div>
+        <span class="user-codename">{{ auth.user?.codename }}</span>
+      </router-link>
+
+      <!-- Auth: logged out -->
+      <router-link v-else to="/login" class="login-btn">
+        {{ t('auth.loginBtn') }}
+      </router-link>
     </div>
   </header>
 </template>
@@ -234,5 +247,75 @@ kbd {
 .icon-btn:hover {
   background: var(--bg-elevated);
   color: var(--text-primary);
+}
+
+/* Auth buttons */
+.login-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--text-inverse);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.login-btn:hover {
+  background: var(--color-primary-hover);
+  color: var(--text-inverse);
+  box-shadow: 0 2px 8px var(--color-primary-muted);
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 4px 10px 4px 4px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  max-width: 160px;
+}
+
+.user-btn:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-muted);
+}
+
+.user-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-primary-muted);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.user-codename {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .user-codename {
+    display: none;
+  }
+  .user-btn {
+    padding: 4px;
+  }
 }
 </style>
