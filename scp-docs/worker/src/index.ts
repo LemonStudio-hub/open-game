@@ -5,11 +5,28 @@ import type { Env } from './types'
 
 const app = new Hono<{ Bindings: Env }>()
 
+function isOriginAllowed(origin: string, allowed: string): boolean {
+  // Exact match
+  if (origin === allowed) return true
+  // Wildcard subdomain match: https://*.example.com matches https://foo.example.com
+  if (allowed.includes('*')) {
+    const pattern = allowed.replace(/\./g, '\\.').replace(/\*/g, '[a-zA-Z0-9-]+')
+    return new RegExp(`^${pattern}$`).test(origin)
+  }
+  return false
+}
+
 // CORS
 app.use('/api/*', cors({
-  origin: (origin, c) => c.env.CORS_ORIGIN || origin,
+  origin: (origin, c) => {
+    if (!origin) return ''
+    const allowedList = (c.env.CORS_ORIGINS || '').split(',').map((s) => s.trim()).filter(Boolean)
+    const allowed = allowedList.some((pattern) => isOriginAllowed(origin, pattern))
+    return allowed ? origin : ''
+  },
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
   maxAge: 86400,
 }))
 
