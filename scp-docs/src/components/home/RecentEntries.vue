@@ -2,16 +2,18 @@
 import { entries } from '@/data/entries'
 import Badge from '@/components/common/Badge.vue'
 import ClassBar from '@/components/common/ClassBar.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const recent = entries.slice(0, 4)
 </script>
 
 <template>
   <section class="recent">
     <div class="section-header">
-      <h2 class="section-title">Recent Entries</h2>
+      <h2 class="section-title">{{ t('recent.title') }}</h2>
       <router-link to="/catalog" class="section-link">
-        View all
+        {{ t('recent.viewAll') }}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="9 18 15 12 9 6" />
         </svg>
@@ -29,10 +31,10 @@ const recent = entries.slice(0, 4)
           <span class="entry-id">SCP-{{ String(entry.number).padStart(3, '0') }}</span>
           <ClassBar :object-class="entry.objectClass" />
         </div>
-        <h3 class="entry-name">{{ entry.name }}</h3>
-        <p class="entry-summary">{{ entry.summary }}</p>
+        <h3 class="entry-name">{{ t(`entries.${entry.id}.name`) }}</h3>
+        <p class="entry-summary">{{ t(`entries.${entry.id}.summary`) }}</p>
         <div class="entry-footer">
-          <Badge :variant="entry.objectClass.toLowerCase() as any">{{ entry.objectClass }}</Badge>
+          <Badge :variant="entry.objectClass.toLowerCase() as any">{{ t(`classes.${entry.objectClass}`) }}</Badge>
           <span class="entry-date">{{ entry.date }}</span>
         </div>
       </router-link>

@@ -1,13 +1,18 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+</script>
+
 <template>
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-left">
-        <span class="footer-brand">SCP Foundation</span>
+        <span class="footer-brand">{{ t('footer.brand') }}</span>
         <span class="footer-divider">|</span>
-        <span class="footer-node">Latom Node Documentation System</span>
+        <span class="footer-node">{{ t('footer.system') }}</span>
       </div>
       <div class="footer-right">
-        <span class="footer-copy">Secure. Contain. Protect.</span>
+        <span class="footer-copy">{{ t('site.tagline') }}</span>
       </div>
     </div>
   </footer>

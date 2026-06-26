@@ -3,8 +3,10 @@ import { ref, computed } from 'vue'
 import { entries } from '@/data/entries'
 import Badge from '@/components/common/Badge.vue'
 import ClassBar from '@/components/common/ClassBar.vue'
+import { useI18n } from 'vue-i18n'
 import type { ObjectClass } from '@/types'
 
+const { t } = useI18n()
 const searchQuery = ref('')
 const activeClass = ref<ObjectClass | null>(null)
 
@@ -21,7 +23,8 @@ const filtered = computed(() => {
       (e) =>
         e.name.toLowerCase().includes(q) ||
         e.id.toLowerCase().includes(q) ||
-        e.summary.toLowerCase().includes(q)
+        t(`entries.${e.id}.name`).toLowerCase().includes(q) ||
+        t(`entries.${e.id}.summary`).toLowerCase().includes(q)
     )
   }
   return result
@@ -35,8 +38,8 @@ function toggleClass(cls: ObjectClass) {
 <template>
   <div class="catalog">
     <div class="page-header">
-      <h1>SCP Catalog</h1>
-      <p class="page-desc">Browse all documented anomalous objects and entities under Foundation jurisdiction.</p>
+      <h1>{{ t('catalog.title') }}</h1>
+      <p class="page-desc">{{ t('catalog.description') }}</p>
     </div>
 
     <div class="filters">
@@ -45,7 +48,7 @@ function toggleClass(cls: ObjectClass) {
           <circle cx="11" cy="11" r="8" />
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
-        <input v-model="searchQuery" type="text" placeholder="Search entries..." class="filter-input" />
+        <input v-model="searchQuery" type="text" :placeholder="t('catalog.searchPlaceholder')" class="filter-input" />
       </div>
       <div class="class-filters">
         <button
@@ -61,7 +64,7 @@ function toggleClass(cls: ObjectClass) {
     </div>
 
     <div class="results-info">
-      <span class="results-count">{{ filtered.length }} entries found</span>
+      <span class="results-count">{{ t('catalog.entriesFound', { count: filtered.length }) }}</span>
     </div>
 
     <div class="entries-list">
@@ -76,18 +79,18 @@ function toggleClass(cls: ObjectClass) {
             <ClassBar :object-class="entry.objectClass" />
             <span class="entry-id">SCP-{{ String(entry.number).padStart(3, '0') }}</span>
           </div>
-          <h3 class="entry-name">{{ entry.name }}</h3>
-          <p class="entry-summary">{{ entry.summary }}</p>
+          <h3 class="entry-name">{{ t(`entries.${entry.id}.name`) }}</h3>
+          <p class="entry-summary">{{ t(`entries.${entry.id}.summary`) }}</p>
         </div>
         <div class="entry-right">
-          <Badge :variant="entry.objectClass.toLowerCase() as any">{{ entry.objectClass }}</Badge>
+          <Badge :variant="entry.objectClass.toLowerCase() as any">{{ t(`classes.${entry.objectClass}`) }}</Badge>
         </div>
       </router-link>
     </div>
 
     <div v-if="filtered.length === 0" class="empty-state">
       <span class="empty-icon">∅</span>
-      <p>No entries match your search criteria.</p>
+      <p>{{ t('catalog.empty') }}</p>
     </div>
   </div>
 </template>

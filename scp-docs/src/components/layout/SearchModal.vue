@@ -2,7 +2,9 @@
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSearchStore } from '@/stores/search'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const search = useSearchStore()
 const router = useRouter()
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -11,10 +13,22 @@ const selectedIndex = ref(0)
 const results = computed(() => {
   const items: Array<{ type: string; id: string; title: string; subtitle: string; route: string }> = []
   for (const e of search.filteredEntries) {
-    items.push({ type: 'entry', id: e.id, title: `SCP-${String(e.number).padStart(3, '0')}`, subtitle: e.name, route: `/entry/${e.id}` })
+    items.push({
+      type: 'entry',
+      id: e.id,
+      title: `SCP-${String(e.number).padStart(3, '0')}`,
+      subtitle: t(`entries.${e.id}.name`),
+      route: `/entry/${e.id}`,
+    })
   }
   for (const d of search.filteredDocuments) {
-    items.push({ type: 'document', id: d.id, title: d.title, subtitle: d.type.charAt(0).toUpperCase() + d.type.slice(1), route: `/documents` })
+    items.push({
+      type: 'document',
+      id: d.id,
+      title: t(`docs.${d.id}.title`),
+      subtitle: t(`documents.types.${d.type}`),
+      route: `/documents`,
+    })
   }
   return items
 })
@@ -71,7 +85,7 @@ onUnmounted(() => window.removeEventListener('keydown', globalKeydown))
               ref="inputRef"
               v-model="search.query"
               type="text"
-              placeholder="Search SCP entries, documents..."
+              :placeholder="t('search.placeholder')"
               class="search-input"
               spellcheck="false"
               autocomplete="off"
@@ -81,7 +95,7 @@ onUnmounted(() => window.removeEventListener('keydown', globalKeydown))
 
           <div class="results" v-if="results.length > 0">
             <div class="results-header">
-              <span class="results-count">{{ results.length }} results</span>
+              <span class="results-count">{{ t('search.results', { count: results.length }) }}</span>
             </div>
             <div class="results-list">
               <button
@@ -92,7 +106,9 @@ onUnmounted(() => window.removeEventListener('keydown', globalKeydown))
                 @click="navigate(item.route)"
                 @mouseenter="selectedIndex = i"
               >
-                <span class="result-type" :class="item.type">{{ item.type === 'entry' ? 'SCP' : 'DOC' }}</span>
+                <span class="result-type" :class="item.type">
+                  {{ item.type === 'entry' ? t('search.scp') : t('search.doc') }}
+                </span>
                 <div class="result-text">
                   <span class="result-title">{{ item.title }}</span>
                   <span class="result-subtitle">{{ item.subtitle }}</span>
@@ -107,7 +123,7 @@ onUnmounted(() => window.removeEventListener('keydown', globalKeydown))
           <div class="results empty" v-else-if="search.query">
             <div class="empty-state">
               <span class="empty-icon">∅</span>
-              <span class="empty-text">No results found for "{{ search.query }}"</span>
+              <span class="empty-text">{{ t('search.empty', { query: search.query }) }}</span>
             </div>
           </div>
         </div>

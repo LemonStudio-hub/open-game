@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const visible = ref(false)
 onMounted(() => {
   requestAnimationFrame(() => (visible.value = true))
@@ -15,26 +17,22 @@ onMounted(() => {
     <div class="hero-content">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
-        <span>LATOM NODE — DOCUMENTATION TERMINAL v7.2.1</span>
+        <span>{{ t('hero.badge') }}</span>
       </div>
       <h1 class="hero-title">
-        <span class="title-line">SCP Foundation</span>
-        <span class="title-accent">Latom Node</span>
+        <span class="title-line">{{ t('hero.titleLine') }}</span>
+        <span class="title-accent">{{ t('hero.titleAccent') }}</span>
       </h1>
-      <p class="hero-description">
-        A comprehensive documentation and archival system for anomalous objects,
-        entities, and phenomena under Foundation jurisdiction. Access restricted
-        to authorized personnel with Level 2 clearance or above.
-      </p>
+      <p class="hero-description">{{ t('hero.description') }}</p>
       <div class="hero-actions">
         <router-link to="/catalog" class="btn btn-primary">
-          <span>Browse Catalog</span>
+          <span>{{ t('hero.browseCatalog') }}</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="5" y1="12" x2="19" y2="12" />
             <polyline points="12 5 19 12 12 19" />
           </svg>
         </router-link>
-        <router-link to="/about" class="btn btn-ghost">Learn More</router-link>
+        <router-link to="/about" class="btn btn-ghost">{{ t('hero.learnMore') }}</router-link>
       </div>
     </div>
   </section>

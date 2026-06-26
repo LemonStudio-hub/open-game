@@ -2,8 +2,10 @@
 import { ref, computed } from 'vue'
 import { documents } from '@/data/documents'
 import Badge from '@/components/common/Badge.vue'
+import { useI18n } from 'vue-i18n'
 import type { Document } from '@/types'
 
+const { t } = useI18n()
 const activeDoc = ref<Document | null>(null)
 const typeFilter = ref<string | null>(null)
 
@@ -32,81 +34,7 @@ function openDoc(doc: Document) {
 function closeDoc() {
   activeDoc.value = null
 }
-</script>
 
-<template>
-  <div class="documents">
-    <div class="page-header">
-      <h1>Documents</h1>
-      <p class="page-desc">Foundation protocols, research papers, and incident reports.</p>
-    </div>
-
-    <div class="type-filters">
-      <button
-        class="type-btn"
-        :class="{ active: !typeFilter }"
-        @click="typeFilter = null"
-      >
-        All
-      </button>
-      <button
-        v-for="t in types"
-        :key="t"
-        class="type-btn"
-        :class="{ active: typeFilter === t }"
-        @click="typeFilter = t"
-      >
-        {{ t.charAt(0).toUpperCase() + t.slice(1) }}
-      </button>
-    </div>
-
-    <div class="doc-grid">
-      <div
-        v-for="doc in filtered"
-        :key="doc.id"
-        class="doc-card"
-        @click="openDoc(doc)"
-      >
-        <div class="doc-header">
-          <Badge :variant="classVariant(doc.classification)">{{ doc.classification }}</Badge>
-          <span class="doc-type">{{ doc.type }}</span>
-        </div>
-        <h3 class="doc-title">{{ doc.title }}</h3>
-        <p class="doc-summary">{{ doc.summary }}</p>
-        <div class="doc-footer">
-          <span class="doc-date">{{ doc.date }}</span>
-          <span class="doc-read">Read →</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Document Modal -->
-    <Teleport to="body">
-      <Transition name="fade">
-        <div v-if="activeDoc" class="doc-overlay" @click.self="closeDoc">
-          <div class="doc-modal">
-            <div class="doc-modal-header">
-              <div>
-                <Badge :variant="classVariant(activeDoc.classification)">{{ activeDoc.classification }}</Badge>
-                <span class="doc-modal-type">{{ activeDoc.type }}</span>
-              </div>
-              <button class="close-btn" @click="closeDoc">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </div>
-            <h2 class="doc-modal-title">{{ activeDoc.title }}</h2>
-            <div class="doc-modal-content" v-html="renderMarkdown(activeDoc.content)"></div>
-          </div>
-        </div>
-      </Transition>
-    </Teleport>
-  </div>
-</template>
-
-<script lang="ts">
 function renderMarkdown(md: string): string {
   return md
     .replace(/^### (.*$)/gm, '<h4>$1</h4>')
@@ -118,12 +46,77 @@ function renderMarkdown(md: string): string {
     .replace(/^\> (.*$)/gm, '<blockquote>$1</blockquote>')
     .replace(/^\- (.*$)/gm, '<li>$1</li>')
     .replace(/\n\n/g, '</p><p>')
-    .replace(/^/ , '<p>')
+    .replace(/^/, '<p>')
     .replace(/$/, '</p>')
     .replace(/<p><(h[234]|blockquote|li)/g, '<$1')
     .replace(/<\/(h[234]|blockquote|li)><\/p>/g, '</$1>')
 }
 </script>
+
+<template>
+  <div class="documents">
+    <div class="page-header">
+      <h1>{{ t('documents.title') }}</h1>
+      <p class="page-desc">{{ t('documents.description') }}</p>
+    </div>
+
+    <div class="type-filters">
+      <button class="type-btn" :class="{ active: !typeFilter }" @click="typeFilter = null">
+        {{ t('documents.all') }}
+      </button>
+      <button
+        v-for="typ in types"
+        :key="typ"
+        class="type-btn"
+        :class="{ active: typeFilter === typ }"
+        @click="typeFilter = typ"
+      >
+        {{ t(`documents.types.${typ}`) }}
+      </button>
+    </div>
+
+    <div class="doc-grid">
+      <div v-for="doc in filtered" :key="doc.id" class="doc-card" @click="openDoc(doc)">
+        <div class="doc-header">
+          <Badge :variant="classVariant(doc.classification)">{{ t(`classification.${doc.classification}`) }}</Badge>
+          <span class="doc-type">{{ t(`documents.types.${doc.type}`) }}</span>
+        </div>
+        <h3 class="doc-title">{{ t(`docs.${doc.id}.title`) }}</h3>
+        <p class="doc-summary">{{ t(`docs.${doc.id}.summary`) }}</p>
+        <div class="doc-footer">
+          <span class="doc-date">{{ doc.date }}</span>
+          <span class="doc-read">{{ t('documents.read') }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Document Modal -->
+    <Teleport to="body">
+      <Transition name="fade">
+        <div v-if="activeDoc" class="doc-overlay" @click.self="closeDoc">
+          <div class="doc-modal">
+            <div class="doc-modal-header">
+              <div>
+                <Badge :variant="classVariant(activeDoc.classification)">
+                  {{ t(`classification.${activeDoc.classification}`) }}
+                </Badge>
+                <span class="doc-modal-type">{{ t(`documents.types.${activeDoc.type}`) }}</span>
+              </div>
+              <button class="close-btn" @click="closeDoc">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+            <h2 class="doc-modal-title">{{ t(`docs.${activeDoc.id}.title`) }}</h2>
+            <div class="doc-modal-content" v-html="renderMarkdown(t(`docs.${activeDoc.id}.content`))"></div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
+  </div>
+</template>
 
 <style scoped>
 .documents {

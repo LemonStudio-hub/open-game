@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import { siteStats } from '@/data/entries'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const stats = [
-  { label: 'Total Entries', value: siteStats.totalEntries, icon: '◈', color: 'var(--color-primary)' },
-  { label: 'Safe', value: siteStats.byClass.Safe, icon: '●', color: 'var(--class-safe)' },
-  { label: 'Euclid', value: siteStats.byClass.Euclid, icon: '●', color: 'var(--class-euclid)' },
-  { label: 'Keter', value: siteStats.byClass.Keter, icon: '●', color: 'var(--class-keter)' },
-  { label: 'Documents', value: siteStats.documents, icon: '◫', color: 'var(--color-accent)' },
-  { label: 'Personnel', value: siteStats.personnel.toLocaleString(), icon: '◎', color: 'var(--text-secondary)' },
+  { labelKey: 'stats.totalEntries', value: siteStats.totalEntries, icon: '◈', color: 'var(--color-primary)' },
+  { labelKey: 'stats.safe', value: siteStats.byClass.Safe, icon: '●', color: 'var(--class-safe)' },
+  { labelKey: 'stats.euclid', value: siteStats.byClass.Euclid, icon: '●', color: 'var(--class-euclid)' },
+  { labelKey: 'stats.keter', value: siteStats.byClass.Keter, icon: '●', color: 'var(--class-keter)' },
+  { labelKey: 'stats.documents', value: siteStats.documents, icon: '◫', color: 'var(--color-accent)' },
+  { labelKey: 'stats.personnel', value: siteStats.personnel.toLocaleString(), icon: '◎', color: 'var(--text-secondary)' },
 ]
 </script>
 
 <template>
   <section class="stats-grid">
-    <div v-for="stat in stats" :key="stat.label" class="stat-card">
+    <div v-for="stat in stats" :key="stat.labelKey" class="stat-card">
       <div class="stat-icon" :style="{ color: stat.color }">{{ stat.icon }}</div>
       <div class="stat-value" :style="{ color: stat.color }">{{ stat.value }}</div>
-      <div class="stat-label">{{ stat.label }}</div>
+      <div class="stat-label">{{ t(stat.labelKey) }}</div>
     </div>
   </section>
 </template>

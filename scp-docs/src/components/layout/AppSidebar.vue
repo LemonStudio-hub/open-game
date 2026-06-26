@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
-const collapsed = ref(false)
 
 const navItems = [
-  { path: '/', label: 'Dashboard', icon: '◈' },
-  { path: '/catalog', label: 'SCP Catalog', icon: '☰' },
-  { path: '/documents', label: 'Documents', icon: '◫' },
-  { path: '/about', label: 'About', icon: '◎' },
+  { path: '/', labelKey: 'nav.dashboard', icon: '◈' },
+  { path: '/catalog', labelKey: 'nav.catalog', icon: '☰' },
+  { path: '/documents', labelKey: 'nav.documents', icon: '◫' },
+  { path: '/about', labelKey: 'nav.about', icon: '◎' },
 ]
 </script>
 
 <template>
-  <aside class="sidebar" :class="{ collapsed }">
+  <aside class="sidebar">
     <nav class="nav">
       <router-link
         v-for="item in navItems"
@@ -24,7 +24,7 @@ const navItems = [
         :class="{ active: route.path === item.path || (item.path !== '/' && route.path.startsWith(item.path)) }"
       >
         <span class="nav-icon">{{ item.icon }}</span>
-        <span class="nav-label">{{ item.label }}</span>
+        <span class="nav-label">{{ t(item.labelKey) }}</span>
       </router-link>
     </nav>
 
@@ -32,17 +32,17 @@ const navItems = [
       <div class="sidebar-divider"></div>
       <div class="sidebar-info">
         <div class="info-row">
-          <span class="info-label">NODE</span>
-          <span class="info-value">LATOM-7</span>
+          <span class="info-label">{{ t('sidebar.node') }}</span>
+          <span class="info-value">{{ t('sidebar.nodeValue') }}</span>
         </div>
         <div class="info-row">
-          <span class="info-label">STATUS</span>
+          <span class="info-label">{{ t('sidebar.status') }}</span>
           <span class="status-dot"></span>
-          <span class="info-value">ACTIVE</span>
+          <span class="info-value">{{ t('sidebar.active') }}</span>
         </div>
         <div class="info-row">
-          <span class="info-label">CLEARANCE</span>
-          <span class="info-value level-4">LEVEL 4</span>
+          <span class="info-label">{{ t('sidebar.clearance') }}</span>
+          <span class="info-value level-4">{{ t('sidebar.level4') }}</span>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@ const navItems = [
       :class="{ active: route.path === item.path || (item.path !== '/' && route.path.startsWith(item.path)) }"
     >
       <span class="mobile-nav-icon">{{ item.icon }}</span>
-      <span class="mobile-nav-label">{{ item.label }}</span>
+      <span class="mobile-nav-label">{{ t(item.labelKey) }}</span>
     </router-link>
   </nav>
 </template>

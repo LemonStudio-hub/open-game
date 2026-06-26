@@ -1,73 +1,52 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+const classKeys = ['safe', 'euclid', 'keter', 'thaumiel', 'apollyon', 'neutralized'] as const
+const classColors: Record<string, string> = {
+  safe: 'var(--class-safe)',
+  euclid: 'var(--class-euclid)',
+  keter: 'var(--class-keter)',
+  thaumiel: 'var(--class-thaumiel)',
+  apollyon: 'var(--text-primary)',
+  neutralized: 'var(--class-neutralized)',
+}
+</script>
+
 <template>
   <div class="about">
     <div class="page-header">
-      <h1>About the Foundation</h1>
-      <p class="page-desc">Understanding the SCP Foundation and the Latom Node documentation system.</p>
+      <h1>{{ t('about.title') }}</h1>
+      <p class="page-desc">{{ t('about.description') }}</p>
     </div>
 
     <div class="about-content">
       <section class="section">
         <div class="section-icon">◈</div>
         <div class="section-body">
-          <h2>The SCP Foundation</h2>
-          <p>
-            The SCP Foundation is a clandestine organization operating under the authority of the United Nations
-            and various world governments. Its mission is to secure, contain, and protect anomalous objects,
-            entities, and phenomena that pose a threat to normalcy and human civilization.
-          </p>
-          <p>
-            Founded in the early 19th century, the Foundation has grown into a global network of secure
-            facilities, research laboratories, and mobile task forces dedicated to understanding and
-            neutralizing anomalous threats.
-          </p>
+          <h2>{{ t('about.foundation.title') }}</h2>
+          <p>{{ t('about.foundation.p1') }}</p>
+          <p>{{ t('about.foundation.p2') }}</p>
         </div>
       </section>
 
       <section class="section">
         <div class="section-icon">◫</div>
         <div class="section-body">
-          <h2>The Latom Node</h2>
-          <p>
-            The Latom Node is a documentation terminal within the Foundation's information network. It serves
-            as an archival and retrieval system for SCP entries, containment procedures, research documents,
-            and operational protocols.
-          </p>
-          <p>
-            Designated as Node LATOM-7, this terminal operates under Level 4 clearance and maintains
-            synchronization with the central Foundation database. All information presented is current
-            as of the last synchronization cycle.
-          </p>
+          <h2>{{ t('about.latomNode.title') }}</h2>
+          <p>{{ t('about.latomNode.p1') }}</p>
+          <p>{{ t('about.latomNode.p2') }}</p>
         </div>
       </section>
 
       <section class="section">
         <div class="section-icon">◎</div>
         <div class="section-body">
-          <h2>Object Classification System</h2>
+          <h2>{{ t('about.classification.title') }}</h2>
           <div class="class-grid">
-            <div class="class-card safe">
-              <h3>Safe</h3>
-              <p>Objects that are easily and safely contained. Minimal risk when proper procedures are followed.</p>
-            </div>
-            <div class="class-card euclid">
-              <h3>Euclid</h3>
-              <p>Objects requiring more extensive containment procedures. Behavior is not fully understood or predictable.</p>
-            </div>
-            <div class="class-card keter">
-              <h3>Keter</h3>
-              <p>Objects that are exceedingly difficult to contain consistently or pose significant threat if breached.</p>
-            </div>
-            <div class="class-card thaumiel">
-              <h3>Thaumiel</h3>
-              <p>Objects used by the Foundation to contain or counteract other anomalous entities or phenomena.</p>
-            </div>
-            <div class="class-card apollyon">
-              <h3>Apollyon</h3>
-              <p>Objects that cannot be contained, are expected to breach imminently, and pose a catastrophic threat.</p>
-            </div>
-            <div class="class-card neutralized">
-              <h3>Neutralized</h3>
-              <p>Objects that are no longer anomalous, have been destroyed, or have lost their anomalous properties.</p>
+            <div v-for="cls in classKeys" :key="cls" class="class-card" :class="cls">
+              <h3 :style="{ color: classColors[cls] }">{{ t(`about.classification.${cls}.name`) }}</h3>
+              <p>{{ t(`about.classification.${cls}.desc`) }}</p>
             </div>
           </div>
         </div>
@@ -76,26 +55,26 @@
       <section class="section">
         <div class="section-icon">▣</div>
         <div class="section-body">
-          <h2>System Information</h2>
+          <h2>{{ t('about.system.title') }}</h2>
           <div class="sys-info">
             <div class="sys-row">
-              <span class="sys-label">Terminal</span>
+              <span class="sys-label">{{ t('about.system.terminal') }}</span>
               <span class="sys-value">LATOM-7</span>
             </div>
             <div class="sys-row">
-              <span class="sys-label">Version</span>
+              <span class="sys-label">{{ t('about.system.version') }}</span>
               <span class="sys-value">7.2.1</span>
             </div>
             <div class="sys-row">
-              <span class="sys-label">Clearance</span>
-              <span class="sys-value accent">Level 4</span>
+              <span class="sys-label">{{ t('about.system.clearance') }}</span>
+              <span class="sys-value accent">{{ t('sidebar.level4') }}</span>
             </div>
             <div class="sys-row">
-              <span class="sys-label">Status</span>
-              <span class="sys-value success">Operational</span>
+              <span class="sys-label">{{ t('about.system.status') }}</span>
+              <span class="sys-value success">{{ t('about.system.operational') }}</span>
             </div>
             <div class="sys-row">
-              <span class="sys-label">Last Sync</span>
+              <span class="sys-label">{{ t('about.system.lastSync') }}</span>
               <span class="sys-value">{{ new Date().toISOString().split('T')[0] }}</span>
             </div>
           </div>
@@ -181,13 +160,6 @@
   color: var(--text-tertiary);
   margin-bottom: 0;
 }
-
-.class-card.safe h3 { color: var(--class-safe); }
-.class-card.euclid h3 { color: var(--class-euclid); }
-.class-card.keter h3 { color: var(--class-keter); }
-.class-card.thaumiel h3 { color: var(--class-thaumiel); }
-.class-card.apollyon h3 { color: var(--text-primary); }
-.class-card.neutralized h3 { color: var(--class-neutralized); }
 
 .sys-info {
   background: var(--bg-surface);

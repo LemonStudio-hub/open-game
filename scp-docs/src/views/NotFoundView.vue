@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+</script>
+
 <template>
   <div class="not-found">
     <div class="glitch-container">
@@ -6,29 +11,26 @@
     <div class="error-content">
       <div class="error-badge">
         <span class="pulse-dot"></span>
-        ACCESS DENIED
+        {{ t('notFound.accessDenied') }}
       </div>
-      <h1>Document Not Found</h1>
-      <p>
-        The requested file does not exist in the Latom Node database, or you lack
-        the necessary clearance to access it. All access attempts have been logged.
-      </p>
+      <h1>{{ t('notFound.title') }}</h1>
+      <p>{{ t('notFound.description') }}</p>
       <div class="error-meta">
         <div class="meta-row">
-          <span class="meta-label">ERROR CODE</span>
-          <span class="meta-value">ERR-404-RESOURCE</span>
+          <span class="meta-label">{{ t('notFound.errorCode') }}</span>
+          <span class="meta-value">{{ t('notFound.errValue') }}</span>
         </div>
         <div class="meta-row">
-          <span class="meta-label">TERMINAL</span>
+          <span class="meta-label">{{ t('notFound.terminal') }}</span>
           <span class="meta-value">LATOM-7</span>
         </div>
         <div class="meta-row">
-          <span class="meta-label">TIMESTAMP</span>
+          <span class="meta-label">{{ t('notFound.timestamp') }}</span>
           <span class="meta-value">{{ new Date().toISOString() }}</span>
         </div>
       </div>
       <router-link to="/" class="btn btn-primary">
-        Return to Main Terminal
+        {{ t('notFound.returnBtn') }}
       </router-link>
     </div>
   </div>

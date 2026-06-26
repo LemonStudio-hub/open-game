@@ -4,9 +4,10 @@ import { useRoute } from 'vue-router'
 import { entries } from '@/data/entries'
 import Badge from '@/components/common/Badge.vue'
 import ClassBar from '@/components/common/ClassBar.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
-
 const entry = computed(() => entries.find((e) => e.id === route.params.id))
 </script>
 
@@ -16,25 +17,25 @@ const entry = computed(() => entries.find((e) => e.id === route.params.id))
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polyline points="15 18 9 12 15 6" />
       </svg>
-      Back to Catalog
+      {{ t('entry.back') }}
     </router-link>
 
     <div class="entry-header">
       <div class="entry-meta">
         <ClassBar :object-class="entry.objectClass" :show-label="true" />
-        <Badge :variant="entry.objectClass.toLowerCase() as any">{{ entry.objectClass }}</Badge>
+        <Badge :variant="entry.objectClass.toLowerCase() as any">{{ t(`classes.${entry.objectClass}`) }}</Badge>
       </div>
       <h1 class="entry-title">
         <span class="entry-id">SCP-{{ String(entry.number).padStart(3, '0') }}</span>
-        <span class="entry-name">— {{ entry.name }}</span>
+        <span class="entry-name">— {{ t(`entries.${entry.id}.name`) }}</span>
       </h1>
       <div class="entry-info">
         <span class="info-item">
-          <span class="info-label">Author:</span>
+          <span class="info-label">{{ t('entry.author') }}</span>
           {{ entry.author }}
         </span>
         <span class="info-item">
-          <span class="info-label">Date:</span>
+          <span class="info-label">{{ t('entry.date') }}</span>
           {{ entry.date }}
         </span>
       </div>
@@ -48,11 +49,11 @@ const entry = computed(() => entries.find((e) => e.id === route.params.id))
       <section class="section">
         <h2 class="section-title">
           <span class="section-icon">◈</span>
-          Object Class
+          {{ t('entry.objectClass') }}
         </h2>
         <div class="object-class-display">
           <Badge :variant="entry.objectClass.toLowerCase() as any" class="class-badge-lg">
-            {{ entry.objectClass }}
+            {{ t(`classes.${entry.objectClass}`) }}
           </Badge>
         </div>
       </section>
@@ -60,31 +61,31 @@ const entry = computed(() => entries.find((e) => e.id === route.params.id))
       <section class="section">
         <h2 class="section-title">
           <span class="section-icon">◫</span>
-          Special Containment Procedures
+          {{ t('entry.containment') }}
         </h2>
         <div class="section-content">
-          <p>{{ entry.containment }}</p>
+          <p>{{ t(`entries.${entry.id}.containment`) }}</p>
         </div>
       </section>
 
       <section class="section">
         <h2 class="section-title">
           <span class="section-icon">◎</span>
-          Description
+          {{ t('entry.description') }}
         </h2>
         <div class="section-content">
-          <p>{{ entry.description }}</p>
+          <p>{{ t(`entries.${entry.id}.description`) }}</p>
         </div>
       </section>
 
       <section v-if="entry.addenda?.length" class="section">
         <h2 class="section-title">
           <span class="section-icon">▣</span>
-          Addenda
+          {{ t('entry.addenda') }}
         </h2>
         <div class="addenda-list">
-          <div v-for="(addendum, i) in entry.addenda" :key="i" class="addendum">
-            <p>{{ addendum }}</p>
+          <div v-for="(_, i) in entry.addenda" :key="i" class="addendum">
+            <p>{{ t(`entries.${entry.id}.addenda[${i}]`) }}</p>
           </div>
         </div>
       </section>
@@ -92,9 +93,9 @@ const entry = computed(() => entries.find((e) => e.id === route.params.id))
   </div>
 
   <div v-else class="not-found">
-    <h1>Entry Not Found</h1>
-    <p>The requested SCP entry does not exist in the Latom Node database.</p>
-    <router-link to="/catalog" class="btn btn-primary">Return to Catalog</router-link>
+    <h1>{{ t('entry.notFound') }}</h1>
+    <p>{{ t('entry.notFoundDesc') }}</p>
+    <router-link to="/catalog" class="btn btn-primary">{{ t('entry.returnToCatalog') }}</router-link>
   </div>
 </template>
 

@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { useTheme } from '@/composables/useTheme'
+import { useLocale } from '@/composables/useLocale'
 import { useSearchStore } from '@/stores/search'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const { theme, toggle: toggleTheme } = useTheme()
+const { toggleLocale } = useLocale()
+const { t } = useI18n()
 const search = useSearchStore()
 const route = useRoute()
 
 const breadcrumbs = computed(() => {
-  const name = route.meta.title as string
-  return name || 'Home'
+  const key = route.meta.titleKey as string
+  return key ? t(key) : t('nav.home')
 })
 </script>
 
@@ -29,8 +33,8 @@ const breadcrumbs = computed(() => {
           </svg>
         </div>
         <div class="logo-text">
-          <span class="logo-title">SCP Foundation</span>
-          <span class="logo-subtitle">Latom Node</span>
+          <span class="logo-title">{{ t('hero.titleLine') }}</span>
+          <span class="logo-subtitle">{{ t('hero.titleAccent') }}</span>
         </div>
       </router-link>
     </div>
@@ -40,16 +44,20 @@ const breadcrumbs = computed(() => {
     </div>
 
     <div class="header-right">
-      <button class="search-btn" @click="search.open" title="Search (Ctrl+K)">
+      <button class="search-btn" @click="search.open" :title="t('header.searchTitle')">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8" />
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
-        <span class="search-label">Search</span>
+        <span class="search-label">{{ t('header.searchPlaceholder') }}</span>
         <kbd>⌘K</kbd>
       </button>
 
-      <button class="icon-btn" @click="toggleTheme" :title="theme === 'dark' ? 'Light mode' : 'Dark mode'">
+      <button class="lang-btn" @click="toggleLocale" :title="t('header.langSwitch')">
+        <span class="lang-label">{{ t('header.langSwitch') }}</span>
+      </button>
+
+      <button class="icon-btn" @click="toggleTheme" :title="theme === 'dark' ? t('header.lightMode') : t('header.darkMode')">
         <svg v-if="theme === 'dark'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5" />
           <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
@@ -189,6 +197,27 @@ kbd {
   kbd {
     display: inline;
   }
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--color-primary);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  transition: all var(--transition-fast);
+}
+
+.lang-btn:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-muted);
 }
 
 .icon-btn {
