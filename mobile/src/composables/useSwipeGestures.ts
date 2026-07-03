@@ -142,10 +142,13 @@ export function useSwipeGestures(options: SwipeOptions) {
     attachedTo = null
   }
 
-  function setTarget(el: HTMLElement | null) {
-    if (el) {
+  // Stable function reference — Vue only re-invokes it when the element
+  // actually changes (mount/unmount), not on every reactive re-render.
+  // This avoids the detach/reattach cycle that inline arrow-function refs cause.
+  function targetRef(el: unknown) {
+    if (el instanceof HTMLElement) {
       attach(el)
-    } else {
+    } else if (el === null) {
       detach()
     }
   }
@@ -155,7 +158,7 @@ export function useSwipeGestures(options: SwipeOptions) {
   })
 
   return {
-    targetRef: setTarget,
+    targetRef,
     dragProgress,
     swipeDirection,
     isDragging,

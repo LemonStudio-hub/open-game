@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import StatusBar from '../StatusBar.vue'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed } from 'vue'
+import { useSwipeGestures } from '../../composables/useSwipeGestures'
 
 const emit = defineEmits<{
   'go-lock': []
   'go-back': []
+  'go-home': []
+  'show-cards': []
 }>()
 
 // --- Swipe gesture ---
-const startY = ref(0)
-const currentY = ref(0)
-const isDragging = ref(false)
-const dragProgress = ref(0)
-const swipeDirection = ref<'down' | 'up' | null>(null)
 const settingsBody = ref<HTMLElement | null>(null)
 
 const canSwipeDown = () => {
@@ -25,71 +23,23 @@ const canSwipeUp = () => {
   return !el || el.scrollTop + el.clientHeight >= el.scrollHeight - 1
 }
 
-const handleTouchStart = (e: TouchEvent) => {
-  startY.value = e.touches[0].clientY
-  currentY.value = startY.value
-  isDragging.value = true
-  swipeDirection.value = null
-}
+// pageHistory is declared below; forward-declare navigateBack
+let navigateBackFn: () => void
 
-const handleTouchMove = (e: TouchEvent) => {
-  if (!isDragging.value) return
-  currentY.value = e.touches[0].clientY
-  const diff = currentY.value - startY.value
-  swipeDirection.value = diff > 0 ? 'down' : diff < 0 ? 'up' : null
-  dragProgress.value = Math.min(Math.max(Math.abs(diff) / 150, 0), 1)
-}
-
-const handleTouchEnd = () => {
-  if (!isDragging.value) return
-  isDragging.value = false
-  const diff = currentY.value - startY.value
-  if (diff > 80 && canSwipeDown()) {
-    emit('go-lock')
-  } else if (diff < -80 && canSwipeUp()) {
-    emit('go-back')
-  }
-  dragProgress.value = 0
-  swipeDirection.value = null
-}
-
-const handleMouseDown = (e: MouseEvent) => {
-  startY.value = e.clientY
-  currentY.value = startY.value
-  isDragging.value = true
-  swipeDirection.value = null
-}
-
-const handleMouseMove = (e: MouseEvent) => {
-  if (!isDragging.value) return
-  currentY.value = e.clientY
-  const diff = currentY.value - startY.value
-  swipeDirection.value = diff > 0 ? 'down' : diff < 0 ? 'up' : null
-  dragProgress.value = Math.min(Math.max(Math.abs(diff) / 150, 0), 1)
-}
-
-const handleMouseUp = () => {
-  if (!isDragging.value) return
-  isDragging.value = false
-  const diff = currentY.value - startY.value
-  if (diff > 80 && canSwipeDown()) {
-    emit('go-lock')
-  } else if (diff < -80 && canSwipeUp()) {
-    emit('go-back')
-  }
-  dragProgress.value = 0
-  swipeDirection.value = null
-}
-
-onMounted(() => {
-  window.addEventListener('mousemove', handleMouseMove)
-  window.addEventListener('mouseup', handleMouseUp)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('mousemove', handleMouseMove)
-  window.removeEventListener('mouseup', handleMouseUp)
-})
+const { targetRef, dragProgress, swipeDirection, isDragging } =
+  useSwipeGestures({
+    onSwipeDown: () => emit('go-lock'),
+    onSwipeUp: () => emit('go-home'),
+    onSwipeRight: () => {
+      if (navigateBackFn) navigateBackFn()
+    },
+    canSwipeVertical: () => {
+      const dir = swipeDirection.value
+      if (dir === 'down') return canSwipeDown()
+      if (dir === 'up') return canSwipeUp()
+      return true
+    },
+  })
 
 // --- State ---
 const airplaneMode = ref(false)
@@ -123,6 +73,45 @@ const navigateBack = () => {
   }
 }
 
+navigateBackFn = navigateBack
+
+// --- Search ---
+const searchQuery = ref('')
+
+interface SettingsItem {
+  label: string
+  keywords: string[]
+  page: Page
+}
+
+const settingsItems: SettingsItem[] = [
+  { label: 'Airplane Mode', keywords: ['airplane', 'flight', 'mode'], page: 'main' },
+  { label: 'Wi-Fi', keywords: ['wifi', 'wi-fi', 'wireless', 'network', 'internet'], page: 'wifi' },
+  { label: 'Bluetooth', keywords: ['bluetooth', 'wireless', 'pair', 'device'], page: 'bluetooth' },
+  { label: 'Display & Brightness', keywords: ['display', 'brightness', 'dark mode', 'screen', 'text', 'font', 'true tone'], page: 'display' },
+  { label: 'Notifications', keywords: ['notifications', 'alerts', 'messages', 'mail', 'calendar', 'photos', 'banner'], page: 'notifications' },
+  { label: 'Privacy & Security', keywords: ['privacy', 'security', 'location', 'face id', 'passcode', 'lock'], page: 'privacy' },
+  { label: 'About', keywords: ['about', 'model', 'version', 'storage', 'device', 'info'], page: 'about' },
+]
+
+const filteredItems = computed(() => {
+  const q = searchQuery.value.toLowerCase().trim()
+  if (!q) return []
+  return settingsItems.filter(item =>
+    item.label.toLowerCase().includes(q) ||
+    item.keywords.some(k => k.includes(q))
+  )
+})
+
+const handleSearchResultClick = (item: SettingsItem) => {
+  if (item.page === 'main') {
+    airplaneMode.value = !airplaneMode.value
+  } else {
+    navigateTo(item.page)
+  }
+  searchQuery.value = ''
+}
+
 // --- WiFi ---
 const selectedWifi = ref('Home Network')
 const wifiNetworks = [
@@ -152,19 +141,18 @@ const deviceInfo = {
 
 <template>
   <div
+    :ref="targetRef"
     class="settings-screen"
     :class="{ dragging: isDragging }"
-    @touchstart="handleTouchStart"
-    @touchmove="handleTouchMove"
-    @touchend="handleTouchEnd"
-    @mousedown="handleMouseDown"
   >
     <div class="wallpaper"></div>
     <div
       class="content"
       :style="{
-        transform: `translateY(${swipeDirection === 'down' && canSwipeDown() ? dragProgress * 30 : swipeDirection === 'up' && canSwipeUp() ? -dragProgress * 30 : 0}px)`,
-        opacity: 1 - (swipeDirection && ((swipeDirection === 'down' && canSwipeDown()) || (swipeDirection === 'up' && canSwipeUp())) ? dragProgress * 0.2 : 0),
+        transform: swipeDirection === 'right'
+          ? `translateX(${dragProgress * 40}px)`
+          : `translateY(${swipeDirection === 'down' && canSwipeDown() ? dragProgress * 30 : swipeDirection === 'up' && canSwipeUp() ? -dragProgress * 30 : 0}px)`,
+        opacity: 1 - (swipeDirection ? dragProgress * 0.2 : 0),
       }"
     >
       <StatusBar />
@@ -195,100 +183,132 @@ const deviceInfo = {
           <!-- Main page -->
           <div v-if="currentPage === 'main'" key="main" class="page">
             <!-- Search bar -->
-            <div class="search-bar">
+            <div class="search-bar" :class="{ focused: searchQuery.length > 0 }">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/>
                 <path d="M21 21l-4.35-4.35"/>
               </svg>
-              <span>Search</span>
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Search"
+                v-model="searchQuery"
+              />
+              <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10" fill="rgba(0,0,0,0.15)"/>
+                  <path d="M15.59 7L12 10.59 8.41 7 7 8.41 10.59 12 7 15.59 8.41 17 12 13.41 15.59 17 17 15.59 13.41 12 17 8.41z" fill="white"/>
+                </svg>
+              </button>
             </div>
 
-            <!-- Airplane / Wi-Fi / Bluetooth -->
-            <div class="settings-group stagger-1">
-              <div class="settings-row" @click="airplaneMode = !airplaneMode">
-                <div class="row-icon airplane-icon" :class="{ active: airplaneMode }">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 2L11 13"/>
-                    <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
-                  </svg>
+            <!-- Search results -->
+            <template v-if="searchQuery">
+              <div v-if="filteredItems.length > 0" class="settings-group search-results">
+                <div
+                  v-for="item in filteredItems"
+                  :key="item.label"
+                  class="settings-row"
+                  @click="handleSearchResultClick(item)"
+                >
+                  <span class="row-label">{{ item.label }}</span>
+                  <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
                 </div>
-                <span class="row-label">Airplane Mode</span>
-                <label class="toggle" @click.stop>
-                  <input type="checkbox" v-model="airplaneMode" />
-                  <span class="toggle-slider"></span>
-                </label>
               </div>
-              <div class="settings-row" @click="navigateTo('wifi')">
-                <div class="row-icon wifi-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
-                    <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
-                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
-                    <circle cx="12" cy="20" r="1"/>
-                  </svg>
-                </div>
-                <span class="row-label">Wi-Fi</span>
-                <span class="row-value">{{ wifiEnabled ? selectedWifi : 'Off' }}</span>
-                <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              <div v-else class="no-results">
+                No Results
               </div>
-              <div class="settings-row" @click="navigateTo('bluetooth')">
-                <div class="row-icon bluetooth-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6.5 6.5l11 11L12 23V1l5.5 5.5-11 11"/>
-                  </svg>
-                </div>
-                <span class="row-label">Bluetooth</span>
-                <span class="row-value">{{ bluetoothEnabled ? 'On' : 'Off' }}</span>
-                <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-              </div>
-            </div>
+            </template>
 
-            <!-- Display / Notifications -->
-            <div class="settings-group stagger-2">
-              <div class="settings-row" @click="navigateTo('display')">
-                <div class="row-icon display-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"/>
-                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                  </svg>
+            <!-- Normal settings list (hidden during search) -->
+            <template v-else>
+              <!-- Airplane / Wi-Fi / Bluetooth -->
+              <div class="settings-group stagger-1">
+                <div class="settings-row" @click="airplaneMode = !airplaneMode">
+                  <div class="row-icon airplane-icon" :class="{ active: airplaneMode }">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 2L11 13"/>
+                      <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                  </div>
+                  <span class="row-label">Airplane Mode</span>
+                  <label class="toggle" @click.stop>
+                    <input type="checkbox" v-model="airplaneMode" />
+                    <span class="toggle-slider"></span>
+                  </label>
                 </div>
-                <span class="row-label">Display &amp; Brightness</span>
-                <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-              </div>
-              <div class="settings-row" @click="navigateTo('notifications')">
-                <div class="row-icon notifications-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-                  </svg>
+                <div class="settings-row" @click="navigateTo('wifi')">
+                  <div class="row-icon wifi-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                      <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                      <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                      <circle cx="12" cy="20" r="1"/>
+                    </svg>
+                  </div>
+                  <span class="row-label">Wi-Fi</span>
+                  <span class="row-value">{{ wifiEnabled ? selectedWifi : 'Off' }}</span>
+                  <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
                 </div>
-                <span class="row-label">Notifications</span>
-                <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-              </div>
-              <div class="settings-row" @click="navigateTo('privacy')">
-                <div class="row-icon privacy-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  </svg>
+                <div class="settings-row" @click="navigateTo('bluetooth')">
+                  <div class="row-icon bluetooth-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6.5 6.5l11 11L12 23V1l5.5 5.5-11 11"/>
+                    </svg>
+                  </div>
+                  <span class="row-label">Bluetooth</span>
+                  <span class="row-value">{{ bluetoothEnabled ? 'On' : 'Off' }}</span>
+                  <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
                 </div>
-                <span class="row-label">Privacy &amp; Security</span>
-                <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
               </div>
-            </div>
 
-            <!-- About -->
-            <div class="settings-group stagger-3">
-              <div class="settings-row" @click="navigateTo('about')">
-                <div class="row-icon about-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 16v-4M12 8h.01"/>
-                  </svg>
+              <!-- Display / Notifications -->
+              <div class="settings-group stagger-2">
+                <div class="settings-row" @click="navigateTo('display')">
+                  <div class="row-icon display-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="5"/>
+                      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                  </div>
+                  <span class="row-label">Display &amp; Brightness</span>
+                  <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
                 </div>
-                <span class="row-label">About</span>
-                <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                <div class="settings-row" @click="navigateTo('notifications')">
+                  <div class="row-icon notifications-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                  </div>
+                  <span class="row-label">Notifications</span>
+                  <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </div>
+                <div class="settings-row" @click="navigateTo('privacy')">
+                  <div class="row-icon privacy-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                  </div>
+                  <span class="row-label">Privacy &amp; Security</span>
+                  <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </div>
               </div>
-            </div>
+
+              <!-- About -->
+              <div class="settings-group stagger-3">
+                <div class="settings-row" @click="navigateTo('about')">
+                  <div class="row-icon about-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                  </div>
+                  <span class="row-label">About</span>
+                  <svg class="row-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </div>
+              </div>
+            </template>
           </div>
 
           <!-- Wi-Fi page -->
@@ -790,15 +810,65 @@ const deviceInfo = {
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.search-bar:active {
+.search-bar.focused {
   background: rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.12);
 }
 
 .search-bar svg {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: var(--color-text);
+  font-family: inherit;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.search-input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.search-clear {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease;
+}
+
+.search-clear:active {
+  opacity: 0.5;
+}
+
+.search-clear svg {
+  width: 18px;
+  height: 18px;
+}
+
+.search-results {
+  animation: group-enter 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.no-results {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--color-text-secondary);
+  font-size: 15px;
 }
 
 /* === Groups === */

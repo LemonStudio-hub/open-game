@@ -1,141 +1,46 @@
 <script setup lang="ts">
 import StatusBar from '../StatusBar.vue'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { useSwipeGestures } from '../../composables/useSwipeGestures'
 
 const emit = defineEmits<{
   'go-lock': []
-  'go-back': []
+  'show-cards': []
   'open-settings': []
+  'open-camera': []
+  'open-photos': []
 }>()
 
-// Track swipe direction: true = downward, false = upward
-const swipeDirection = ref<'down' | 'up' | null>(null)
-
-const startY = ref(0)
-const currentY = ref(0)
-const isDragging = ref(false)
-const dragProgress = ref(0)
-
-const handleTouchStart = (e: TouchEvent) => {
-  startY.value = e.touches[0].clientY
-  currentY.value = startY.value
-  isDragging.value = true
-  swipeDirection.value = null
-}
-
-const handleTouchMove = (e: TouchEvent) => {
-  if (!isDragging.value) return
-  currentY.value = e.touches[0].clientY
-  const diff = currentY.value - startY.value
-  swipeDirection.value = diff > 0 ? 'down' : diff < 0 ? 'up' : null
-  dragProgress.value = Math.min(Math.max(Math.abs(diff) / 150, 0), 1)
-}
-
-const handleTouchEnd = () => {
-  if (!isDragging.value) return
-  isDragging.value = false
-  const diff = currentY.value - startY.value
-  if (diff > 80) {
-    emit('go-lock')
-  } else if (diff < -80) {
-    emit('go-back')
-  }
-  dragProgress.value = 0
-  swipeDirection.value = null
-}
-
-const handleMouseDown = (e: MouseEvent) => {
-  startY.value = e.clientY
-  currentY.value = startY.value
-  isDragging.value = true
-  swipeDirection.value = null
-}
-
-const handleMouseMove = (e: MouseEvent) => {
-  if (!isDragging.value) return
-  currentY.value = e.clientY
-  const diff = currentY.value - startY.value
-  swipeDirection.value = diff > 0 ? 'down' : diff < 0 ? 'up' : null
-  dragProgress.value = Math.min(Math.max(Math.abs(diff) / 150, 0), 1)
-}
-
-const handleMouseUp = () => {
-  if (!isDragging.value) return
-  isDragging.value = false
-  const diff = currentY.value - startY.value
-  if (diff > 80) {
-    emit('go-lock')
-  } else if (diff < -80) {
-    emit('go-back')
-  }
-  dragProgress.value = 0
-  swipeDirection.value = null
-}
-
-onMounted(() => {
-  window.addEventListener('mousemove', handleMouseMove)
-  window.addEventListener('mouseup', handleMouseUp)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('mousemove', handleMouseMove)
-  window.removeEventListener('mouseup', handleMouseUp)
-})
+const { targetRef, dragProgress, swipeDirection, isDragging } =
+  useSwipeGestures({
+    onSwipeDown: () => emit('go-lock'),
+    onSwipeUp: () => emit('show-cards'),
+  })
 
 const handleSettingsClick = () => {
   emit('open-settings')
 }
 
-// --- Home bar swipe-up gesture ---
-const barStartY = ref(0)
-const barCurrentY = ref(0)
-const barDragging = ref(false)
-
-const handleBarTouchStart = (e: TouchEvent) => {
-  barStartY.value = e.touches[0].clientY
-  barCurrentY.value = barStartY.value
-  barDragging.value = true
+const handleCameraClick = () => {
+  emit('open-camera')
 }
 
-const handleBarTouchMove = (e: TouchEvent) => {
-  if (!barDragging.value) return
-  barCurrentY.value = e.touches[0].clientY
+const handlePhotosClick = () => {
+  emit('open-photos')
 }
 
-const handleBarTouchEnd = () => {
-  if (!barDragging.value) return
-  barDragging.value = false
-  if (barStartY.value - barCurrentY.value > 40) {
-    emit('go-lock')
-  }
-}
-
-const handleBarMouseDown = (e: MouseEvent) => {
-  barStartY.value = e.clientY
-  barCurrentY.value = barStartY.value
-  barDragging.value = true
-  const onMove = (ev: MouseEvent) => { barCurrentY.value = ev.clientY }
-  const onUp = () => {
-    barDragging.value = false
-    if (barStartY.value - barCurrentY.value > 40) {
-      emit('go-lock')
-    }
-    window.removeEventListener('mousemove', onMove)
-    window.removeEventListener('mouseup', onUp)
-  }
-  window.addEventListener('mousemove', onMove)
-  window.addEventListener('mouseup', onUp)
-}
+// --- Home bar swipe-up gesture (lower threshold) ---
+const { targetRef: barTargetRef } =
+  useSwipeGestures({
+    onSwipeUp: () => emit('go-lock'),
+    threshold: 40,
+  })
 </script>
 
 <template>
   <div
+    :ref="targetRef"
     class="home-screen"
     :class="{ dragging: isDragging }"
-    @touchstart="handleTouchStart"
-    @touchmove="handleTouchMove"
-    @touchend="handleTouchEnd"
-    @mousedown="handleMouseDown"
   >
     <!-- Wallpaper -->
     <div class="wallpaper"></div>
@@ -151,6 +56,27 @@ const handleBarMouseDown = (e: MouseEvent) => {
       <StatusBar />
 
       <div class="app-grid">
+        <button class="app-icon" @click="handleCameraClick">
+          <div class="icon-wrapper camera-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </div>
+          <span class="app-name">Camera</span>
+        </button>
+
+        <button class="app-icon" @click="handlePhotosClick">
+          <div class="icon-wrapper photos-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <path d="M21 15l-5-5L5 21" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="app-name">Photos</span>
+        </button>
+
         <button class="app-icon" @click="handleSettingsClick">
           <div class="icon-wrapper settings-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -164,11 +90,8 @@ const handleBarMouseDown = (e: MouseEvent) => {
 
       <!-- Home bar -->
       <div
+        :ref="barTargetRef"
         class="home-bar-area"
-        @touchstart.stop="handleBarTouchStart"
-        @touchmove.stop="handleBarTouchMove"
-        @touchend.stop="handleBarTouchEnd"
-        @mousedown.stop="handleBarMouseDown"
       >
         <div class="home-bar"></div>
       </div>
@@ -248,6 +171,16 @@ const handleBarMouseDown = (e: MouseEvent) => {
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.camera-icon {
+  background: linear-gradient(135deg, #e6e2dc 0%, #d8d3cc 100%);
+  color: #5a5650;
+}
+
+.photos-icon {
+  background: linear-gradient(135deg, #e2ddd6 0%, #d4cec6 100%);
+  color: #6b6560;
 }
 
 .settings-icon {

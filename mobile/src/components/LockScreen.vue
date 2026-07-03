@@ -22,7 +22,7 @@ const handleOpenCamera = () => {
 
 <template>
   <div
-    :ref="(el: any) => targetRef(el as HTMLElement)"
+    :ref="targetRef"
     class="lock-screen"
     :class="{ dragging: isDragging }"
   >
