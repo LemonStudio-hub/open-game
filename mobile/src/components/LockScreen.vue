@@ -3,80 +3,28 @@ import StatusBar from './StatusBar.vue'
 import TimeDisplay from './TimeDisplay.vue'
 import BottomActions from './BottomActions.vue'
 import SwipeIndicator from './SwipeIndicator.vue'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { useSwipeGestures } from '../composables/useSwipeGestures'
 
 const emit = defineEmits<{
-  unlock: []
+  'unlock': []
+  'open-camera': []
 }>()
 
-const startY = ref(0)
-const currentY = ref(0)
-const isDragging = ref(false)
-const dragProgress = ref(0)
+const { targetRef, dragProgress, isDragging } =
+  useSwipeGestures({
+    onSwipeUp: () => emit('unlock'),
+  })
 
-const handleTouchStart = (e: TouchEvent) => {
-  startY.value = e.touches[0].clientY
-  currentY.value = startY.value
-  isDragging.value = true
+const handleOpenCamera = () => {
+  emit('open-camera')
 }
-
-const handleTouchMove = (e: TouchEvent) => {
-  if (!isDragging.value) return
-  currentY.value = e.touches[0].clientY
-  const diff = startY.value - currentY.value
-  dragProgress.value = Math.min(Math.max(diff / 150, 0), 1)
-}
-
-const handleTouchEnd = () => {
-  if (!isDragging.value) return
-  isDragging.value = false
-  if (startY.value - currentY.value > 80) {
-    emit('unlock')
-  }
-  dragProgress.value = 0
-}
-
-const handleMouseDown = (e: MouseEvent) => {
-  startY.value = e.clientY
-  currentY.value = startY.value
-  isDragging.value = true
-}
-
-const handleMouseMove = (e: MouseEvent) => {
-  if (!isDragging.value) return
-  currentY.value = e.clientY
-  const diff = startY.value - currentY.value
-  dragProgress.value = Math.min(Math.max(diff / 150, 0), 1)
-}
-
-const handleMouseUp = () => {
-  if (!isDragging.value) return
-  isDragging.value = false
-  if (startY.value - currentY.value > 80) {
-    emit('unlock')
-  }
-  dragProgress.value = 0
-}
-
-onMounted(() => {
-  window.addEventListener('mousemove', handleMouseMove)
-  window.addEventListener('mouseup', handleMouseUp)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('mousemove', handleMouseMove)
-  window.removeEventListener('mouseup', handleMouseUp)
-})
 </script>
 
 <template>
   <div
+    :ref="(el: any) => targetRef(el as HTMLElement)"
     class="lock-screen"
     :class="{ dragging: isDragging }"
-    @touchstart="handleTouchStart"
-    @touchmove="handleTouchMove"
-    @touchend="handleTouchEnd"
-    @mousedown="handleMouseDown"
   >
     <div
       class="content"
@@ -90,7 +38,7 @@ onUnmounted(() => {
         <TimeDisplay />
       </div>
       <div class="bottom">
-        <BottomActions />
+        <BottomActions @open-camera="handleOpenCamera" />
         <SwipeIndicator />
       </div>
     </div>
