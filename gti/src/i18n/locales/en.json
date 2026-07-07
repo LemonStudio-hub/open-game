@@ -1,0 +1,463 @@
+{
+  "nav": {
+    "brand": "Global Terrorism Intervention",
+    "items": {
+      "about": "About",
+      "history": "History",
+      "resolution": "Resolution",
+      "situation": "Situation",
+      "structure": "Structure",
+      "operators": "Operators",
+      "operations": "Operations",
+      "relations": "Relations"
+    },
+    "langSwitch": "中"
+  },
+  "hero": {
+    "badge": "CLASSIFIED // LEVEL-7 CLEARANCE",
+    "subtitle": "Global Terrorism Intervention",
+    "motto": "\"Leave No One Behind\"",
+    "description": [
+      "A global anti-terrorism rapid response force operating independently from the existing UN peacekeeping system",
+      "Countering global terrorism threats, maintaining international peace and regional stability"
+    ],
+    "stats": {
+      "year": "Year Founded",
+      "classes": "Unit Types",
+      "operators": "Elite Operators",
+      "scope": "Deploy Scope",
+      "scopeValue": "Global"
+    },
+    "cta": "Learn More"
+  },
+  "about": {
+    "label": "// OVERVIEW",
+    "title": "About G.T.I.",
+    "subtitle": "Global Terrorism Intervention — A global anti-terrorism rapid response force operating independently from the UN peacekeeping system",
+    "cards": {
+      "global": {
+        "title": "Global Deployment",
+        "text": "Multiple divisions worldwide, including North America, Asia, Oceania, and Africa. Operators from member nations can rapidly respond to terrorism threats in any region globally."
+      },
+      "legal": {
+        "title": "Legal Authorization",
+        "text": "Officially established by UN Security Council resolution, maintaining high autonomy in personnel, budget, and operational command, with legal authorization to take all necessary measures to maintain regional stability."
+      },
+      "elite": {
+        "title": "Elite Operators",
+        "text": "The core special forces were initially drawn from the US Delta Force, then gradually recruited elite special operations forces from around the world through the member nation dispatch system, forming a world-class special operations force."
+      },
+      "mission": {
+        "title": "Core Mission",
+        "text": "Contain the Havoc Group's threat to global security, contest and control the Mandel Bricks, prevent Havoc's secret experiments, disrupt the \"Babel Tower Plan\", and dismantle their space military operations."
+      }
+    }
+  },
+  "history": {
+    "label": "// HISTORY",
+    "title": "History",
+    "subtitle": "From the Mogadishu Tragedy to the Birth of G.T.I.",
+    "events": {
+      "1993": {
+        "title": "The Mogadishu Tragedy",
+        "description": "US Delta Force suffered a major failure in Somalia's \"Gothic Serpent\" operation. The \"Black Hawk Down\" incident exposed the international community's institutional deficiencies in responding to regional crises, becoming the spiritual origin of GTI's establishment."
+      },
+      "1993-2018": {
+        "title": "Prolonged International Consultations",
+        "description": "Following the Somalia crisis, the international community spent twenty-five years discussing and designing institutions for a rapidly deployable, legally authorized global anti-terrorism force with top-tier combat capabilities."
+      },
+      "2018": {
+        "title": "G.T.I. Officially Established",
+        "description": "By UN Security Council resolution, the Global Terrorism Intervention was officially established. The organization operates independently from the existing UN peacekeeping system, maintaining high autonomy in personnel, budget, and operational command."
+      },
+      "2032": {
+        "title": "Intervention in Ahsarah Region",
+        "description": "Due to the deteriorating situation in the Ahsarah region, the UN Security Council authorized G.T.I. to deploy in the area and take all necessary measures to maintain regional stability. This marked GTI's transition from theory to full-scale operational deployment."
+      },
+      "2035": {
+        "title": "Full-Scale Confrontation with Havoc",
+        "description": "GTI dispatched elite operators deep into Ahsarah to fully investigate the Havoc Group's illegal activities. Operations \"Diamond Hotel\", \"Ascender\", and \"Echo\" were launched in succession, bringing the full-scale confrontation with the Havoc Group to a fever pitch."
+      }
+    }
+  },
+  "resolution": {
+    "label": "// AUTHORIZATION",
+    "title": "Security Council Authorization Resolution",
+    "orgName": "UNITED NATIONS",
+    "orgNameEn": "UNITED NATIONS",
+    "meta": {
+      "council": "Security Council",
+      "councilEn": "SECURITY COUNCIL",
+      "number": "Resolution No.",
+      "date": "Adopted on",
+      "dateValue": "17 March 2032"
+    },
+    "docTitle": "Resolution on Authorizing the Global Terrorism Intervention (G.T.I.)\nto Deploy in the Ahsarah Region and Take All Necessary Measures\nto Maintain Regional Stability",
+    "preamble": {
+      "recalls": "Recalling",
+      "recallsText": "its previous resolutions and presidential statements on the situation in the Ahsarah region,",
+      "reaffirms": "Reaffirming",
+      "reaffirmsText": "its firm commitment to the sovereignty, independence, unity and territorial integrity of the Republic of Ahsarah,",
+      "concerned": "Gravely concerned",
+      "concernedText": "by the serious threat posed by the increasingly rampant military activities of the Havoc Group in the region to international peace and security,",
+      "noting": "Noting",
+      "notingText": "that the \"Mandel Brick\" high-value military computing modules developed and deployed by the Havoc Group could alter the regional military balance,",
+      "condemning": "Condemning",
+      "condemningText": "all forms of terrorist acts by the Havoc Group and the casualties they have caused to civilians,",
+      "emphasizing": "Emphasizing",
+      "emphasizingText": "the need to deploy an international anti-terrorism force with rapid response capability and legal authorization in the Ahsarah region,",
+      "determining": "Determining",
+      "determiningText": "that the situation in the Ahsarah region constitutes a threat to international peace and security,",
+      "acting": "Acting",
+      "actingText": "under Chapter VII of the Charter of the United Nations,"
+    },
+    "operative": {
+      "heading": "Decides as follows:",
+      "nums": ["1.", "2.", "3.", "4.", "5.", "6.", "7.", "8."],
+      "items": [
+        {
+          "verb": "Authorizes",
+          "text": "the Global Terrorism Intervention (G.T.I.), as a global anti-terrorism rapid response force operating independently from the existing UN peacekeeping system, to deploy in the Ahsarah region to carry out missions to maintain regional stability;"
+        },
+        {
+          "verb": "Authorizes",
+          "text": "G.T.I. to take all necessary measures in the Ahsarah region, including but not limited to the use of force, to contain the Havoc Group's terrorist activities and military expansion;"
+        },
+        {
+          "verb": "Demands",
+          "text": "that the Havoc Group immediately cease all terrorist activities, secret experiments, and military deployments, including but not limited to the \"Babel Tower Plan\" and its space military operations;"
+        },
+        {
+          "verb": "Urges",
+          "text": "all member states to fully cooperate with G.T.I., providing necessary facilities for its deployment and operations, including transit permits, logistical support, and intelligence sharing;"
+        },
+        {
+          "verb": "Decides",
+          "text": "that G.T.I.'s operational budget shall be shared proportionally by all member states, included in the UN peacekeeping budget framework, and subject to nominal budget management;"
+        },
+        {
+          "verb": "Confirms",
+          "text": "that the G.T.I. Standing Committee has full decision-making authority over organizational operations, and the Security Council shall not intervene in real-time in its specific operations;"
+        },
+        {
+          "verb": "Requests",
+          "text": "G.T.I. to regularly submit operational reports to the Security Council and a comprehensive assessment upon mission completion;"
+        },
+        {
+          "verb": "Decides",
+          "text": "to remain actively seized of the matter."
+        }
+      ]
+    },
+    "vote": {
+      "label": "Voting Record",
+      "yes": "In favor: 15",
+      "no": "Against: 0",
+      "abstain": "Abstentions: 0",
+      "note": "Adopted unanimously at the 9287th meeting"
+    }
+  },
+  "situation": {
+    "label": "// AHSARAH REGION",
+    "title": "Ahsarah Regional Situation",
+    "subtitle": "Full operational situation and faction distribution across the Ahsarah Peninsula",
+    "toolbar": "TACTICAL MAP v2.0",
+    "canvasHint": "LMB Rotate · RMB Pan · Scroll Zoom",
+    "legend": {
+      "title": "Faction Distribution",
+      "symbols": {
+        "military": "Military",
+        "city": "City",
+        "facility": "Facility"
+      }
+    },
+    "factions": {
+      "havoc": "Havoc Group",
+      "asara": "Ahsarah Guard",
+      "contested": "Contested",
+      "unknown": "Unknown",
+      "gti": "G.T.I."
+    },
+    "locationTypes": {
+      "city": "City",
+      "military": "Military",
+      "poi": "Facility",
+      "landmark": "Landmark"
+    },
+    "locations": {
+      "markajesh": "Markajesh",
+      "baksh": "Baksh",
+      "zalvatt": "Zalvatt",
+      "zero-dam": "Zero Dam",
+      "longbow": "Longbow Valley",
+      "space-base": "Space Base",
+      "radar": "Havoc Radar",
+      "chaoxing": "Chaoxing Station",
+      "storage": "Storage Station",
+      "tide-prison": "Tide Prison",
+      "canal": "Umm's Canal",
+      "gti-outpost": "GTI Outpost"
+    },
+    "locationDescs": {
+      "markajesh": "Capital of the Ahsarah Kingdom, a core area contested by multiple factions",
+      "baksh": "Headquarters of the Havoc Group in the Ahsarah region",
+      "zalvatt": "Ancient ruins in Ahsarah, faction ownership unknown",
+      "zero-dam": "Key water facility on the Umm River, controlled by the Ahsarah Guard",
+      "longbow": "Downstream area of Zero Dam, fiercely contested between the Ahsarah Guard and Havoc",
+      "space-base": "Havoc's space launch facility near the equator, a key node of the Babel Tower Plan",
+      "radar": "Havoc early warning radar facility in Longbow Valley",
+      "chaoxing": "Transportation hub controlled by Havoc",
+      "storage": "Havoc military supplies storage facility",
+      "tide-prison": "Island prison under Havoc control, where exiled prince \"Raven\" plots an uprising",
+      "canal": "Strategic waterway, control contested by multiple factions",
+      "gti-outpost": "GTI's forward operating base in the Ahsarah region"
+    }
+  },
+  "structure": {
+    "label": "// STRUCTURE",
+    "title": "Organizational Structure",
+    "subtitle": "An efficient anti-terrorism combat system under the Standing Committee's collective leadership",
+    "commandTitle": "Supreme Command",
+    "commandSubtitle": "Standing Committee Collective Leadership",
+    "commandDetail": "Composed of members appointed by the Security Council, with full authority over all major organizational decisions. Members are nominally accountable to the Security Council, but in practice possess highly independent decision-making authority.",
+    "commanderLabel": "Current Commander",
+    "commanderName": "Lt. Gen. Dominic Santiago",
+    "departmentsTitle": "Affiliated Bodies",
+    "departments": [
+      {
+        "name": "Standing Committee",
+        "desc": "Composed of members appointed by the Security Council, with full authority over organizational decisions"
+      },
+      {
+        "name": "Military Staff Committee",
+        "desc": "Composed of senior officers dispatched by member nations, responsible for operational planning and tactical coordination"
+      },
+      {
+        "name": "Independent Supervision Office",
+        "desc": "Nominally responsible for internal audit and compliance oversight, subject to the Standing Committee"
+      },
+      {
+        "name": "Special Operations Division",
+        "desc": "Front-line combat force composed of operators from all unit types, the player's operational unit"
+      }
+    ],
+    "branchesTitle": "Global Divisions",
+    "branches": ["North America", "Asia", "Oceania", "Africa"]
+  },
+  "operators": {
+    "label": "// OPERATORS",
+    "title": "Elite Operators",
+    "subtitle": "Divided into four unit types by tactical function: Assault, Support, Engineer, Recon",
+    "detail": {
+      "close": "Close",
+      "rank": "Rank",
+      "age": "Age",
+      "dob": "Date of Birth",
+      "height": "Height",
+      "weight": "Weight",
+      "affiliation": "Affiliation",
+      "background": "Background",
+      "classified": "CLASSIFIED",
+      "classifiedSub": "Detailed profile unavailable for this operator"
+    },
+    "classes": {
+      "assault": {
+        "name": "Assault",
+        "nameEn": "Assault",
+        "description": "Front-line assault core, overwhelming enemies with speed and firepower"
+      },
+      "support": {
+        "name": "Support",
+        "nameEn": "Support",
+        "description": "Battlefield medical and tactical support, ensuring sustained team operations"
+      },
+      "engineer": {
+        "name": "Engineer",
+        "nameEn": "Engineer",
+        "description": "Trap deployment and outpost defense, controlling the battlefield environment"
+      },
+      "recon": {
+        "name": "Recon",
+        "nameEn": "Recon",
+        "description": "Intelligence gathering and battlefield reconnaissance, tracking enemy movements"
+      }
+    },
+    "list": {
+      "honglang": {
+        "codename": "Red Wolf",
+        "name": "Kai Silva",
+        "role": "Front-line Operations Captain",
+        "bio": "GTI front-line operations captain, exoskeleton assault core",
+        "profile": {
+          "rank": "Major",
+          "age": "29",
+          "dob": "29 April 2006",
+          "height": "183 cm",
+          "weight": "82 kg",
+          "affiliation": "G.T.I. North America Division",
+          "class": "Assault",
+          "background": "Red Wolf was born in a conflict zone and endured the ravages of war throughout his childhood. His father, Karl Huston, a decorated veteran of Delta Force, adopted the infant Kai in 2007 during an operation. When Red Wolf was twelve, his father was killed in action. Driven by his father's creed of \"protection\", Red Wolf enlisted and, in 2024, passed the Delta Force selection as the youngest candidate in the unit's history.",
+          "desertSpring": "In 2034, during Operation \"Desert Spring\" in North Africa, Red Wolf disobeyed a strict cease-fire order to rescue a trapped young girl, sustaining severe injuries to both legs in the process.",
+          "joingti": "The injury would have ended most military careers, but G.T.I. Commander Dominic Santiago recognized his exceptional combat instincts and field judgment. Red Wolf was recruited into G.T.I. and became the first operational user of the organization's powered exoskeleton system.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Red Wolf's combat kit is built around his powered exoskeleton, emphasizing extreme mobility and breakthrough capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Powered Exoskeleton",
+            "desc": "Activated via a wrist-mounted controller, the exoskeleton temporarily boosts movement speed, rate of fire, and slide distance. Eliminating enemies restores health and extends the overload duration."
+          },
+          "active": {
+            "name": "Active Skill: Triple Grenade Launcher",
+            "desc": "Fires three high-explosive grenades with an effective range of approximately 80 meters, dealing area-of-effect damage with fracture and concussive effects. Grenades ricochet off obstacles and adhere to vehicles."
+          },
+          "throwable": {
+            "name": "Throwable: Tactical Smoke Grenade",
+            "desc": "Deploys a rapid-expansion smoke screen lasting approximately 8 seconds, used to cover advances or retreats."
+          },
+          "passive": {
+            "name": "Passive Skill: Tactical Slide",
+            "desc": "Triggered by crouching while sprinting. This is the core of Red Wolf's high-mobility combat style, enabling rapid repositioning, fire evasion, and close-quarters engagement."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Flanker and battlefield harvester. Red Wolf uses superior mobility to flank or encircle enemy positions, disrupting formations and isolated targets.",
+          "engagement": "Engagement sequence: suppress at range with the grenade launcher → activate exoskeleton for a high-speed advance → close the gap with tactical slide to secure eliminations.",
+          "weapons": "Recommended weapons: SMGs (e.g., MP5) and shotguns, complementing his close-range, high-tempo combat style."
+        }
+      },
+      "weilong": {
+        "codename": "Wyvern",
+        "name": "Yuhao Wang",
+        "role": "Mobile Assault Main Force",
+        "bio": "Former carrier-based aircraft pilot, mobile assault main force"
+      },
+      "die": {
+        "codename": "Butterfly",
+        "name": "Lena van der Meer",
+        "role": "Nano-Medical Specialist",
+        "bio": "Former Havoc researcher, nano-medical specialist"
+      },
+      "gu": {
+        "codename": "Venom",
+        "name": "Zoya Ponchenkova",
+        "role": "Neuroscientist",
+        "bio": "Relink brain-computer interface co-founder, neuroscientist"
+      },
+      "fengyi": {
+        "codename": "Medic",
+        "name": "Roy Smee",
+        "role": "Field Medical Support",
+        "bio": "Field medical support"
+      },
+      "muyangren": {
+        "codename": "Shepherd",
+        "name": "Terri Mewshaw",
+        "role": "Defense Specialist",
+        "bio": "Trap deployment and outpost defense specialist"
+      },
+      "bite": {
+        "codename": "Bit",
+        "name": "Rashid Rahal",
+        "role": "Mechanical Prodigy",
+        "bio": "Ahsarah native mechanical prodigy"
+      },
+      "wulululu": {
+        "codename": "Uluru",
+        "name": "David Ferrier",
+        "role": "Engineering Operator",
+        "bio": "Oceania engineering operator"
+      },
+      "shenlan": {
+        "codename": "Deep Blue",
+        "name": "Alexei Petrov",
+        "role": "Engineering Operator",
+        "bio": "Engineering operator"
+      },
+      "luna": {
+        "codename": "Luna",
+        "name": "—",
+        "role": "Recon Operator",
+        "bio": "Recon operator"
+      },
+      "haizhua": {
+        "codename": "Hacker",
+        "name": "—",
+        "role": "Recon Operator",
+        "bio": "Recon operator"
+      },
+      "yinyi": {
+        "codename": "Silver Wing",
+        "name": "—",
+        "role": "Recon Operator",
+        "bio": "Recon operator"
+      }
+    }
+  },
+  "operations": {
+    "label": "// OPERATIONS",
+    "title": "Major Operations",
+    "subtitle": "Key military operations in the Ahsarah region, 2035",
+    "status": {
+      "success": "Success",
+      "failure": "Failed",
+      "ongoing": "Ongoing"
+    },
+    "list": {
+      "diamond": {
+        "name": "Operation Diamond Hotel",
+        "description": "An intense operation to contest the Mandel Brick. GTI operators infiltrated behind enemy lines, ultimately ending in failure."
+      },
+      "ascender": {
+        "name": "Operation Ascender",
+        "description": "An attempt to prevent Havoc's rocket launch plan and implant GTI's self-developed \"Minerva\" program, ultimately ending in failure."
+      },
+      "echo": {
+        "name": "Operation Echo",
+        "description": "A complex espionage game surrounding a mole within GTI's leadership. Intelligence leaks led to the operation's failure."
+      },
+      "ouroboros": {
+        "name": "Operation Ouroboros",
+        "description": "A large-scale purge operation launched to recover the Mandel Brick, which failed to achieve its core objective."
+      }
+    }
+  },
+  "relations": {
+    "label": "// RELATIONS",
+    "title": "Faction Relations",
+    "subtitle": "A complex landscape of international power games",
+    "factions": {
+      "havoc": {
+        "name": "Havoc Group",
+        "nameEn": "HAVOC",
+        "relation": "Full Confrontation",
+        "description": "The world's highest-valued tech corporation, combining terrorist activities with military expansion. GTI's primary target. Secretly develops high-value military technologies like the Mandel Brick, whose \"Babel Tower Plan\" poses a fundamental threat to global security."
+      },
+      "assara": {
+        "name": "Ahsarah Guard",
+        "nameEn": "ASSARA",
+        "relation": "Three-Way Conflict",
+        "description": "Ahsarah's indigenous armed force, resisting both the Havoc Group's invasion and control, and firmly opposing external intervention in its territorial sovereignty. Forms a complex three-way power game with GTI."
+      },
+      "un": {
+        "name": "United Nations",
+        "nameEn": "UNITED NATIONS",
+        "relation": "Nominal Affiliation",
+        "description": "Established by Security Council authorization with legal basis, nominally responsible for budget framework management. Actual command operates independently, forming a unique \"principal-agent\" governance structure."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Global Terrorism Intervention",
+    "motto": "\"Leave No One Behind\"",
+    "navTitle": "Navigation",
+    "moreTitle": "More",
+    "links": {
+      "about": "About GTI",
+      "history": "History",
+      "structure": "Structure",
+      "operators": "Elite Operators",
+      "operations": "Major Operations",
+      "relations": "Faction Relations"
+    },
+    "copyright": "This archive is compiled by fans for enthusiasts' reference only",
+    "disclaimer": "G.T.I. and Delta Force related settings belong to the official game"
+  }
+}

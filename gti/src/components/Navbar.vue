@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 
-const navItems = [
-  { id: 'about', label: '关于' },
-  { id: 'history', label: '历史' },
-  { id: 'structure', label: '架构' },
-  { id: 'operators', label: '干员' },
-  { id: 'operations', label: '行动' },
-  { id: 'relations', label: '势力' },
-]
+const navItemKeys = ['about', 'history', 'resolution', 'situation', 'structure', 'operators', 'operations', 'relations'] as const
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 20
@@ -23,6 +19,12 @@ const scrollTo = (id: string) => {
     el.scrollIntoView({ behavior: 'smooth' })
     isMobileMenuOpen.value = false
   }
+}
+
+const toggleLocale = () => {
+  const next = locale.value === 'zh' ? 'en' : 'zh'
+  locale.value = next
+  localStorage.setItem('locale', next)
 }
 
 onMounted(() => {
@@ -47,31 +49,37 @@ onUnmounted(() => {
         </div>
         <span class="brand-text">
           <span class="brand-gti">G.T.I.</span>
-          <span class="brand-sub">全球反恐特勤组</span>
+          <span class="brand-sub">{{ t('nav.brand') }}</span>
         </span>
       </div>
 
       <div class="navbar-links" :class="{ open: isMobileMenuOpen }">
         <a
-          v-for="item in navItems"
-          :key="item.id"
+          v-for="key in navItemKeys"
+          :key="key"
           class="nav-link"
-          @click.prevent="scrollTo(item.id)"
+          @click.prevent="scrollTo(key)"
         >
-          {{ item.label }}
+          {{ t(`nav.items.${key}`) }}
         </a>
       </div>
 
-      <button
-        class="mobile-toggle"
-        :class="{ active: isMobileMenuOpen }"
-        @click="isMobileMenuOpen = !isMobileMenuOpen"
-        aria-label="Toggle menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <div class="navbar-actions">
+        <button class="lang-switch" @click="toggleLocale" :aria-label="t('nav.langSwitch')">
+          {{ t('nav.langSwitch') }}
+        </button>
+
+        <button
+          class="mobile-toggle"
+          :class="{ active: isMobileMenuOpen }"
+          @click="isMobileMenuOpen = !isMobileMenuOpen"
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
   </nav>
 </template>
@@ -179,6 +187,33 @@ onUnmounted(() => {
   width: 100%;
 }
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.lang-switch {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 36px;
+  text-align: center;
+}
+
+.lang-switch:hover {
+  border-color: var(--color-accent);
+  background: rgba(201, 168, 76, 0.08);
+}
+
 .mobile-toggle {
   display: none;
   flex-direction: column;
@@ -186,7 +221,11 @@ onUnmounted(() => {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 12px;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobile-toggle span {
@@ -218,9 +257,12 @@ onUnmounted(() => {
     top: var(--nav-height);
     left: 0;
     right: 0;
+    bottom: 0;
     background: rgba(10, 12, 16, 0.95);
     backdrop-filter: blur(20px);
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: var(--space-xl);
     gap: var(--space-md);
     border-bottom: 1px solid var(--color-border);
@@ -228,12 +270,32 @@ onUnmounted(() => {
     opacity: 0;
     pointer-events: none;
     transition: transform var(--transition-base), opacity var(--transition-base);
+    overflow-y: auto;
   }
 
   .navbar-links.open {
     transform: translateY(0);
     opacity: 1;
     pointer-events: all;
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
+    padding: var(--space-sm) 0;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar-links {
+    gap: var(--space-md);
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
+  }
+
+  .brand-sub {
+    display: none;
   }
 }
 </style>

@@ -1,0 +1,463 @@
+{
+  "nav": {
+    "brand": "全球反恐特勤组",
+    "items": {
+      "about": "关于",
+      "history": "历史",
+      "resolution": "决议",
+      "situation": "态势",
+      "structure": "架构",
+      "operators": "干员",
+      "operations": "行动",
+      "relations": "势力"
+    },
+    "langSwitch": "EN"
+  },
+  "hero": {
+    "badge": "CLASSIFIED // LEVEL-7 CLEARANCE",
+    "subtitle": "全球反恐特勤组",
+    "motto": "不让任何一个人掉队",
+    "description": [
+      "独立于联合国现有维和体系之外的全球性反恐机动力量",
+      "应对全球性恐怖主义威胁，维护国际和平与区域稳定"
+    ],
+    "stats": {
+      "year": "成立年份",
+      "classes": "兵种类别",
+      "operators": "精英干员",
+      "scope": "部署范围",
+      "scopeValue": "全球"
+    },
+    "cta": "了解更多"
+  },
+  "about": {
+    "label": "// OVERVIEW",
+    "title": "关于 G.T.I.",
+    "subtitle": "全球反恐特勤组 — 独立于联合国维和体系之外的全球性反恐机动力量",
+    "cards": {
+      "global": {
+        "title": "全球部署",
+        "text": "在全球设有多处分部，包括北美分部、亚洲分部、大洋洲分部、非洲分部等，干员来自各成员国，可快速响应全球任意区域的恐怖主义威胁。"
+      },
+      "legal": {
+        "title": "合法授权",
+        "text": "经联合国安理会决议正式成立，在人事、预算与行动指挥上保有高度自主权，拥有采取一切必要手段维护地区稳定的合法授权。"
+      },
+      "elite": {
+        "title": "精英干员",
+        "text": "精锐武装核心最初抽调自美军三角洲特种部队，随后通过各成员国派遣制度，逐步吸纳来自全球的特战精英，组成世界顶尖特战力量。"
+      },
+      "mission": {
+        "title": "核心使命",
+        "text": "遏制哈夫克集团对全球安全的威胁，争夺并控制曼德尔砖，阻止哈夫克秘密实验，破坏\"巴别塔计划\"，瓦解其太空军事布局。"
+      }
+    }
+  },
+  "history": {
+    "label": "// HISTORY",
+    "title": "历史沿革",
+    "subtitle": "从摩加迪沙之殇到全球反恐特勤组的诞生",
+    "events": {
+      "1993": {
+        "title": "摩加迪沙之殇",
+        "description": "美军三角洲特种部队在索马里\"哥特蛇\"行动中遭遇重大失败，\"黑鹰坠落\"事件暴露了国际社会应对地区危机的制度性缺陷，成为GTI创立的精神原点。"
+      },
+      "1993-2018": {
+        "title": "漫长的国际磋商",
+        "description": "经历索马里危机后，国际社会对建立可快速部署、拥有合法授权、具备顶尖作战能力的全球反恐力量进行了长达二十五年的讨论与制度设计。"
+      },
+      "2018": {
+        "title": "G.T.I. 正式成立",
+        "description": "经联合国安理会决议，全球反恐特勤组（Global Terrorism Intervention）正式成立。组织独立于联合国现有维和体系之外，在人事、预算与行动指挥上保有高度自主权。"
+      },
+      "2032": {
+        "title": "介入阿萨拉地区",
+        "description": "鉴于阿萨拉地区局势持续恶化，联合国安理会授权G.T.I.进驻该地区，采取一切必要手段维护地区稳定。这标志着GTI从理论走向全面实战部署。"
+      },
+      "2035": {
+        "title": "全面对抗哈夫克",
+        "description": "GTI派遣精英干员深入阿萨拉，全面调查哈夫克集团非法活动。\"钻石酒店\"行动、飞升者行动、\"回响\"行动相继展开，与哈夫克集团的全面对抗进入白热化阶段。"
+      }
+    }
+  },
+  "resolution": {
+    "label": "// AUTHORIZATION",
+    "title": "安理会授权决议",
+    "orgName": "联合国",
+    "orgNameEn": "UNITED NATIONS",
+    "meta": {
+      "council": "安全理事会",
+      "councilEn": "SECURITY COUNCIL",
+      "number": "决议编号",
+      "date": "通过日期",
+      "dateValue": "2032年3月17日"
+    },
+    "docTitle": "关于授权全球反恐特勤组（G.T.I.）\n进驻阿萨拉地区并采取一切必要手段\n维护地区稳定的决议",
+    "preamble": {
+      "recalls": "回顾",
+      "recallsText": "其以往关于阿萨拉地区局势的各项决议和主席声明，",
+      "reaffirms": "重申",
+      "reaffirmsText": "对阿萨拉共和国主权、独立、统一和领土完整的坚定承诺，",
+      "concerned": "严重关切",
+      "concernedText": "哈夫克集团在该地区日益猖獗的军事化活动对国际和平与安全构成的严重威胁，",
+      "noting": "注意到",
+      "notingText": "哈夫克集团研发并部署的\"曼德尔砖\"高价值军事计算模块可能改变地区军事平衡，",
+      "condemning": "谴责",
+      "condemningText": "哈夫克集团一切形式的恐怖主义行为及其对平民造成的伤亡，",
+      "emphasizing": "强调",
+      "emphasizingText": "有必要在阿萨拉地区部署一支具备快速反应能力、拥有合法授权的国际反恐力量，",
+      "determining": "认定",
+      "determiningText": "阿萨拉地区局势对国际和平与安全构成威胁，",
+      "acting": "根据",
+      "actingText": "《联合国宪章》第七章采取行动，"
+    },
+    "operative": {
+      "heading": "兹决定如下：",
+      "nums": ["一、", "二、", "三、", "四、", "五、", "六、", "七、", "八、"],
+      "items": [
+        {
+          "verb": "授权",
+          "text": "全球反恐特勤组（G.T.I.）作为独立于联合国现有维和体系之外的全球性反恐机动力量，进驻阿萨拉地区，执行维护地区稳定之任务；"
+        },
+        {
+          "verb": "授权",
+          "text": "G.T.I.在阿萨拉地区采取一切必要手段，包括但不限于武力使用，以遏制哈夫克集团的恐怖主义活动及其军事扩张行为；"
+        },
+        {
+          "verb": "要求",
+          "text": "哈夫克集团立即停止一切恐怖主义活动、秘密实验及军事化部署，包括但不限于\"巴别塔计划\"及其太空军事布局；"
+        },
+        {
+          "verb": "敦促",
+          "text": "所有会员国与G.T.I.充分合作，为其部署和行动提供必要便利，包括过境许可、后勤支援及情报共享；"
+        },
+        {
+          "verb": "决定",
+          "text": "G.T.I.之运营预算由所有成员国按比例平摊，列入联合国维和预算框架科目，接受名义上之预算管理；"
+        },
+        {
+          "verb": "确认",
+          "text": "G.T.I.常务委员会对组织行动享有全权决策权限，安理会不对其具体行动实施实时干预；"
+        },
+        {
+          "verb": "请",
+          "text": "G.T.I.定期向安全理事会提交行动报告，并在任务完成后提交全面评估；"
+        },
+        {
+          "verb": "决定",
+          "text": "继续积极处理此案。"
+        }
+      ]
+    },
+    "vote": {
+      "label": "表决结果",
+      "yes": "赞成：15",
+      "no": "反对：0",
+      "abstain": "弃权：0",
+      "note": "第 9287 次会议一致通过"
+    }
+  },
+  "situation": {
+    "label": "// AHSARAH REGION",
+    "title": "阿萨拉地区态势",
+    "subtitle": "阿萨拉半岛全域作战态势与势力分布",
+    "toolbar": "TACTICAL MAP v2.0",
+    "canvasHint": "LMB 旋转 · RMB 平移 · Scroll 缩放",
+    "legend": {
+      "title": "势力分布",
+      "symbols": {
+        "military": "军事",
+        "city": "城市",
+        "facility": "设施"
+      }
+    },
+    "factions": {
+      "havoc": "哈夫克集团",
+      "asara": "阿萨拉卫队",
+      "contested": "多方争夺",
+      "unknown": "势力不明",
+      "gti": "G.T.I."
+    },
+    "locationTypes": {
+      "city": "城市",
+      "military": "军事",
+      "poi": "设施",
+      "landmark": "地标"
+    },
+    "locations": {
+      "markajesh": "马尔卡杰耶什",
+      "baksh": "巴克什",
+      "zalvatt": "扎尔瓦特古城",
+      "zero-dam": "零号大坝",
+      "longbow": "长弓溪谷",
+      "space-base": "航天基地",
+      "radar": "哈夫克雷达站",
+      "chaoxing": "超星车站",
+      "storage": "储藏站",
+      "tide-prison": "潮汐监狱",
+      "canal": "乌姆斯运河",
+      "gti-outpost": "G.T.I. 前哨"
+    },
+    "locationDescs": {
+      "markajesh": "阿萨拉王国首都，多方势力争夺的核心区域",
+      "baksh": "哈夫克集团在阿萨拉地区的总部所在地",
+      "zalvatt": "阿萨拉境内古城遗址，势力归属不明",
+      "zero-dam": "乌姆河上的关键水利设施，由阿萨拉卫队控制",
+      "longbow": "零号大坝下游区域，阿萨拉卫队与哈夫克激烈争夺",
+      "space-base": "靠近赤道的哈夫克航天发射设施，巴别塔计划关键节点",
+      "radar": "位于长弓溪谷内的哈夫克早期预警雷达设施",
+      "chaoxing": "哈夫克控制的交通运输枢纽",
+      "storage": "哈夫克军事物资储存设施",
+      "tide-prison": "孤岛监狱，哈夫克关押重刑犯之地，流亡王子\"渡鸦\"密谋起义",
+      "canal": "战略水道，多方势力争夺控制权",
+      "gti-outpost": "GTI在阿萨拉地区的前沿作战基地"
+    }
+  },
+  "structure": {
+    "label": "// STRUCTURE",
+    "title": "组织架构",
+    "subtitle": "常务委员会集体领导制下的高效反恐作战体系",
+    "commandTitle": "最高指挥层",
+    "commandSubtitle": "常务委员会集体领导制",
+    "commandDetail": "由联合国安理会指派委员组成，全权负责组织所有重大决策。委员在法理上向安理会负责，但在实际操作中拥有高度独立的决策权限。",
+    "commanderLabel": "现任总指挥",
+    "commanderName": "多米尼克·圣地亚哥 中将",
+    "departmentsTitle": "附属机构",
+    "departments": [
+      {
+        "name": "常务委员会",
+        "desc": "由安理会指派委员组成，全权负责组织决策"
+      },
+      {
+        "name": "军事参谋团",
+        "desc": "由各成员国派遣高级军官组成，负责作战计划制定与战术协调"
+      },
+      {
+        "name": "独立监察办公室",
+        "desc": "名义上负责内部审计与合规监督，受常务委员会节制"
+      },
+      {
+        "name": "特勤处",
+        "desc": "一线作战力量，由各兵种干员组成，即玩家所在作战单元"
+      }
+    ],
+    "branchesTitle": "全球分部",
+    "branches": ["北美分部", "亚洲分部", "大洋洲分部", "非洲分部"]
+  },
+  "operators": {
+    "label": "// OPERATORS",
+    "title": "精英干员",
+    "subtitle": "按战术职能划分为突击、支援、工程、侦察四大兵种",
+    "detail": {
+      "close": "关闭",
+      "rank": "军衔",
+      "age": "年龄",
+      "dob": "出生日期",
+      "height": "身高",
+      "weight": "体重",
+      "affiliation": "所属",
+      "background": "背景故事",
+      "classified": "机密",
+      "classifiedSub": "该干员详细档案暂未开放"
+    },
+    "classes": {
+      "assault": {
+        "name": "突击",
+        "nameEn": "Assault",
+        "description": "前线突击核心，以速度与火力压制敌人"
+      },
+      "support": {
+        "name": "支援",
+        "nameEn": "Support",
+        "description": "战场医疗与战术支援，保障团队持续作战"
+      },
+      "engineer": {
+        "name": "工程",
+        "nameEn": "Engineer",
+        "description": "陷阱布置与据点防御，掌控战场环境"
+      },
+      "recon": {
+        "name": "侦察",
+        "nameEn": "Recon",
+        "description": "情报收集与战场侦察，掌握敌方动向"
+      }
+    },
+    "list": {
+      "honglang": {
+        "codename": "红狼",
+        "name": "凯·席尔瓦",
+        "role": "前线行动队长",
+        "bio": "GTI前线行动队长，外骨骼突击核心",
+        "profile": {
+          "rank": "少校",
+          "age": "29",
+          "dob": "2006年4月29日",
+          "height": "183 cm",
+          "weight": "82 kg",
+          "affiliation": "G.T.I. 北美分部",
+          "class": "突击型",
+          "background": "红狼出生在战乱地区，童年饱受战火摧残。他的父亲卡尔·休斯敦是三角洲特种部队的功勋老兵，于2007年在一次行动中收养了还是婴儿的凯。父亲在红狼12岁时牺牲，受父亲「守护」信念的影响，红狼于2024年以最年轻学员身份通过三角洲部队选拔。",
+          "desertSpring": "2034年，红狼在北非执行「沙漠之泉」任务时，为营救一名被困小女孩，违抗「严禁开火」的命令，导致双腿负伤。",
+          "joingti": "这次负伤本可能终结他的军旅生涯，但G.T.I.总指挥多米尼克·圣地亚哥看中了他的作战技巧和判断力，招募了他。红狼也因此成为G.T.I.单兵动力外骨骼的首位使用者。",
+          "skillsTitle": "技能与战术装备",
+          "skillsIntro": "红狼的技能体系围绕其动力外骨骼构建，强调高机动性和突破能力。",
+          "equipment": {
+            "name": "战术装备：动力外骨骼",
+            "desc": "通过腕部启动器激活，短时间内大幅提升移速、射速和滑铲距离。击败敌人可恢复生命值并延长超载时间。"
+          },
+          "active": {
+            "name": "主动技能：三联装手炮",
+            "desc": "发射三发高爆榴弹，射程约80米，造成范围伤害并附带骨折、眩晕效果。榴弹碰到障碍物会反弹，击中载具会吸附。"
+          },
+          "throwable": {
+            "name": "投掷物：战术烟雾弹",
+            "desc": "投掷后快速生成烟雾，持续约8秒，用于掩护冲刺或撤退。"
+          },
+          "passive": {
+            "name": "被动技能：战术滑铲",
+            "desc": "奔跑时按下蹲键触发，是红狼高机动性的核心，可用于快速转移、规避火力和近战缠斗。"
+          },
+          "playstyleTitle": "战斗特性",
+          "playstyle": "侧翼突击手、战场收割者。利用高机动性绕后或侧翼突袭，打乱敌方阵型。",
+          "engagement": "作战风格：远程用手炮压制→ 开启外骨骼加速突进→ 利用滑铲接近完成击杀。",
+          "weapons": "武器推荐：冲锋枪（如MP5）和霰弹枪，契合其近距离高速作战的风格。"
+        }
+      },
+      "weilong": {
+        "codename": "威龙",
+        "name": "王宇昊",
+        "role": "机动突击主力",
+        "bio": "前舰载机飞行员，机动突击主力"
+      },
+      "die": {
+        "codename": "蝶",
+        "name": "莉娜·范德梅尔",
+        "role": "纳米医疗专家",
+        "bio": "原哈夫克研究员，纳米医疗专家"
+      },
+      "gu": {
+        "codename": "蛊",
+        "name": "佐娅·庞琴科娃",
+        "role": "神经科学家",
+        "bio": "Relink脑机接口联合创始人，神经科学家"
+      },
+      "fengyi": {
+        "codename": "蜂医",
+        "name": "罗伊·斯米",
+        "role": "战地医疗支援",
+        "bio": "战地医疗支援"
+      },
+      "muyangren": {
+        "codename": "牧羊人",
+        "name": "泰瑞·缪萨",
+        "role": "防御专家",
+        "bio": "陷阱布置与据点防御专家"
+      },
+      "bite": {
+        "codename": "比特",
+        "name": "拉希德·拉哈尔",
+        "role": "机械天才",
+        "bio": "阿萨拉本土机械天才"
+      },
+      "wulululu": {
+        "codename": "乌鲁鲁",
+        "name": "大卫·费莱尔",
+        "role": "工程干员",
+        "bio": "大洋洲工程干员"
+      },
+      "shenlan": {
+        "codename": "深蓝",
+        "name": "阿列克谢·彼得罗夫",
+        "role": "工程干员",
+        "bio": "工程干员"
+      },
+      "luna": {
+        "codename": "露娜",
+        "name": "—",
+        "role": "侦察干员",
+        "bio": "侦察干员"
+      },
+      "haizhua": {
+        "codename": "骇爪",
+        "name": "—",
+        "role": "侦察干员",
+        "bio": "侦察干员"
+      },
+      "yinyi": {
+        "codename": "银翼",
+        "name": "—",
+        "role": "侦察干员",
+        "bio": "侦察干员"
+      }
+    }
+  },
+  "operations": {
+    "label": "// OPERATIONS",
+    "title": "主要行动",
+    "subtitle": "2035年阿萨拉地区关键军事行动记录",
+    "status": {
+      "success": "成功",
+      "failure": "失利",
+      "ongoing": "进行中"
+    },
+    "list": {
+      "diamond": {
+        "name": "钻石酒店行动",
+        "description": "争夺曼德尔砖的激烈行动，GTI干员深入敌后展开角逐，最终以失利告终。"
+      },
+      "ascender": {
+        "name": "飞升者行动",
+        "description": "阻止哈夫克火箭发射计划，试图植入GTI自主开发的\"密涅瓦\"（Minerva）程序，最终以失败告终。"
+      },
+      "echo": {
+        "name": "回响行动",
+        "description": "围绕GTI高层内鬼展开的复杂谍战博弈，情报泄露导致行动失败。"
+      },
+      "ouroboros": {
+        "name": "衔尾蛇行动",
+        "description": "为追回曼德尔砖发起的大规模肃清行动，未能达成核心目标。"
+      }
+    }
+  },
+  "relations": {
+    "label": "// RELATIONS",
+    "title": "势力关系",
+    "subtitle": "错综复杂的国际博弈格局",
+    "factions": {
+      "havoc": {
+        "name": "哈夫克集团",
+        "nameEn": "HAVOC",
+        "relation": "全面对抗",
+        "description": "全球市值最高的科技企业，兼具恐怖活动与军事扩张属性，GTI核心打击目标。秘密研发曼德尔砖等高价值军事技术，其\"巴别塔计划\"对全球安全构成根本性威胁。"
+      },
+      "assara": {
+        "name": "阿萨拉卫队",
+        "nameEn": "ASSARA",
+        "relation": "三方混战",
+        "description": "阿萨拉本土武装力量，既反抗哈夫克集团的侵略与控制，又坚决抗拒外部势力介入其领土主权。与GTI形成复杂的三方博弈格局。"
+      },
+      "un": {
+        "name": "联合国",
+        "nameEn": "UNITED NATIONS",
+        "relation": "名义隶属",
+        "description": "安理会授权成立并提供法理依据，名义上负责预算框架管理。实际指挥独立运作，形成独特的\"委托-代理\"治理结构。"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "全球反恐特勤组",
+    "motto": "不让任何一个人掉队",
+    "navTitle": "导航",
+    "moreTitle": "更多",
+    "links": {
+      "about": "关于 GTI",
+      "history": "历史沿革",
+      "structure": "组织架构",
+      "operators": "精英干员",
+      "operations": "主要行动",
+      "relations": "势力关系"
+    },
+    "copyright": "本档案为粉丝站整理编制，仅供爱好者参考使用",
+    "disclaimer": "G.T.I. 及《三角洲行动》相关设定版权归属游戏官方"
+  }
+}

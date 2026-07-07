@@ -1,29 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useScrollReveal } from '../composables/useScrollReveal'
 
+const { t, tm } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 useScrollReveal(sectionRef)
-
-const departments = [
-  { name: '常务委员会', desc: '由安理会指派委员组成，全权负责组织决策', icon: '◆' },
-  { name: '军事参谋团', desc: '由各成员国派遣高级军官组成，负责作战计划制定与战术协调', icon: '◈' },
-  { name: '独立监察办公室', desc: '名义上负责内部审计与合规监督，受常务委员会节制', icon: '◇' },
-  { name: '特勤处', desc: '一线作战力量，由各兵种干员组成，即玩家所在作战单元', icon: '◉' },
-]
-
-const branches = ['北美分部', '亚洲分部', '大洋洲分部', '非洲分部']
 </script>
 
 <template>
   <section id="structure" ref="sectionRef" class="section structure">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">// STRUCTURE</span>
-        <h2 class="section-title">组织架构</h2>
+        <span class="section-label">{{ t('structure.label') }}</span>
+        <h2 class="section-title">{{ t('structure.title') }}</h2>
         <div class="divider"></div>
         <p class="section-subtitle">
-          常务委员会集体领导制下的高效反恐作战体系
+          {{ t('structure.subtitle') }}
         </p>
       </div>
 
@@ -38,18 +31,12 @@ const branches = ['北美分部', '亚洲分部', '大洋洲分部', '非洲分�
                 </svg>
               </div>
               <div>
-                <h3 class="command-title">最高指挥层</h3>
-                <p class="command-subtitle">常务委员会集体领导制</p>
+                <h3 class="command-title">{{ t('structure.commandTitle') }}</h3>
+                <p class="command-subtitle">{{ t('structure.commandSubtitle') }}</p>
               </div>
             </div>
             <div class="command-detail">
-              <p>
-                由联合国安理会指派委员组成，全权负责组织所有重大决策。委员在法理上向安理会负责，但在实际操作中拥有高度独立的决策权限。
-              </p>
-              <div class="command-note">
-                <span class="note-label">制度张力</span>
-                <span>委员会名义上由安理会指派，但一旦任命后"全权负责"，实质上切断了安理会对具体行动的实时干预通道。</span>
-              </div>
+              <p>{{ t('structure.commandDetail') }}</p>
             </div>
           </div>
 
@@ -61,18 +48,32 @@ const branches = ['北美分部', '亚洲分部', '大洋洲分部', '非洲分�
               </svg>
             </div>
             <div>
-              <span class="commander-label">现任总指挥</span>
-              <h4 class="commander-name">多米尼克·圣地亚哥 中将</h4>
+              <span class="commander-label">{{ t('structure.commanderLabel') }}</span>
+              <h4 class="commander-name">{{ t('structure.commanderName') }}</h4>
             </div>
           </div>
         </div>
 
         <div class="structure-side">
           <div class="departments reveal">
-            <h4 class="side-title">附属机构</h4>
+            <h4 class="side-title">{{ t('structure.departmentsTitle') }}</h4>
             <div class="dept-list">
-              <div v-for="dept in departments" :key="dept.name" class="dept-item">
-                <span class="dept-icon">{{ dept.icon }}</span>
+              <div v-for="(dept, idx) in (tm('structure.departments') as any[])" :key="idx" class="dept-item">
+                <span class="dept-icon">
+                  <svg v-if="idx === 0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                  <svg v-else-if="idx === 1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 7l4-4 4 4-4 4M3 17l4 4 4-4"/>
+                  </svg>
+                  <svg v-else-if="idx === 2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                  </svg>
+                  <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                  </svg>
+                </span>
                 <div>
                   <h5 class="dept-name">{{ dept.name }}</h5>
                   <p class="dept-desc">{{ dept.desc }}</p>
@@ -82,9 +83,9 @@ const branches = ['北美分部', '亚洲分部', '大洋洲分部', '非洲分�
           </div>
 
           <div class="branches reveal">
-            <h4 class="side-title">全球分部</h4>
+            <h4 class="side-title">{{ t('structure.branchesTitle') }}</h4>
             <div class="branch-grid">
-              <div v-for="branch in branches" :key="branch" class="branch-tag">
+              <div v-for="(branch, idx) in (tm('structure.branches') as string[])" :key="idx" class="branch-tag">
                 {{ branch }}
               </div>
             </div>
@@ -150,25 +151,6 @@ const branches = ['北美分部', '亚洲分部', '大洋洲分部', '非洲分�
   color: var(--color-text-secondary);
   line-height: 1.7;
   margin-bottom: var(--space-md);
-}
-
-.command-note {
-  background: rgba(201, 168, 76, 0.05);
-  border-left: 2px solid var(--color-accent);
-  padding: var(--space-md);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-size: 0.85rem;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-}
-
-.note-label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--color-accent);
-  letter-spacing: 0.1em;
-  margin-bottom: var(--space-xs);
 }
 
 .commander-info {
@@ -242,9 +224,15 @@ const branches = ['北美分部', '亚洲分部', '大洋洲分部', '非洲分�
 
 .dept-icon {
   color: var(--color-accent);
-  font-size: 1.2rem;
-  line-height: 1;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
   margin-top: 2px;
+}
+
+.dept-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .dept-name {
@@ -292,6 +280,22 @@ const branches = ['北美分部', '亚洲分部', '大洋洲分部', '非洲分�
 
 @media (max-width: 768px) {
   .structure-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .command-card,
+  .departments,
+  .branches {
+    padding: var(--space-lg);
+  }
+
+  .commander-info {
+    padding: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .branch-grid {
     grid-template-columns: 1fr;
   }
 }

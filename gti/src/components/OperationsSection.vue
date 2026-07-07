@@ -1,37 +1,30 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useScrollReveal } from '../composables/useScrollReveal'
 import { operations } from '../data/operations'
 
+const { t } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 useScrollReveal(sectionRef)
-
-const getStatusLabel = (status: string) => {
-  const map: Record<string, string> = {
-    success: '成功',
-    failure: '失利',
-    ongoing: '进行中',
-  }
-  return map[status] || status
-}
 </script>
 
 <template>
   <section id="operations" ref="sectionRef" class="section operations">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">// OPERATIONS</span>
-        <h2 class="section-title">主要行动</h2>
+        <span class="section-label">{{ t('operations.label') }}</span>
+        <h2 class="section-title">{{ t('operations.title') }}</h2>
         <div class="divider"></div>
         <p class="section-subtitle">
-          2035年阿萨拉地区关键军事行动记录
+          {{ t('operations.subtitle') }}
         </p>
       </div>
 
       <div class="operations-list">
         <div
           v-for="(op, index) in operations"
-          :key="op.name"
+          :key="op.key"
           class="operation-card reveal"
         >
           <div class="op-index">
@@ -41,16 +34,16 @@ const getStatusLabel = (status: string) => {
             <div class="op-header">
               <div>
                 <span class="op-year">{{ op.year }}</span>
-                <h3 class="op-name">{{ op.name }}</h3>
+                <h3 class="op-name">{{ t(`operations.list.${op.key}.name`) }}</h3>
               </div>
               <span
                 class="op-status"
                 :class="op.status"
               >
-                {{ getStatusLabel(op.status) }}
+                {{ t(`operations.status.${op.status}`) }}
               </span>
             </div>
-            <p class="op-desc">{{ op.description }}</p>
+            <p class="op-desc">{{ t(`operations.list.${op.key}.description`) }}</p>
           </div>
         </div>
       </div>
@@ -165,11 +158,27 @@ const getStatusLabel = (status: string) => {
   .operation-card {
     flex-direction: column;
     gap: var(--space-md);
+    padding: var(--space-lg);
   }
 
   .op-index {
     width: auto;
     justify-content: flex-start;
+  }
+
+  .op-header {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .op-status {
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .operation-card {
+    padding: var(--space-md);
   }
 }
 </style>

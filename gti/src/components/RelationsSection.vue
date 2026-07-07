@@ -1,66 +1,48 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useScrollReveal } from '../composables/useScrollReveal'
 
+const { t } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 useScrollReveal(sectionRef)
 
-const factions = [
-  {
-    name: '哈夫克集团',
-    nameEn: 'HAVOC',
-    relation: '全面对抗',
-    description: '全球市值最高的科技企业，兼具恐怖活动与军事扩张属性，GTI核心打击目标。秘密研发曼德尔砖等高价值军事技术，其"巴别塔计划"对全球安全构成根本性威胁。',
-    color: 'var(--color-havoc)',
-    icon: '⚔',
-  },
-  {
-    name: '阿萨拉卫队',
-    nameEn: 'ASSARA',
-    relation: '三方混战',
-    description: '阿萨拉本土武装力量，既反抗哈夫克集团的侵略与控制，又坚决抗拒外部势力介入其领土主权。与GTI形成复杂的三方博弈格局。',
-    color: 'var(--color-assara)',
-    icon: '⛊',
-  },
-  {
-    name: '联合国',
-    nameEn: 'UNITED NATIONS',
-    relation: '名义隶属',
-    description: '安理会授权成立并提供法理依据，名义上负责预算框架管理。实际指挥独立运作，形成独特的"委托-代理"治理结构。',
-    color: 'var(--color-text-secondary)',
-    icon: '◈',
-  },
-]
+const factionKeys = ['havoc', 'assara', 'un'] as const
+const factionMeta: Record<string, { color: string; icon: string }> = {
+  havoc: { color: 'var(--color-havoc)', icon: '⚔' },
+  assara: { color: 'var(--color-assara)', icon: '⛊' },
+  un: { color: 'var(--color-text-secondary)', icon: '◈' },
+}
 </script>
 
 <template>
   <section id="relations" ref="sectionRef" class="section relations">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">// RELATIONS</span>
-        <h2 class="section-title">势力关系</h2>
+        <span class="section-label">{{ t('relations.label') }}</span>
+        <h2 class="section-title">{{ t('relations.title') }}</h2>
         <div class="divider"></div>
         <p class="section-subtitle">
-          错综复杂的国际博弈格局
+          {{ t('relations.subtitle') }}
         </p>
       </div>
 
       <div class="relations-grid stagger-children">
         <div
-          v-for="faction in factions"
-          :key="faction.name"
+          v-for="key in factionKeys"
+          :key="key"
           class="faction-card"
-          :style="{ '--faction-color': faction.color }"
+          :style="{ '--faction-color': factionMeta[key].color }"
         >
           <div class="faction-header">
-            <div class="faction-icon">{{ faction.icon }}</div>
+            <div class="faction-icon">{{ factionMeta[key].icon }}</div>
             <div class="faction-identity">
-              <h3 class="faction-name">{{ faction.name }}</h3>
-              <span class="faction-name-en">{{ faction.nameEn }}</span>
+              <h3 class="faction-name">{{ t(`relations.factions.${key}.name`) }}</h3>
+              <span class="faction-name-en">{{ t(`relations.factions.${key}.nameEn`) }}</span>
             </div>
-            <span class="faction-relation">{{ faction.relation }}</span>
+            <span class="faction-relation">{{ t(`relations.factions.${key}.relation`) }}</span>
           </div>
-          <p class="faction-desc">{{ faction.description }}</p>
+          <p class="faction-desc">{{ t(`relations.factions.${key}.description`) }}</p>
           <div class="faction-indicator"></div>
         </div>
       </div>
@@ -75,7 +57,7 @@ const factions = [
 
 .relations-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: var(--space-xl);
 }
 
@@ -160,6 +142,23 @@ const factions = [
 @media (max-width: 768px) {
   .relations-grid {
     grid-template-columns: 1fr;
+  }
+
+  .faction-card {
+    padding: var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .faction-header {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .faction-relation {
+    order: -1;
+    width: 100%;
+    text-align: center;
   }
 }
 </style>

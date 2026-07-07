@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useScrollReveal } from '../composables/useScrollReveal'
 
+const { t } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 useScrollReveal(sectionRef)
 
@@ -20,48 +22,48 @@ const scrollToAbout = () => {
     <div class="hero-content container">
       <div class="hero-badge reveal">
         <span class="badge-dot"></span>
-        <span>CLASSIFIED // LEVEL-7 CLEARANCE</span>
+        <span>{{ t('hero.badge') }}</span>
       </div>
 
       <h1 class="hero-title reveal">
         <span class="hero-title-line">G<span class="title-dot">.</span>T<span class="title-dot">.</span>I<span class="title-dot">.</span></span>
-        <span class="hero-title-sub">全球反恐特勤组</span>
+        <span class="hero-title-sub">{{ t('hero.subtitle') }}</span>
       </h1>
 
       <p class="hero-motto reveal">
-        "不让任何一个人掉队"
+        "{{ t('hero.motto') }}"
       </p>
 
       <p class="hero-description reveal">
-        独立于联合国现有维和体系之外的全球性反恐机动力量<br />
-        应对全球性恐怖主义威胁，维护国际和平与区域稳定
+        <span class="desc-line">{{ t('hero.description[0]') }}</span>
+        <span class="desc-line">{{ t('hero.description[1]') }}</span>
       </p>
 
       <div class="hero-stats reveal">
         <div class="stat">
           <span class="stat-value">2018</span>
-          <span class="stat-label">成立年份</span>
+          <span class="stat-label">{{ t('hero.stats.year') }}</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-value">4</span>
-          <span class="stat-label">兵种类别</span>
+          <span class="stat-label">{{ t('hero.stats.classes') }}</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-value">14+</span>
-          <span class="stat-label">精英干员</span>
+          <span class="stat-label">{{ t('hero.stats.operators') }}</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
-          <span class="stat-value">全球</span>
-          <span class="stat-label">部署范围</span>
+          <span class="stat-value">{{ t('hero.stats.scopeValue') }}</span>
+          <span class="stat-label">{{ t('hero.stats.scope') }}</span>
         </div>
       </div>
 
       <div class="hero-cta reveal">
         <a href="#about" class="btn-primary" @click.prevent="scrollToAbout">
-          <span>了解更多</span>
+          <span>{{ t('hero.cta') }}</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -176,10 +178,15 @@ const scrollToAbout = () => {
 }
 
 .hero-description {
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 2vw, 1rem);
   color: var(--color-text-secondary);
   line-height: 1.8;
   margin-bottom: var(--space-3xl);
+  padding: 0 var(--space-md);
+}
+
+.desc-line {
+  display: block;
 }
 
 .hero-stats {
@@ -257,6 +264,20 @@ const scrollToAbout = () => {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: 100dvh;
+  }
+
+  .hero-content {
+    padding-top: calc(var(--nav-height) + var(--space-lg));
+    padding-bottom: var(--space-3xl);
+  }
+
+  .hero-badge {
+    font-size: 0.6rem;
+    margin-bottom: var(--space-lg);
+  }
+
   .hero-stats {
     gap: var(--space-md);
   }
@@ -265,8 +286,64 @@ const scrollToAbout = () => {
     display: none;
   }
 
+  .hero-cta {
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-scroll-indicator {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    text-align: center;
+  }
+
+  .hero-title-sub {
+    letter-spacing: 0.2em;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    min-height: auto;
+    padding: var(--space-xl) 0;
+  }
+
+  .hero-content {
+    padding-top: var(--space-lg);
+  }
+
   .hero-badge {
-    font-size: 0.6rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-title {
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero-motto {
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-description {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-stats {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-cta {
+    margin-bottom: 0;
+  }
+
+  .hero-scroll-indicator {
+    display: none;
   }
 }
 </style>

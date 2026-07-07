@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useScrollReveal } from '../composables/useScrollReveal'
-import { historyEvents } from '../data/history'
 
+const { t } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 useScrollReveal(sectionRef)
+
+const eventKeys = ['1993', '1993-2018', '2018', '2032', '2035'] as const
 </script>
 
 <template>
   <section id="history" ref="sectionRef" class="section history">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">// HISTORY</span>
-        <h2 class="section-title">历史沿革</h2>
+        <span class="section-label">{{ t('history.label') }}</span>
+        <h2 class="section-title">{{ t('history.title') }}</h2>
         <div class="divider"></div>
         <p class="section-subtitle">
-          从摩加迪沙之殇到全球反恐特勤组的诞生
+          {{ t('history.subtitle') }}
         </p>
       </div>
 
@@ -23,18 +26,18 @@ useScrollReveal(sectionRef)
         <div class="timeline-line"></div>
 
         <div
-          v-for="(event, index) in historyEvents"
-          :key="event.year"
+          v-for="(key, index) in eventKeys"
+          :key="key"
           class="timeline-item reveal"
-          :class="{ highlight: event.highlight, right: index % 2 !== 0 }"
+          :class="{ highlight: key === '2018' || key === '2035', right: index % 2 !== 0 }"
         >
           <div class="timeline-dot">
             <div class="dot-inner"></div>
           </div>
           <div class="timeline-content">
-            <span class="timeline-year">{{ event.year }}</span>
-            <h3 class="timeline-title">{{ event.title }}</h3>
-            <p class="timeline-desc">{{ event.description }}</p>
+            <span class="timeline-year">{{ key }}</span>
+            <h3 class="timeline-title">{{ t(`history.events.${key}.title`) }}</h3>
+            <p class="timeline-desc">{{ t(`history.events.${key}.description`) }}</p>
           </div>
         </div>
       </div>
@@ -142,18 +145,37 @@ useScrollReveal(sectionRef)
 
 @media (max-width: 768px) {
   .timeline-line {
-    left: 20px;
+    left: 16px;
   }
 
   .timeline-item,
   .timeline-item.right {
-    padding-left: 50px;
+    padding-left: 42px;
     padding-right: 0;
     flex-direction: row;
+    margin-bottom: var(--space-xl);
   }
 
   .timeline-dot {
-    left: 20px;
+    left: 16px;
+  }
+
+  .timeline-content {
+    padding: var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-content {
+    padding: var(--space-md);
+  }
+
+  .timeline-title {
+    font-size: 1rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.85rem;
   }
 }
 </style>

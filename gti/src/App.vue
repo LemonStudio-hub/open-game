@@ -3,6 +3,8 @@ import Navbar from './components/Navbar.vue'
 import HeroSection from './components/HeroSection.vue'
 import AboutSection from './components/AboutSection.vue'
 import HistorySection from './components/HistorySection.vue'
+import ResolutionSection from './components/ResolutionSection.vue'
+import SituationSection from './components/SituationSection.vue'
 import StructureSection from './components/StructureSection.vue'
 import OperatorsSection from './components/OperatorsSection.vue'
 import OperationsSection from './components/OperationsSection.vue'
@@ -16,6 +18,8 @@ import FooterSection from './components/FooterSection.vue'
     <HeroSection />
     <AboutSection />
     <HistorySection />
+    <ResolutionSection />
+    <SituationSection />
     <StructureSection />
     <OperatorsSection />
     <OperationsSection />
@@ -25,5 +29,4 @@ import FooterSection from './components/FooterSection.vue'
 </template>
 
 <style>
-/* Remove default style.css imports - using global.css instead */
 </style>

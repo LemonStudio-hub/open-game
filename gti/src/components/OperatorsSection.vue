@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useScrollReveal } from '../composables/useScrollReveal'
 import { operators, operatorClasses } from '../data/operators'
+import OperatorDetail from './OperatorDetail.vue'
 
+const { t } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 useScrollReveal(sectionRef)
 
 const activeClass = ref<string>('assault')
+const selectedOperator = ref<string | null>(null)
 
 const filteredOperators = computed(() =>
   operators.filter((op) => op.class === activeClass.value)
@@ -16,8 +20,24 @@ const currentClassInfo = computed(() =>
   operatorClasses.find((c) => c.id === activeClass.value)
 )
 
+const selectedOperatorData = computed(() => {
+  if (!selectedOperator.value) return null
+  const op = operators.find((o) => o.key === selectedOperator.value)
+  if (!op) return null
+  const cls = operatorClasses.find((c) => c.id === op.class)
+  return { key: op.key, class: op.class, color: cls?.color ?? 'var(--color-accent)' }
+})
+
 const setClass = (classId: string) => {
   activeClass.value = classId
+}
+
+const openDetail = (opKey: string) => {
+  selectedOperator.value = opKey
+}
+
+const closeDetail = () => {
+  selectedOperator.value = null
 }
 </script>
 
@@ -25,11 +45,11 @@ const setClass = (classId: string) => {
   <section id="operators" ref="sectionRef" class="section operators">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">// OPERATORS</span>
-        <h2 class="section-title">精英干员</h2>
+        <span class="section-label">{{ t('operators.label') }}</span>
+        <h2 class="section-title">{{ t('operators.title') }}</h2>
         <div class="divider"></div>
         <p class="section-subtitle">
-          按战术职能划分为突击、支援、工程、侦察四大兵种
+          {{ t('operators.subtitle') }}
         </p>
       </div>
 
@@ -42,21 +62,22 @@ const setClass = (classId: string) => {
           :style="activeClass === cls.id ? { '--tab-color': cls.color } : {}"
           @click="setClass(cls.id)"
         >
-          <span class="tab-name">{{ cls.name }}</span>
-          <span class="tab-name-en">{{ cls.nameEn }}</span>
+          <span class="tab-name">{{ t(`operators.classes.${cls.id}.name`) }}</span>
+          <span class="tab-name-en">{{ t(`operators.classes.${cls.id}.nameEn`) }}</span>
         </button>
       </div>
 
       <div class="class-description reveal">
-        <p :style="{ color: currentClassInfo?.color }">{{ currentClassInfo?.description }}</p>
+        <p :style="{ color: currentClassInfo?.color }">{{ t(`operators.classes.${currentClassInfo?.id}.description`) }}</p>
       </div>
 
       <div class="operators-grid stagger-children">
         <div
           v-for="op in filteredOperators"
-          :key="op.codename"
+          :key="op.key"
           class="operator-card"
           :style="{ '--card-color': currentClassInfo?.color }"
+          @click="openDetail(op.key)"
         >
           <div class="operator-avatar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -65,17 +86,23 @@ const setClass = (classId: string) => {
             </svg>
           </div>
           <div class="operator-info">
-            <span class="operator-codename">{{ op.codename }}</span>
-            <span class="operator-name">{{ op.name }}</span>
-            <span class="operator-role">{{ op.role }}</span>
+            <span class="operator-codename">{{ t(`operators.list.${op.key}.codename`) }}</span>
+            <span class="operator-name">{{ t(`operators.list.${op.key}.name`) }}</span>
+            <span class="operator-role">{{ t(`operators.list.${op.key}.role`) }}</span>
           </div>
           <div class="operator-bio">
-            <p>{{ op.bio }}</p>
+            <p>{{ t(`operators.list.${op.key}.bio`) }}</p>
           </div>
           <div class="operator-class-indicator" :style="{ background: currentClassInfo?.color }"></div>
         </div>
       </div>
     </div>
+
+    <OperatorDetail
+      v-if="selectedOperatorData"
+      :operator="selectedOperatorData"
+      @close="closeDetail"
+    />
   </section>
 </template>
 
@@ -85,11 +112,13 @@ const setClass = (classId: string) => {
 }
 
 .class-tabs {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-sm);
   margin-bottom: var(--space-xl);
-  flex-wrap: wrap;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .class-tab {
@@ -97,7 +126,7 @@ const setClass = (classId: string) => {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: var(--space-sm) var(--space-xl);
+  padding: var(--space-sm) var(--space-md);
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -139,7 +168,7 @@ const setClass = (classId: string) => {
 
 .operators-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: var(--space-lg);
 }
 
@@ -151,6 +180,7 @@ const setClass = (classId: string) => {
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .operator-card:hover {
@@ -219,5 +249,19 @@ const setClass = (classId: string) => {
 
 .operator-card:hover .operator-class-indicator {
   opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .class-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .class-tab {
+    padding: var(--space-sm);
+  }
+
+  .operator-card {
+    padding: var(--space-lg);
+  }
 }
 </style>

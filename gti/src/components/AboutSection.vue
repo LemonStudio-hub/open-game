@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useScrollReveal } from '../composables/useScrollReveal'
 
+const { t } = useI18n()
 const sectionRef = ref<HTMLElement | null>(null)
 useScrollReveal(sectionRef)
 </script>
@@ -10,11 +12,11 @@ useScrollReveal(sectionRef)
   <section id="about" ref="sectionRef" class="section about">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-label">// OVERVIEW</span>
-        <h2 class="section-title">关于 G.T.I.</h2>
+        <span class="section-label">{{ t('about.label') }}</span>
+        <h2 class="section-title">{{ t('about.title') }}</h2>
         <div class="divider"></div>
         <p class="section-subtitle">
-          全球反恐特勤组 — 独立于联合国维和体系之外的全球性反恐机动力量
+          {{ t('about.subtitle') }}
         </p>
       </div>
 
@@ -26,9 +28,9 @@ useScrollReveal(sectionRef)
               <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
             </svg>
           </div>
-          <h3 class="card-title">全球部署</h3>
+          <h3 class="card-title">{{ t('about.cards.global.title') }}</h3>
           <p class="card-text">
-            在全球设有多处分部，包括北美分部、亚洲分部、大洋洲分部、非洲分部等，干员来自各成员国，可快速响应全球任意区域的恐怖主义威胁。
+            {{ t('about.cards.global.text') }}
           </p>
         </div>
 
@@ -38,9 +40,9 @@ useScrollReveal(sectionRef)
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
           </div>
-          <h3 class="card-title">合法授权</h3>
+          <h3 class="card-title">{{ t('about.cards.legal.title') }}</h3>
           <p class="card-text">
-            经联合国安理会决议正式成立，在人事、预算与行动指挥上保有高度自主权，拥有采取一切必要手段维护地区稳定的合法授权。
+            {{ t('about.cards.legal.text') }}
           </p>
         </div>
 
@@ -52,9 +54,9 @@ useScrollReveal(sectionRef)
               <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
             </svg>
           </div>
-          <h3 class="card-title">精英干员</h3>
+          <h3 class="card-title">{{ t('about.cards.elite.title') }}</h3>
           <p class="card-text">
-            精锐武装核心最初抽调自美军三角洲特种部队，随后通过各成员国派遣制度，逐步吸纳来自全球的特战精英，组成世界顶尖特战力量。
+            {{ t('about.cards.elite.text') }}
           </p>
         </div>
 
@@ -64,9 +66,9 @@ useScrollReveal(sectionRef)
               <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
             </svg>
           </div>
-          <h3 class="card-title">核心使命</h3>
+          <h3 class="card-title">{{ t('about.cards.mission.title') }}</h3>
           <p class="card-text">
-            遏制哈夫克集团对全球安全的威胁，争夺并控制曼德尔砖，阻止哈夫克秘密实验，破坏"巴别塔计划"，瓦解其太空军事布局。
+            {{ t('about.cards.mission.text') }}
           </p>
         </div>
       </div>
@@ -81,7 +83,7 @@ useScrollReveal(sectionRef)
 
 .about-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: var(--space-xl);
 }
 
@@ -141,5 +143,17 @@ useScrollReveal(sectionRef)
   font-size: 0.9rem;
   color: var(--color-text-secondary);
   line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+  .about-card {
+    padding: var(--space-lg);
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: var(--space-md);
+  }
 }
 </style>

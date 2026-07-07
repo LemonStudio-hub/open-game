@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
 <template>
   <footer class="footer">
     <div class="container">
@@ -11,32 +17,32 @@
             </svg>
             <span class="footer-gti">G.T.I.</span>
           </div>
-          <p class="footer-tagline">全球反恐特勤组</p>
-          <p class="footer-motto">"不让任何一个人掉队"</p>
+          <p class="footer-tagline">{{ t('footer.tagline') }}</p>
+          <p class="footer-motto">"{{ t('footer.motto') }}"</p>
         </div>
 
         <div class="footer-links">
           <div class="footer-column">
-            <h4 class="footer-col-title">导航</h4>
-            <a href="#about">关于 GTI</a>
-            <a href="#history">历史沿革</a>
-            <a href="#structure">组织架构</a>
+            <h4 class="footer-col-title">{{ t('footer.navTitle') }}</h4>
+            <a href="#about">{{ t('footer.links.about') }}</a>
+            <a href="#history">{{ t('footer.links.history') }}</a>
+            <a href="#structure">{{ t('footer.links.structure') }}</a>
           </div>
           <div class="footer-column">
-            <h4 class="footer-col-title">更多</h4>
-            <a href="#operators">精英干员</a>
-            <a href="#operations">主要行动</a>
-            <a href="#relations">势力关系</a>
+            <h4 class="footer-col-title">{{ t('footer.moreTitle') }}</h4>
+            <a href="#operators">{{ t('footer.links.operators') }}</a>
+            <a href="#operations">{{ t('footer.links.operations') }}</a>
+            <a href="#relations">{{ t('footer.links.relations') }}</a>
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
         <p class="footer-copyright">
-          本档案为粉丝站整理编制，仅供爱好者参考使用
+          {{ t('footer.copyright') }}
         </p>
         <p class="footer-disclaimer">
-          G.T.I. 及《三角洲行动》相关设定版权归属游戏官方
+          {{ t('footer.disclaimer') }}
         </p>
       </div>
     </div>
@@ -96,6 +102,7 @@
 .footer-links {
   display: flex;
   gap: var(--space-3xl);
+  flex-wrap: wrap;
 }
 
 .footer-column {
@@ -144,6 +151,21 @@
   .footer-top {
     flex-direction: column;
     gap: var(--space-2xl);
+  }
+
+  .footer-links {
+    gap: var(--space-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-links {
+    gap: var(--space-xl);
+  }
+
+  .footer-column {
+    min-width: 0;
+    flex: 1;
   }
 }
 </style>
