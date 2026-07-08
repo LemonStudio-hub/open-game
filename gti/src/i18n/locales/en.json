@@ -336,67 +336,521 @@
         "codename": "Wyvern",
         "name": "Yuhao Wang",
         "role": "Mobile Assault Main Force",
-        "bio": "Former carrier-based aircraft pilot, mobile assault main force"
+        "bio": "Former carrier-based aircraft pilot, mobile assault core",
+        "profile": {
+          "rank": "Captain",
+          "age": "27",
+          "dob": "14 September 2008",
+          "height": "178 cm",
+          "weight": "75 kg",
+          "affiliation": "G.T.I. Asia Division",
+          "class": "Assault",
+          "background": "Yuhao Wang demonstrated exceptional spatial awareness and physical coordination from an early age. Selected as a youth for the Naval Aviation Academy, he completed carrier landing qualifications with the highest scores in his cohort, becoming one of the youngest carrier-based fighter pilots in the service. Years of high-intensity carrier operations forged extraordinary equilibrium, G-force tolerance, and split-second reaction speed.",
+          "desertSpring": "During a night carrier landing exercise, a catastrophic hydraulic failure rendered Wang's arresting hook completely inoperative. Drawing on extraordinary airmanship, he executed a manual emergency recovery under extreme conditions, preserving both the aircraft and his own life. The incident drew the attention of G.T.I.'s Technical Assessment Division.",
+          "joingti": "When G.T.I. initiated its Individual Kinetic Assist System — the jet pack program — the organization urgently required a test pilot possessing superior high-altitude adaptability and extreme G-force endurance. Wang's distinguished flight record and physiological profile made him the prime candidate, and he was formally transferred to the G.T.I. Asia Division. After rigorous ground and aerial acclimatization training, he became the first operator to achieve operational deployment with the jet pack system, integrating aircraft control principles into ground-level high-speed maneuver warfare and establishing a new paradigm in assault tactics.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Wyvern's combat framework is built around the Individual Kinetic Assist System, emphasizing three-dimensional high-speed mobility and vertical strike capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Kinetic Assist System",
+            "desc": "A back-mounted jet propulsion unit capable of delivering powerful horizontal or vertical thrust in short bursts, enabling high-speed advances, aerial hovering, and rapid repositioning. An integrated stabilization module maintains firing accuracy during high-speed maneuvers."
+          },
+          "active": {
+            "name": "Active Skill: Crouching Tiger Cannon",
+            "desc": "Fires a high-pressure compressed air projectile that generates a powerful shockwave on impact, displacing enemy personnel and inducing momentary loss of balance. Effective for breaking through defensive lines, flushing targets from cover, or disrupting enemy formations."
+          },
+          "throwable": {
+            "name": "Throwable: Magnetic Sticky Bomb",
+            "desc": "A directional demolition charge equipped with a strong magnetic adhesion module. Upon throwing, it firmly attaches to any metallic surface or vehicle and detonates after a timed delay. Suited for anti-vehicle operations, area denial, and precision target elimination."
+          },
+          "passive": {
+            "name": "Passive Skill: Rapid Displacement",
+            "desc": "The passive effect of the Kinetic Assist System significantly reduces fall damage during high-speed movement while enhancing base movement speed. This trait grants Wyvern superior mobility efficiency across complex terrain compared to standard operators."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "High-speed breakthrough specialist and vertical assault core. Wyvern leverages the jet pack to penetrate via unconventional vectors, striking from angles the enemy does not anticipate, excelling at disrupting defensive lines and rapidly withdrawing to regroup.",
+          "engagement": "Engagement sequence: close the distance rapidly or seize elevated positions using the jet pack → disrupt enemy formations with the Crouching Tiger Cannon → eliminate priority targets with Magnetic Sticky Bombs → disengage at high speed.",
+          "weapons": "Recommended weapons: assault rifles (e.g., M4A1) and SMGs, balancing mid- to close-range engagements to complement his high-tempo assault-and-contact fighting rhythm."
+        }
       },
       "die": {
         "codename": "Butterfly",
         "name": "Lena van der Meer",
         "role": "Nano-Medical Specialist",
-        "bio": "Former Havoc researcher, nano-medical specialist"
+        "bio": "Former Havoc researcher, nano-medical specialist",
+        "profile": {
+          "rank": "Lieutenant",
+          "age": "31",
+          "dob": "7 March 2004",
+          "height": "170 cm",
+          "weight": "58 kg",
+          "affiliation": "G.T.I. Europe Division",
+          "class": "Support",
+          "background": "Lena van der Meer was born into a family of physicians in Europe and displayed a natural aptitude for biomedical science from childhood. She earned her doctorate in Nano-Bioengineering with distinction; her doctoral thesis, \"Clinical Viability of Nano-Scale Targeted Repair Systems\", garnered widespread academic attention. Upon graduation, she was recruited by the Havoc Group's Biotechnology Division to lead research and development in nano-medical repair technology, becoming the youngest core project director in the field.",
+          "desertSpring": "During her tenure at Havoc, Lena gradually discovered that her research had been covertly repurposed for military applications — nano-technology was being weaponized into battlefield enhancement serums rather than the civilian medical treatments she had envisioned. When she attempted to expose the truth, she was placed under house arrest and surveillance by Havoc Group. Exploiting an internal security lapse, she escaped with core research data and was nearly eliminated by a Havoc kill squad during extraction. She was ultimately rescued by a G.T.I. Europe Division special operations team.",
+          "joingti": "G.T.I. accorded the highest priority to the nano-medical technology Lena carried. In recognition of her exceptional expertise and invaluable insight into Havoc's internal operations, G.T.I. formally granted her operator status under the codename \"Butterfly\" — a symbol of metamorphosis and rebirth. She redirected her nano-technology toward battlefield medical aid, developing the Butterfly Drone tactical rescue system that has become an irreplaceable pillar of G.T.I.'s support framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Butterfly's combat framework is built around nano-medical technology and autonomous drone platforms, emphasizing sustained battlefield rescue and team survivability.",
+          "equipment": {
+            "name": "Tactical Equipment: Butterfly Rescue Drone Swarm",
+            "desc": "Deploys a swarm of butterfly-shaped autonomous rescue drones that fly to downed teammates and execute remote revivals automatically. The drones can absorb one explosion during the rescue process, ensuring the revival is not interrupted. Holding the ability button directs the drones to heal the operator herself."
+          },
+          "active": {
+            "name": "Active Skill: Nano-Medical Dust",
+            "desc": "Launches a cloud of nano-medical particles that adhere to a teammate or the operator, continuously restoring health. The healing rate exceeds that of standard medical devices and persists even while the target is mobile, making it ideal for sustaining allies during intense firefights."
+          },
+          "throwable": {
+            "name": "Throwable: Remote-Controlled Fog",
+            "desc": "Upon deployment, generates a dense smoke barrier whose landing point and dispersal direction can be manually adjusted via remote control. Offers superior controllability and precision compared to conventional smoke grenades, useful for covering rescues, obstructing enemy sightlines, or creating tactical decoys."
+          },
+          "passive": {
+            "name": "Passive Skill: Vital Signs Detection",
+            "desc": "Automatically monitors the vital signs of all teammates within a defined radius. When a teammate's health drops to a critical threshold, the system provides real-time alerting. This passive capability enables Butterfly to intervene before teammates are downed, achieving preventive medical response."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Positional support anchor and team sustain specialist. Butterfly's core value lies in maintaining the entire squad's combat endurance — through remote drone revivals and continuous nano-dust healing, she keeps the team operational through prolonged, high-intensity engagements.",
+          "engagement": "Engagement sequence: anticipate teammate contact vectors and pre-deploy smoke → sustain frontline allies with Nano-Medical Dust → execute remote revives via drone for downed teammates → reposition proactively based on Vital Signs Detection alerts.",
+          "weapons": "Recommended weapons: SMGs (e.g., UMP45) and sidearms, emphasizing self-defense capability consistent with her rear-line support role and avoidance of direct firefights."
+        }
       },
       "gu": {
         "codename": "Venom",
         "name": "Zoya Ponchenkova",
         "role": "Neuroscientist",
-        "bio": "Relink brain-computer interface co-founder, neuroscientist"
+        "bio": "Relink brain-computer interface co-founder, neuroscientist",
+        "profile": {
+          "rank": "Lieutenant",
+          "age": "28",
+          "dob": "3 November 2007",
+          "height": "168 cm",
+          "weight": "56 kg",
+          "affiliation": "G.T.I. Eastern Europe Division",
+          "class": "Support",
+          "background": "Zoya Ponchenkova was born in Saint Petersburg into a family with a deep military tradition; all three of her elder brothers served on the front lines. As a youth, Zoya was rebellious and outspoken, dreaming of forming a rock band with her brothers and harboring no interest in a military career. The cruelty of war, however, shattered that dream utterly — her eldest brother was killed in action, and the other two sustained severe injuries. This family tragedy compelled her to devote herself to neurochemical research, determined to use science to protect the lives of frontline soldiers.",
+          "desertSpring": "Zoya's breakthrough成果 in neurostimulant technology earned her a direct commission into the SSO Special Forces. During a high-intensity engagement, she personally tested a self-developed adrenaline activation device, successfully enabling her squad to break through an enemy encirclement before ammunition was exhausted. The operation cemented her reputation within the military research establishment. However, her ideological rift with a former research partner — now the head of Havoc Group's Relink brain-computer interface project — widened steadily, ultimately driving them into opposing camps.",
+          "joingti": "After evaluating Zoya's neurostimulant technology, G.T.I. determined it held irreplaceable strategic value in the battlefield support domain. Zoya formally joined the G.T.I. Eastern Europe Division under the codename \"Venom.\" She fused neurochemistry with drone technology to develop the Firefly Swarm System, capable of penetrating cover to disrupt enemy perception and reduce their maximum health, while simultaneously boosting allied combat effectiveness through adrenaline activation devices — establishing herself as a uniquely versatile composite operator within G.T.I.'s support framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Venom's combat framework is built around neurochemical technology and drone swarms, emphasizing suppression of enemy perception and amplification of allied combat capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Firefly Swarm System",
+            "desc": "Deploys a swarm of micro-drones that penetrate cover to disrupt the perception systems of enemy personnel along their path, blurring their vision and reducing maximum health. Simultaneously briefly activates the adrenaline of friendly personnel along the route, enhancing weapon handling speed and reaction time."
+          },
+          "active": {
+            "name": "Active Skill: Adrenaline Activation",
+            "desc": "Deploys an adrenaline activation device that provides sustained weapon handling buffs to nearby friendly personnel, significantly improving firing stability and reload speed. Most effective during the firepower suppression phase of high-intensity engagements."
+          },
+          "throwable": {
+            "name": "Throwable: Blinding Toxic Fog",
+            "desc": "Upon deployment, releases a large-area blinding toxic fog that creates a visual obscuration zone. Enemy personnel entering the fog suffer severely limited vision and sustained disruption. Useful for blocking passages, covering retreats, or coordinating breach operations."
+          },
+          "passive": {
+            "name": "Passive Skill: Battlefield Medical Optimization",
+            "desc": "Reduces healing time on teammates and shortens injury recovery intervals, enabling Venom to maintain squad-wide health more efficiently during sustained operations and enhancing overall team endurance."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Battlefield tempo controller and offensive-defensive amplifier. Venom weakens enemy combat power through Firefly drones while reinforcing allied output with adrenaline devices, holding decisive advantage in wars of attrition and positional warfare.",
+          "engagement": "Engagement sequence: Firefly drones penetrate cover to weaken enemies → Blinding Toxic Fog obstructs enemy sightlines → Adrenaline Activation boosts teammate firepower → continuous healing sustains frontline pressure.",
+          "weapons": "Recommended weapons: assault rifles and SMGs, balancing mid-range engagement with self-defense, consistent with her rear-line support and battlefield tempo control role."
+        }
       },
       "fengyi": {
         "codename": "Medic",
         "name": "Roy Smee",
-        "role": "Field Medical Support",
-        "bio": "Field medical support"
+        "role": "Combat Medic",
+        "bio": "Combat medic core, team sustain specialist",
+        "profile": {
+          "rank": "Captain",
+          "age": "33",
+          "dob": "18 June 2002",
+          "height": "180 cm",
+          "weight": "79 kg",
+          "affiliation": "G.T.I. North America Division",
+          "class": "Support",
+          "background": "Roy Smee grew up in an impoverished neighborhood in North America, running with street gangs as a youth and earning a reputation for reckless defiance. A brutal street brawl in which he watched a young man bleed out from lack of medical attention became his turning point. He resolved to change his life, gaining admission to medical school through sheer determination and specializing in battlefield emergency medicine. After graduation, he joined Doctors Without Borders, accumulating extensive field medical experience across multiple conflict zones.",
+          "desertSpring": "During a humanitarian relief mission in an African conflict zone, Roy's medical team came under武装 attack by militants. Under fire, he held a position alone behind cover, using hormone injectors to administer emergency treatment to seven critically wounded personnel — all of whom survived. The incident was formally documented by the military, and G.T.I. flagged his extraordinary record when screening battlefield medical talent.",
+          "joingti": "As one of the earliest support operators recruited by G.T.I., Roy became an indispensable core member through his extensive combat medical experience and calm field judgment. His codename \"Medic\" evokes the tireless守护 of a worker bee守护 its hive. Combining traditional battlefield急救 with Honeycomb technology, he developed the Smoke Drone and Hormone Gun systems, capable of completing a rapid revival of a downed teammate in 1.4 seconds — establishing himself as the founding pillar of G.T.I.'s support framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Medic's combat framework is built around高效 battlefield急救 and smoke obscuration, emphasizing rapid rescue and team survivability.",
+          "equipment": {
+            "name": "Tactical Equipment: Hormone Gun",
+            "desc": "A specialized medical injection device that fires hormone syringes远程 to restore teammate health, or self-administer treatment. Requires no reload and is always ready, serving as Medic's core tool for maintaining the team's lifeline."
+          },
+          "active": {
+            "name": "Active Skill: Smoke Drone",
+            "desc": "Deploys a smoke drone that flies along a designated path while continuously释放 smoke屏障. The drone generates a large-area obscuration zone while in motion, used to cover rescue operations, obstruct enemy sightlines, or provide safe passage for team movement."
+          },
+          "throwable": {
+            "name": "Throwable: Honeycomb Tech Smoke Grenade",
+            "desc": "Upon deployment, rapidly generates dense smoke with long duration and wide coverage. When combined with the Smoke Drone, it creates multiple layers of smoke barriers, effectively分割 the battlefield and severing enemy lines of fire."
+          },
+          "passive": {
+            "name": "Passive Skill:高效 Rescue",
+            "desc": "大幅 reduces revive time on downed teammates to 1.4 seconds while restoring a greater amount of health upon revival. This passive makes Medic the most efficient emergency responder on the team, capable of rapidly扭转 the tide at critical moments."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Frontline emergency specialist and smoke战术 master. Medic's core value lies in maintaining the team's lifeline at maximum speed, ensuring teammate survival through the Hormone Gun and高效 Rescue passive, while using the smoke toolkit to control battlefield visibility.",
+          "engagement": "Engagement sequence: anticipate teammate contact vectors and pre-deploy Smoke Drone → Hormone Gun远程 sustains frontline teammate health → rapid revive of downed队友 → Honeycomb Smoke Grenade分割 battlefield to cover retreat.",
+          "weapons": "Recommended weapons: SMGs (e.g., UMP45) and sidearms, emphasizing self-defense consistent with his rear-line急救 role and avoidance of direct firefights."
+        }
       },
       "muyangren": {
         "codename": "Shepherd",
-        "name": "Terri Mewshaw",
+        "name": "Terry Musa",
         "role": "Defense Specialist",
-        "bio": "Trap deployment and outpost defense specialist"
+        "bio": "Former police EOD specialist, stronghold defense core",
+        "profile": {
+          "rank": "Captain",
+          "age": "35",
+          "dob": "12 February 2000",
+          "height": "188 cm",
+          "weight": "95 kg",
+          "affiliation": "G.T.I. Africa Division",
+          "class": "Engineer",
+          "background": "Terry Musa was born in Africa into a military family and received rigorous disciplinary training from childhood. He graduated with distinction from a Military Engineering Academy before joining an international counter-terrorism bomb disposal unit. Over more than a decade of EOD service, he处理 over 300 explosive devices of various types, accumulating unparalleled expertise in defensive fortification construction and explosive ordnance disposal. His calm judgment and engineering intuition earned him the highest reputation in the field.",
+          "desertSpring": "During a high-risk urban bomb disposal operation, Terry's squad was ambushed and communications were severed. Drawing on his profound understanding of structural engineering, he利用 available materials to rapidly construct improvised defensive fortifications, single-handedly holding off enemy assault for forty-seven minutes until reinforcements arrived. The action earned him the military's \"Iron Wall\" commendation and drew the attention of G.T.I. leadership.",
+          "joingti": "G.T.I. urgently required a specialist兼具 engineering construction and combat defense capability when building its defensive framework. Terry's distinguished engineering record and composed combat style made him the prime candidate; he formally joined the G.T.I. Africa Division under the codename \"Shepherd\" — symbolizing the guardian who protects the flock from external threats. He integrated defensive engineering principles into tactical operations, developing a defense system centered on acoustic sensing and trap deployment, becoming the team's most formidable defensive line.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Shepherd's combat framework is built around defensive fortification construction and trap control, emphasizing area denial and stronghold retention.",
+          "equipment": {
+            "name": "Tactical Equipment: Acoustic Sensor",
+            "desc": "Deploys acoustic sensors that detect movement轨迹 of enemy personnel within range and标记 them in real-time. Sensors联动 with the trap system; when enemies enter the sensing zone, defense mechanisms activate automatically, integrating early warning with counterattack."
+          },
+          "active": {
+            "name": "Active Skill:快速 Solidifying Cover",
+            "desc": "Rapidly deploys a high-strength improvised cover that forms a solid defensive fortification within seconds. The cover withstands small arms fire and explosive shockwaves, providing the team with reliable battlefield遮蔽 and firing platforms."
+          },
+          "throwable": {
+            "name": "Throwable: Concussion Mine",
+            "desc": "Once planted on the ground, detonates when enemy personnel enter the trigger zone, generating a powerful shockwave that briefly disorients enemies and deals damage. Suitable for blocking passages, protecting flanks, or配合 stronghold defense."
+          },
+          "passive": {
+            "name": "Passive Skill: Engineering Reinforcement",
+            "desc": "All defensive fortifications and traps deployed by Shepherd gain额外 durability, and deployment speed is enhanced. This trait enables him to rapidly construct multi-layered defensive systems during positional warfare, significantly提升 team survivability."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Positional defense anchor and battlefield architect. Shepherd's core value lies in converting any terrain into a fortified defensive position, controlling enemy movement routes through acoustic sensors and trap systems to create favorable engagement conditions for the team.",
+          "engagement": "Engagement sequence: select favorable terrain and deploy Acoustic Sensors → quickly Solidifying Cover构建 defensive fortification → Concussion Mines封锁 flank passages → hold position and wait for enemies to enter kill zones.",
+          "weapons": "Recommended weapons: shotguns and assault rifles, balancing close-range defense with mid-range fire suppression consistent with his stronghold retention role."
+        }
       },
       "bite": {
         "codename": "Bit",
         "name": "Rashid Rahal",
         "role": "Mechanical Prodigy",
-        "bio": "Ahsarah native mechanical prodigy"
+        "bio": "Ahsarah native mechanical genius, combat pet pioneer",
+        "profile": {
+          "rank": "Lieutenant",
+          "age": "24",
+          "dob": "5 August 2011",
+          "height": "175 cm",
+          "weight": "68 kg",
+          "affiliation": "G.T.I. Ahsarah Division",
+          "class": "Engineer",
+          "background": "Rashid Rahal was born into a family of mechanical artisans in the Ahsarah region, displaying extraordinary aptitude for electronics and machinery from childhood. He independently modified his first industrial robot at the age of fourteen, earning him the local reputation as a \"mechanical prodigy.\" During the Ahsarah conflict, he利用 scrap components to制造 various defensive devices protecting家乡 civilians, drawing the attention of multiple factions. He拒绝 Havoc Group's lucrative recruitment offer and chose to join G.T.I. instead.",
+          "desertSpring": "During a large-scale Havoc Group offensive against the Ahsarah region, Rashid's自制 reconnaissance spider robot successfully预警 the enemy's flanking route, enabling local civilians to evacuate提前 and saving数百 lives. The incident was documented by G.T.I. intelligence and成为 the key catalyst for his recruitment.",
+          "joingti": "G.T.I. recognized Rashid's独创性 talent in unmanned combat systems and formally授予 him operator status under the codename \"Bit.\" He is G.T.I.'s first operator拥有 a combat pet unit; his核心装备 \"Blaze\" spider robot can执行 reconnaissance, target锁定, and assault missions among多重 tactical tasks. Rashid融合 Ahsarah's本土 mechanical craft with modern military technology,开创 a new paradigm in engineering combat.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Bit's combat framework is built around autonomous combat pets and mechanical traps, emphasizing reconnaissance锁定 and area control capability.",
+          "equipment": {
+            "name": "Tactical Equipment: \"Blaze\" Spider Robot",
+            "desc": "Deploys an autonomous combat spider robot capable of executing reconnaissance patrols,锁定 and marking enemy personnel, and close-range assault. The spider robot possesses autonomous AI that灵活 adjusts its action策略 based on battlefield形势, serving as Bit's core combat companion."
+          },
+          "active": {
+            "name": "Active Skill: Dragon's Breath",
+            "desc": "Deploys a flame projection device that持续喷射 high-temperature flames in a frontal扇形 area, dealing area-of-effect damage with附带 burn effect. Effective for blocking passages, flushing targets from cover, or迫使 enemies to改变 formation."
+          },
+          "throwable": {
+            "name": "Throwable: Electromagnetic Trap",
+            "desc": "Once planted on the ground or walls,释放 a powerful electromagnetic pulse when enemy personnel or vehicles enter the trigger range, briefly瘫痪 enemy electronic equipment and causing减速 effect. Suited for anti-vehicle operations and通道封锁."
+          },
+          "passive": {
+            "name": "Passive Skill: Mechanical Intuition",
+            "desc": "Bit possesses a天然感知 ability for enemy electronic devices and unmanned vehicles within a defined radius, able to穿透 cover to detect traps, sensors, and other devices deployed by the enemy, providing the team with额外 intelligence advantage."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Battlefield全能手 and mechanical tactical master. Bit achieves integrated reconnaissance and assault through the Blaze Spider Robot, controlling enemy movement routes with Electromagnetic Traps — one of G.T.I.'s most versatile engineering operators.",
+          "engagement": "Engagement sequence: deploy Blaze Spider to reconnoiter and锁定 enemies → Electromagnetic Traps封锁 critical passages → Dragon's Breath清除 targets behind cover → Spider Robot配合 close-quarters收割.",
+          "weapons": "Recommended weapons: assault rifles (e.g., AK-12) and shotguns, balancing mid-range firepower with close-range burst damage consistent with his multi-functional tactical role."
+        }
       },
       "wulululu": {
         "codename": "Uluru",
         "name": "David Ferrier",
         "role": "Engineering Operator",
-        "bio": "Oceania engineering operator"
+        "bio": "Oceania engineering operator, mobile fortress with攻守兼备 capability",
+        "profile": {
+          "rank": "Captain",
+          "age": "32",
+          "dob": "22 April 2003",
+          "height": "191 cm",
+          "weight": "118 kg",
+          "affiliation": "G.T.I. Oceania Division",
+          "class": "Engineer",
+          "background": "David Ferrier was born in Australia into a mining family; he possesses a imposing physique and composed temperament. Developing a deep passion for mechanical engineering from childhood, he graduated with distinction from a Military Engineering Academy and joined the Australian Army Engineering Corps. Over more than a decade of military service, he参与 in multiple major construction projects and battlefield fortification missions, accumulating extensive实战 experience and engineering development expertise. His towering, rugged build earned him the affectionate nickname \"Mobile Fortress\" among his comrades.",
+          "desertSpring": "During an overseas peacekeeping operation, David's squad was围困 by militants.利用 his随身携带 engineering materials, he constructed an improvised defensive fortification in极短 time and used自制巡航 missiles to精确 strike enemy火力点, successfully opening an evacuation corridor for the squad. The action demonstrated his卓越攻守兼备 capability and drew the attention of G.T.I. leadership.",
+          "joingti": "When G.T.I. was构建 its Oceania Division engineering力量, it recognized David's双重 talent in defensive fortification construction and long-range precision strike. He formally joined the G.T.I. Oceania Division under the codename \"Uluru\" — named after Australia's iconic monolith, symbolizing impregnability. He combines fortification construction with巡航 missile technology, able to rapidly deploy improvised defensive fortifications as a mobile堡垒 or execute long-range strike missions as an offensive尖刀, achieving a perfect攻守兼备 combination.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Uluru's combat framework is built around快速 solidifying defensive fortifications and巡航 missile long-range strikes, emphasizing攻守转换 and battlefield adaptability.",
+          "equipment": {
+            "name": "Tactical Equipment:快速 Solidifying Cover",
+            "desc": "Rapidly deploys a high-strength improvised cover that forms a solid defensive fortification within seconds. The cover withstands small arms fire and explosive shockwaves, providing the team with reliable battlefield遮蔽 and firing platforms — the core embodiment of Uluru's \"Mobile Fortress\" concept."
+          },
+          "active": {
+            "name": "Active Skill: Cruise Missile",
+            "desc": "Fires a遥控 cruise missile with远程 precision strike capability. The missile can adjust its trajectory during flight to精确 strike enemy火力点, vehicles, or集结 areas, serving as Uluru's key means of transitioning from defender to attacker."
+          },
+          "throwable": {
+            "name": "Throwable: Sticky Explosive",
+            "desc": "Upon throwing,牢固 adheres to any surface and can be遥控 detonated. Suitable for定点 demolition, anti-vehicle operations, or setting ambush traps, providing Uluru with灵活 tactical options."
+          },
+          "passive": {
+            "name": "Passive Skill: Engineering Expert",
+            "desc": "All defensive fortifications deployed by Uluru gain额外 durability, and efficiency when using engineering equipment (such as explosives and repair tools) is enhanced. This trait enables him to perform出色 in both offensive and defensive capacities."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "全能攻守兼备 engineering operator. Uluru can serve as the team's defensive核心 constructing fortified positions, or execute远程 precision strikes with cruise missiles, possessing极高 adaptability in战场 where攻防转换 is frequent.",
+          "engagement": "Engagement sequence:快速 Solidifying Cover构建 defensive positions → Cruise Missile远程 strikes on enemy火力点 → Sticky Explosives定点 elimination of key targets →灵活 switch between offensive and defensive roles based on battlefield形势.",
+          "weapons": "Recommended weapons: assault rifles and light machine guns, balancing mid- to long-range fire suppression with self-defense consistent with his攻守兼备 operational role."
+        }
       },
       "shenlan": {
         "codename": "Deep Blue",
         "name": "Alexei Petrov",
         "role": "Engineering Operator",
-        "bio": "Engineering operator"
+        "bio": "Heavy defense core, unbreakable shield",
+        "profile": {
+          "rank": "Captain",
+          "age": "34",
+          "dob": "9 January 2001",
+          "height": "195 cm",
+          "weight": "110 kg",
+          "affiliation": "G.T.I. Eastern Europe Division",
+          "class": "Engineer",
+          "background": "Alexei Petrov was born in Russia into a military family and received rigorous military training from childhood. Possessing an exceptionally powerful physique and resolute, composed temperament, he graduated with distinction from a Military Engineering Academy and joined the Russian Army's Heavy Engineering Corps. Over years of military service, he participated in multiple high-intensity urban operations,积累了 extensive experience in close-quarters defense and shield tactics. His imposing build and indomitable will earned him the reputation as the battlefield's \"Unbreakable Shield.\"",
+          "desertSpring": "During a high-intensity urban engagement, Alexei's squad was ambushed and encircled.凭借 his heavy bomb-disposal shield, he single-handedly withstood withering enemy fire, buying his teammates precious time to withdraw. Even after his shield was destroyed, he继续 used his own body to掩护 teammates' evacuation, sustaining severe injuries while ensuring all队友 escaped safely. The action cemented his reputation at the military's \"Iron Wall\" tier.",
+          "joingti": "When G.T.I. evaluated heavy defense talent, Alexei's履历 and combat will made him the unequivocal choice. He formally joined the G.T.I. Eastern Europe Division under the codename \"Deep Blue\" — symbolizing immeasurable defensive power. He combines heavy shield tactics with侧翼 shooting techniques, developing a unique观察窗 and elbow strike system that enables him to withstand frontal密集 fire while launching counterattacks from the flanks, establishing himself as a core operator in G.T.I.'s heavy defense framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Deep Blue's combat framework is built around heavy shield defense and flanking counterattacks, emphasizing frontal pressure absorption and tactical牵制 capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Heavy Bomb-Disposal Shield",
+            "desc": "Deploys a high-strength bomb-disposal shield to the front, capable of withstanding small arms fire and explosive shockwaves. The shield features an observation window that allows Deep Blue to monitor前方 enemy positions while in a defensive state. With极高 durability, it is Deep Blue's core equipment for frontal pressure absorption."
+          },
+          "active": {
+            "name": "Active Skill: Side-Shield Shooting",
+            "desc": "While in shield defense stance, extends a weapon from the shield's侧方 to fire at enemies. This skill enables Deep Blue to maintain defense while反击 against enemies, integrating offense and defense — the key means of transitioning from passive defense to active suppression."
+          },
+          "throwable": {
+            "name": "Throwable: Flashbang",
+            "desc": "Upon detonation, produces an intense闪光 that blinds all enemy personnel within range for several seconds. Effective for配合 breach operations, disrupting enemy formations, or掩护 teammate advances — an integral component of Deep Blue's tactical牵制 system."
+          },
+          "passive": {
+            "name": "Passive Skill: Elbow Strike",
+            "desc": "In close-quarters encounters, Deep Blue can use his shield to deliver a devastating elbow strike, dealing significant damage and knocking back enemies. This passive grants Deep Blue formidable suppression capability in close-range brawls, forming the core of his heavy melee combat system."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Heavy frontline tank and tactical牵制 anchor. Deep Blue absorbs enemy火力 with his shield正面,吸引 enemy attention and ammunition expenditure, while using Side-Shield Shooting and Elbow Strikes to pose致命 threats at close range.",
+          "engagement": "Engagement sequence: shield正面 advance absorbs enemy fire → observation window锁定 enemy positions → Side-Shield Shooting反击 suppression → Elbow Strikes清除 close-range targets.",
+          "weapons": "Recommended weapons: SMGs and sidearms, consistent with his shield-integrated close-quarters combat role."
+        }
       },
       "luna": {
         "codename": "Luna",
-        "name": "—",
-        "role": "Recon Operator",
-        "bio": "Recon operator"
+        "name": "Kim Luna",
+        "role": "Reconnaissance Operator",
+        "bio": "Genius reconnaissance specialist, battlefield situational awareness core",
+        "profile": {
+          "rank": "Lieutenant",
+          "age": "26",
+          "dob": "20 May 2009",
+          "height": "167 cm",
+          "weight": "54 kg",
+          "affiliation": "G.T.I. Asia Division",
+          "class": "Recon",
+          "background": "Kim Luna was born into an intelligence family and received rigorous training in observation and logical reasoning from childhood. She was admitted to the Military Intelligence Academy at the age of sixteen as a prodigy, graduating at the top of her cohort. Possessing extraordinarily keen observation and spatial memory, she can rapidly锁定 enemy personnel positions and movement routes in complex battlefield environments, earning her the reputation as the battlefield's \"Hawk Eye.\"",
+          "desertSpring": "During a highly classified reconnaissance mission, Kim Luna infiltrated enemy-controlled territory alone. Leveraging her extraordinary observation abilities, she produced a complete enemy disposition map within three hours, precisely标注 all firing positions, patrol routes, and ammunition storage locations. This intelligence directly led to the全线 breakthrough of enemy defenses, saving numerous friendly lives.",
+          "joingti": "G.T.I. listed Kim Luna as a priority recruitment target when构建 its reconnaissance framework. She formally joined the G.T.I. Asia Division under the codename \"Luna\" — symbolizing how moonlight silently illuminates the darkness. She combines traditional reconnaissance techniques with modern electronic warfare手段, developing a reconnaissance system centered on electric shock arrows and situational awareness, capable of precisely marking and disrupting enemy personnel at long range — an indispensable asset in G.T.I.'s reconnaissance framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Luna's combat framework is built around long-range situational awareness and precision disruption, emphasizing battlefield intelligence acquisition and enemy position暴露 capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Electric Shock Arrow",
+            "desc": "Fires an electric shock arrow that释放 a powerful electric current upon hitting enemy personnel, causing brief paralysis and marking their position. The arrow's high velocity and stable trajectory make it suitable for long-range precision strikes and enemy position暴露."
+          },
+          "active": {
+            "name": "Active Skill: Reconnaissance Drone",
+            "desc": "Deploys a reconnaissance drone to扫描 a designated area, marking the positions of all enemy personnel within range in real-time. The drone features silent flight capability,不易被 enemy detection, serving as Luna's core means of battlefield intelligence acquisition."
+          },
+          "throwable": {
+            "name": "Throwable: Proximity Mine",
+            "desc": "Once planted on the ground, detonates when enemy personnel enter the trigger range, dealing area damage and briefly marking surviving positions. Effective for blocking passages, protecting flanks, or预警 enemy flanking maneuvers."
+          },
+          "passive": {
+            "name": "Passive Skill: Hunter's Instinct",
+            "desc": "Luna deals额外 damage to enemy personnel who are marked and within her line of sight. This passive enables her to rapidly转化 reconnaissance定位 into致命 strikes, achieving integration of侦察 and assault."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Long-range reconnaissance sharpshooter and battlefield intelligence中枢. Luna's core value lies in providing the team with real-time, precise enemy position intelligence, exposing enemy formations through Electric Shock Arrows and Reconnaissance Drones to create favorable engagement conditions for teammates.",
+          "engagement": "Engagement sequence: Reconnaissance Drone scans and marks enemy positions → Electric Shock Arrow long-range precision strikes on key targets → Proximity Mines封锁 flank passages → provide real-time battlefield intelligence support for teammates.",
+          "weapons": "Recommended weapons: designated marksman rifles and SMGs, balancing long-range precision shooting with close-range self-defense consistent with her integrated reconnaissance-strike operational role."
+        }
       },
       "haizhua": {
-        "codename": "Hacker",
-        "name": "—",
-        "role": "Recon Operator",
-        "bio": "Recon operator"
+        "codename": "Claw",
+        "name": "Mai Xiaowen",
+        "role": "Reconnaissance Operator",
+        "bio": "Electronic warfare specialist, network infiltration core",
+        "profile": {
+          "rank": "Lieutenant",
+          "age": "25",
+          "dob": "8 October 2010",
+          "height": "165 cm",
+          "weight": "52 kg",
+          "affiliation": "G.T.I. Asia Division",
+          "class": "Recon",
+          "background": "Mai Xiaowen was born into a technology family and displayed extraordinary天赋 for electronic devices and network systems from childhood. As a teenager, she gained notoriety as a hacker on the网络, infiltrating high-security systems on multiple occasions without leaving traces. Her talents drew the attention of the military, and she was given a direct commission into the Cyber Warfare Corps. During her service, she参与 in multiple classified network infiltration operations,积累了 extensive experience in electronic warfare and information operations.",
+          "desertSpring": "During an infiltration operation targeting Havoc Group's network infrastructure, Mai Xiaowen penetrated a敌方 data center alone, successfully obtaining a vast cache of classified intelligence. During her撤退, she was pursued and sustained facial injuries, after which she adopted her signature face mask. The action not only demonstrated her extraordinary network infiltration capabilities but also made her a priority target for Havoc Group.",
+          "joingti": "When G.T.I. was构建 its electronic warfare capabilities, Mai Xiaowen was列为 a core recruitment target. She formally joined the G.T.I. Asia Division under the codename \"Claw\" — symbolizing talons that penetrate all electronic defenses. She combines hacking techniques with battlefield reconnaissance, developing an electronic warfare system centered on signal disruption and network infiltration, capable of瘫痪 enemy communications,窃取 intelligence, and marking enemy positions — an irreplaceable asset in G.T.I.'s electronic warfare framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Claw's combat framework is built around electronic warfare and network infiltration, emphasizing enemy information system paralysis and battlefield intelligence theft capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Signal Disruptor",
+            "desc": "Deploys a signal disruptor that瘫痪 enemy communications systems and electronic devices within range, preventing them from using abilities, marking teammates, or联络 with command. With wide disruption range and long duration, it is Claw's core equipment for controlling battlefield information flow."
+          },
+          "active": {
+            "name": "Active Skill: Network Infiltration",
+            "desc": "Remotely infiltrates enemy electronic systems within a designated range,窃取 enemy map intelligence, teammate positions, and ammunition status, sharing all data with the team in real-time. This skill grants the team an absolute advantage in information warfare."
+          },
+          "throwable": {
+            "name": "Throwable: EMP Grenade",
+            "desc": "Upon detonation, releases a powerful electromagnetic pulse that瘫痪 all enemy electronic devices within range and causes brief眩晕. Effective for pre-breach electronic suppression, disrupting enemy ability usage, or破坏 enemy defensive devices."
+          },
+          "passive": {
+            "name": "Passive Skill: Digital Intuition",
+            "desc": "Claw possesses a天然感知 ability for nearby enemy electronic devices and signal sources, able to穿透 cover to detect traps, drones, sensors, and other devices deployed by the enemy, providing the team with额外 electronic warfare intelligence."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Electronic warfare infiltrator and information战 中枢. Claw's core value lies in瘫痪 enemy information systems and窃取 battlefield intelligence, rendering the enemy completely exposed at the information level through signal disruption and network infiltration to create overwhelming intelligence advantage for the team.",
+          "engagement": "Engagement sequence: Signal Disruptor瘫痪 enemy communications → Network Infiltration窃取 enemy intelligence → EMP Grenades压制 enemy electronic devices → provide real-time battlefield intelligence support for teammates.",
+          "weapons": "Recommended weapons: SMGs and sidearms, emphasizing close-range self-defense consistent with her rear-line electronic warfare support role and avoidance of direct firefights."
+        }
       },
       "yinyi": {
         "codename": "Silver Wing",
-        "name": "—",
+        "name": "Ryan Hawke",
         "role": "Recon Operator",
-        "bio": "Recon operator"
+        "bio": "Former hunter instructor, tracking and counter-reconnaissance specialist",
+        "profile": {
+          "rank": "Captain",
+          "age": "30",
+          "dob": "15 July 2005",
+          "height": "182 cm",
+          "weight": "77 kg",
+          "affiliation": "G.T.I. Europe Division",
+          "class": "Recon",
+          "background": "Ryan Hawke was born in Europe into a military family and received rigorous field survival and tracking training from childhood. Graduating with distinction from the Special Operations Academy, he joined the Hunter Corps and rapidly rose to the rank of instructor凭借 his outstanding reconnaissance and counter-reconnaissance capabilities. Over years of military service, he trained大批 reconnaissance personnel and积累了 extensive experience in tracking, ambush, and counter-infiltration. His motto is \"Always keep the quarry in sight.\"",
+          "desertSpring": "During a high-value target pursuit mission, Ryan led his squad deep into enemy-controlled territory. As the target was about to escape, he凭借 his extraordinary tracking intuition predicted the enemy's withdrawal route, set an ambush in advance, and successfully intercepted the target. The action demonstrated his tracking philosophy of \"leaving the quarry no escape\" and drew the attention of G.T.I. leadership.",
+          "joingti": "When G.T.I. was构建 its reconnaissance framework, it urgently required a specialist兼具 tracking and counter-reconnaissance dual capabilities. Ryan's distinguished Hunter Corps record and composed combat style made him the prime candidate; he formally joined the G.T.I. Europe Division under the codename \"Silver Wing\" — symbolizing silver feathers that silently俯瞰 the quarry. He combines traditional tracking techniques with modern reconnaissance methods, developing a reconnaissance network centered on Hunter Drones and marking systems, capable of持续 tracking and marking enemy personnel at long range — a core operator in G.T.I.'s tracking reconnaissance framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Silver Wing's combat framework is built around持续 tracking and target marking, emphasizing enemy position暴露 and pursuit suppression capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Hunter Drone",
+            "desc": "Deploys a Hunter Drone for持续 tracking of a designated area, automatically锁定 and marking enemy personnel within range. The drone持续 follows the target, maintaining the mark even when the target enters cover, ensuring \"the quarry is always in sight.\""
+          },
+          "active": {
+            "name": "Active Skill: Tracking Mark",
+            "desc": "Applies a tracking mark to enemy personnel within line of sight. The mark has long duration and cannot be removed by the enemy. Marked personnel are实时 visible on the squad map and take额外 damage from Silver Wing, achieving integrated tracking and strike."
+          },
+          "throwable": {
+            "name": "Throwable:感应 Trap",
+            "desc": "Once planted on the ground, automatically marks enemy positions and alerts nearby friendlies when enemy personnel enter the trigger range. Effective for预警 enemy flanking maneuvers, protecting flanks, or配合 ambush tactics."
+          },
+          "passive": {
+            "name": "Passive Skill: Hunter's Instinct",
+            "desc": "Silver Wing possesses a天然感知 ability for the movement轨迹 of marked targets, able to briefly maintain position information even when the target leaves his line of sight. This passive ensures he always holds the initiative in pursuit engagements, leaving the quarry no escape."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Tracking hunter and battlefield reconnaissance core. Silver Wing's core value lies in持续 tracking and exposing enemy positions, ensuring enemy personnel remain under constant surveillance through Hunter Drones and Tracking Marks to provide the team with持续 target intelligence.",
+          "engagement": "Engagement sequence: Hunter Drone锁定 enemy positions → Tracking Mark施加持续暴露 →感应 Traps预警 enemy movements → provide real-time target tracking support for teammates.",
+          "weapons": "Recommended weapons: designated marksman rifles and assault rifles, balancing long-range precision shooting with mid-range engagement consistent with his integrated tracking-strike operational role."
+        }
+      },
+      "huixiang": {
+        "codename": "Echo",
+        "name": "Unknown",
+        "role": "Acoustic Intelligence Specialist",
+        "bio": "S9 Season Recon Operator, Acoustic Intelligence Specialist",
+        "profile": {
+          "rank": "Lieutenant",
+          "age": "28",
+          "dob": "Unknown",
+          "height": "178 cm",
+          "weight": "72 kg",
+          "affiliation": "G.T.I. Asia Division",
+          "class": "Recon",
+          "background": "Echo demonstrated an extraordinary perception of sound from childhood, able to precisely identify the direction and characteristics of various sound sources in complex environments. After obtaining a doctorate in acoustic engineering, he was given a direct commission into the intelligence reconnaissance corps. During his service, he spearheaded the development of a battlefield situational awareness system based on acoustic detection, elevating acoustic reconnaissance from a supplementary measure to a core tactical capability.",
+          "desertSpring": "During a high-risk urban counter-terrorism operation, Echo's squad was ambushed and communications were severed. Leveraging his extraordinary hearing, he precisely located three enemy snipers in complete darkness, guiding his teammates to successfully break through. This action cemented his reputation as the \"Father of Acoustic Reconnaissance\" within the military and drew the attention of G.T.I. leadership.",
+          "joingti": "When G.T.I. was constructing its next-generation reconnaissance framework, it urgently required a top-tier specialist in acoustic reconnaissance. Echo's distinguished acoustic engineering record and unique battlefield perception capabilities made him the prime candidate; he formally joined the G.T.I. Asia Division under the codename \"Echo\" — symbolizing sound waves that penetrate all obstacles and perceive everything. He deeply integrated acoustic technology with battlefield reconnaissance, developing a reconnaissance system centered on infrasound disruption and echo detection, capable of precisely locating enemy personnel at long range and deploying acoustic interference — the founder of G.T.I.'s acoustic reconnaissance framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Echo's combat framework is built around acoustic detection and sonic disruption, emphasizing battlefield intelligence acquisition and enemy perception suppression capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Echo Detector",
+            "desc": "Deploys an Echo Detector that periodically scans a fan-shaped area to the front (approximately 75 meters, 120 degrees), capable of penetrating walls to mark enemies who are making sound. Mark information is shared with the entire team, but enemies who remain stationary cannot be precisely marked."
+          },
+          "active": {
+            "name": "Active Skill: Infrasound Disruptor",
+            "desc": "Throws a resonant disruption device that generates a persistent disruption field upon landing. Enemies within range suffer four negative effects: movement speed reduction, vision blur, turning difficulty, and hearing reduction, while involuntarily screaming to expose their position."
+          },
+          "throwable": {
+            "name": "Throwable: Composite Flashbang",
+            "desc": "A delayed-detonation flash device that only causes strong blinding to enemies facing the direction of the explosion. This design effectively prevents friendly fire and is suitable for precision breach operations."
+          },
+          "passive": {
+            "name": "Passive Skill: Sound Perception",
+            "desc": "Significantly expands hearing range, capable of detecting subtle sounds such as enemy footsteps, weapon reloading, and breathing, while automatically filtering out environmental noise like AI footsteps and gunfire. When an enemy fires within 100 meters, their position is automatically marked on the map with a fuzzy indicator (60-second cooldown)."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Acoustic reconnaissance core and battlefield intelligence hub. Echo's core value lies in providing the team with real-time, precise enemy position intelligence through acoustic detection, suppressing enemy combat capability with the Infrasound Disruptor, achieving integration of intelligence acquisition and tactical suppression.",
+          "engagement": "Engagement sequence: Sound Perception passive provides early warning of enemy movements → Echo Detector scans and marks enemy positions → Infrasound Disruptor suppresses enemy combat capability → Composite Flashbang supports precision teammate breaches.",
+          "weapons": "Recommended weapons: SMGs and sidearms, emphasizing close-range self-defense consistent with his rear-line reconnaissance support role and avoidance of direct firefights."
+        }
+      },
+      "yening": {
+        "codename": "Cryo",
+        "name": "Gabriel Muriel",
+        "role": "Cryo-Engineering Specialist",
+        "bio": "S10 Season Engineering Operator, Cryo-Engineering Specialist",
+        "profile": {
+          "rank": "Lieutenant",
+          "age": "30",
+          "dob": "Unknown",
+          "height": "185 cm",
+          "weight": "80 kg",
+          "affiliation": "G.T.I. Europe Division",
+          "class": "Engineer",
+          "background": "Gabriel Muriel was born in Europe into a research family and developed a keen interest in cryogenic physics from childhood. After obtaining a doctorate in cryogenic engineering, he was recruited by Havoc Group into their military R&D division, leading research on cryogenic weapons systems. During his tenure at Havoc, he gradually discovered that his research was being applied to inhumane military purposes, and his repeated objections were ignored and suppressed.",
+          "desertSpring": "During a Havoc internal security incident, Gabriel witnessed the cruel application of cryogenic weapons in human experimentation. He secretly copied core research data and attempted to expose the truth to the outside world, but was pursued by Havoc elimination squads. During his escape, he successfully repelled pursuers using a self-built cryogenic device and was ultimately rescued by a G.T.I. Europe Division special operations team.",
+          "joingti": "G.T.I. gave Gabriel's cryogenic weapon technology the highest evaluation. In recognition of his outstanding professional capabilities and deep understanding of Havoc's internal operations, G.T.I. formally granted him operator status under the codename \"Cryo\" — symbolizing the freezing of all threats like liquid nitrogen. He redirected cryogenic technology toward battlefield area denial, developing a cryo-control system centered on Dewar Flasks and Cryogenic Grenades, establishing himself as a distinctive area-denial operator within G.T.I.'s engineering framework.",
+          "skillsTitle": "Skills & Tactical Equipment",
+          "skillsIntro": "Cryo's combat framework is built around progressive cryo-layered area denial and zone control, emphasizing gradual deceleration, freeze immobilization, and battlefield intelligence exposure capability.",
+          "equipment": {
+            "name": "Tactical Equipment: Dewar Flask",
+            "desc": "Throws to generate a cryogenic fog zone that cannot be destroyed by bullets. Stores 2 charges with approximately 60-second cooldown per charge. Enemies entering the zone are slowed and continuously cough to expose their position; prolonged exposure results in complete freeze. Can be mutually cancelled by incendiary grenades."
+          },
+          "active": {
+            "name": "Active Skill: Thermal-Tracking Stun Grenade",
+            "desc": "Upon throwing, automatically tracks nearby enemies, causing ear ringing, vision blur, and weapon sway interference on hit. Can precisely mark enemies with cryo debuffs, enabling wall-hack-style detection — the perfect counter to campers. Supports bounce shots off walls."
+          },
+          "throwable": {
+            "name": "Throwable: Dewar Flask",
+            "desc": "Throws to generate a cryogenic fog zone that cannot be destroyed by bullets. Stores 2 charges with approximately 60-second cooldown per charge. Enemies entering the zone are slowed and continuously cough to expose their position; prolonged exposure results in complete freeze."
+          },
+          "passive": {
+            "name": "Passive Skill: Cryo Adhesion",
+            "desc": "All abilities that hit enemies apply stacking cryo effects, first slowing then completely freezing (immobilizing) the target. Frozen enemies cannot move or fire, only able to attempt breakout. Enemies in cryo zones continuously cough to expose their position. In large-scale battle mode, can削弱 vehicle handling."
+          },
+          "playstyleTitle": "Combat Features",
+          "playstyle": "Area denial specialist and cryo-control core. Cryo's core value lies in achieving progressive control through the cryo-layered mechanism, gradually stripping enemy combat capability from deceleration to freeze, creating favorable engagement environments for the team.",
+          "engagement": "Engagement sequence: Dewar Flask封锁 key passages → Thermal-Tracking Stun Grenade marks cryo targets → Burst Cryogenic Grenade Launcher provides wide-area control → teammates focus fire on frozen targets.",
+          "weapons": "Recommended weapons: assault rifles and shotguns, balancing mid-range fire suppression with close-range self-defense consistent with his area-denial, battlefield tempo control role."
+        }
       }
     }
   },

@@ -25,7 +25,9 @@ export const operators: Operator[] = [
   { key: 'bite', class: 'engineer' },
   { key: 'wulululu', class: 'engineer' },
   { key: 'shenlan', class: 'engineer' },
+  { key: 'yening', class: 'engineer' },
   { key: 'luna', class: 'recon' },
   { key: 'haizhua', class: 'recon' },
   { key: 'yinyi', class: 'recon' },
+  { key: 'huixiang', class: 'recon' },
 ]
