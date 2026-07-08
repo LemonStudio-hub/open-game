@@ -51,24 +51,24 @@ const toggleNode = (key: string) => {
               </feMerge>
             </filter>
             <radialGradient id="cmdGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.25" />
-              <stop offset="100%" stop-color="#c9a84c" stop-opacity="0" />
+              <stop offset="0%" stop-color="#4ae87a" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#4ae87a" stop-opacity="0" />
             </radialGradient>
           </defs>
 
           <!-- Tier labels -->
           <text x="20" y="60" class="tier-label">{{ t('structure.chart.tier1') }}</text>
-          <line x1="20" y1="65" x2="130" y2="65" stroke="#c9a84c" stroke-width="0.5" opacity="0.3" />
+          <line x1="20" y1="65" x2="130" y2="65" stroke="#4ae87a" stroke-width="0.5" opacity="0.3" />
 
           <text x="20" y="230" class="tier-label">{{ t('structure.chart.tier2') }}</text>
-          <line x1="20" y1="235" x2="130" y2="235" stroke="#c9a84c" stroke-width="0.5" opacity="0.3" />
+          <line x1="20" y1="235" x2="130" y2="235" stroke="#4ae87a" stroke-width="0.5" opacity="0.3" />
 
           <text x="20" y="420" class="tier-label">{{ t('structure.chart.tier3') }}</text>
-          <line x1="20" y1="425" x2="130" y2="425" stroke="#c9a84c" stroke-width="0.5" opacity="0.3" />
+          <line x1="20" y1="425" x2="130" y2="425" stroke="#4ae87a" stroke-width="0.5" opacity="0.3" />
 
           <!-- Tier separator lines -->
-          <line x1="100" y1="150" x2="800" y2="150" stroke="#c9a84c" stroke-width="0.3" stroke-dasharray="4 8" opacity="0.2" />
-          <line x1="100" y1="350" x2="800" y2="350" stroke="#c9a84c" stroke-width="0.3" stroke-dasharray="4 8" opacity="0.2" />
+          <line x1="100" y1="150" x2="800" y2="150" stroke="#4ae87a" stroke-width="0.3" stroke-dasharray="4 8" opacity="0.2" />
+          <line x1="100" y1="350" x2="800" y2="350" stroke="#4ae87a" stroke-width="0.3" stroke-dasharray="4 8" opacity="0.2" />
 
           <!-- TIER 1: Standing Committee (Top Command) -->
           <g class="org-node cmd-node" @mouseenter="hoveredNode = 'cmd'" @mouseleave="hoveredNode = null">
@@ -76,7 +76,7 @@ const toggleNode = (key: string) => {
             <circle cx="450" cy="65" r="42" class="cmd-ring-outer" />
             <circle cx="450" cy="65" r="34" class="cmd-ring" />
             <circle cx="450" cy="65" r="28" class="cmd-bg" />
-            <path d="M450 45l5 10.2 11.2 1.6-8.1 7.9 1.9 11.2L450 71l-10 5.1 1.9-11.2-8.1-7.9L445 55.2z" fill="#c9a84c" opacity="0.9" />
+            <path d="M450 45l5 10.2 11.2 1.6-8.1 7.9 1.9 11.2L450 71l-10 5.1 1.9-11.2-8.1-7.9L445 55.2z" fill="#4ae87a" opacity="0.9" />
             <text x="450" y="108" class="node-title-cmd">{{ (tm('structure.departments') as any[])[0]?.name }}</text>
             <text x="450" y="122" class="node-sub-cmd">{{ t('structure.commandSubtitle') }}</text>
           </g>
@@ -85,7 +85,7 @@ const toggleNode = (key: string) => {
           <g class="commander-badge">
             <rect x="600" y="40" width="220" height="52" rx="8" class="cmd-badge-bg" />
             <circle cx="628" cy="66" r="14" class="cmd-badge-avatar" />
-            <svg x="620" y="58" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5">
+            <svg x="620" y="58" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ae87a" stroke-width="1.5">
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
@@ -98,13 +98,13 @@ const toggleNode = (key: string) => {
             <path d="M450,100 L450,130 L300,130 L300,180" class="conn-line" fill="none" />
             <path d="M450,100 L450,130 L450,130 L450,180" class="conn-line" fill="none" />
             <path d="M450,100 L450,130 L600,130 L600,180" class="conn-line" fill="none" />
-            <circle r="2.5" fill="#c9a84c" opacity="0.7">
+            <circle r="2.5" fill="#4ae87a" opacity="0.7">
               <animateMotion dur="2.5s" repeatCount="indefinite" path="M450,100 L450,130 L300,130 L300,180" />
             </circle>
-            <circle r="2.5" fill="#c9a84c" opacity="0.7">
+            <circle r="2.5" fill="#4ae87a" opacity="0.7">
               <animateMotion dur="2.2s" repeatCount="indefinite" path="M450,100 L450,180" />
             </circle>
-            <circle r="2.5" fill="#c9a84c" opacity="0.7">
+            <circle r="2.5" fill="#4ae87a" opacity="0.7">
               <animateMotion dur="2.8s" repeatCount="indefinite" path="M450,100 L450,130 L600,130 L600,180" />
             </circle>
           </g>
@@ -171,11 +171,11 @@ const toggleNode = (key: string) => {
              @mouseleave="hoveredNode = null">
             <rect :x="[140, 340, 540, 740][idx]" y="380" width="120" height="56" rx="8" class="branch-card" />
             <circle :cx="[170, 370, 570, 770][idx]" cy="400" r="12" class="branch-icon-circle" />
-            <svg :x="[160, 360, 560, 760][idx]" y="390" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5">
+            <svg :x="[160, 360, 560, 760][idx]" y="390" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ae87a" stroke-width="1.5">
               <path :d="branchIcons[idx]" />
             </svg>
             <text :x="[200, 400, 600, 800][idx]" y="405" class="node-name-branch">{{ branch }}</text>
-            <line :x1="[150, 350, 550, 750][idx]" y1="431" :x2="[250, 450, 650, 850][idx]" y2="431" stroke="#c9a84c" stroke-width="0.5" opacity="0.3" />
+            <line :x1="[150, 350, 550, 750][idx]" y1="431" :x2="[250, 450, 650, 850][idx]" y2="431" stroke="#4ae87a" stroke-width="0.5" opacity="0.3" />
           </g>
 
           <!-- Bracket indicating Special Ops oversees all branches -->
@@ -212,11 +212,11 @@ const toggleNode = (key: string) => {
         </div>
 
         <!-- Department Cards -->
-        <div v-for="(dept, idx) in (tm('structure.departments') as any[])" :key="idx" v-show="idx > 0" class="detail-card dept-detail-card" :style="{ '--dept-color': ['#c9a84c', '#4a9ee8', '#e8a84a', '#4ae87a'][idx] }">
-          <div class="card-accent-line" :style="{ background: ['#c9a84c', '#4a9ee8', '#e8a84a', '#4ae87a'][idx] }"></div>
+        <div v-for="(dept, idx) in (tm('structure.departments') as any[])" :key="idx" v-show="idx > 0" class="detail-card dept-detail-card" :style="{ '--dept-color': ['#4ae87a', '#4a9ee8', '#e8a84a', '#4ae87a'][idx] }">
+          <div class="card-accent-line" :style="{ background: ['#4ae87a', '#4a9ee8', '#e8a84a', '#4ae87a'][idx] }"></div>
           <div class="dept-header">
-            <div class="dept-icon-wrap" :style="{ borderColor: ['#c9a84c', '#4a9ee8', '#e8a84a', '#4ae87a'][idx] }">
-              <svg viewBox="0 0 24 24" fill="none" :stroke="['#c9a84c', '#4a9ee8', '#e8a84a', '#4ae87a'][idx]" stroke-width="1.5">
+            <div class="dept-icon-wrap" :style="{ borderColor: ['#4ae87a', '#4a9ee8', '#e8a84a', '#4ae87a'][idx] }">
+              <svg viewBox="0 0 24 24" fill="none" :stroke="['#4ae87a', '#4a9ee8', '#e8a84a', '#4ae87a'][idx]" stroke-width="1.5">
                 <path :d="deptIcons[idx]" />
               </svg>
             </div>
@@ -268,7 +268,7 @@ const toggleNode = (key: string) => {
 
 /* Connection lines */
 .conn-line {
-  stroke: #c9a84c;
+  stroke: #4ae87a;
   stroke-width: 1.5;
   opacity: 0.3;
   stroke-dasharray: 6 4;
@@ -291,7 +291,7 @@ const toggleNode = (key: string) => {
 /* Command node */
 .cmd-ring-outer {
   fill: none;
-  stroke: #c9a84c;
+  stroke: #4ae87a;
   stroke-width: 1;
   stroke-dasharray: 3 6;
   opacity: 0.4;
@@ -301,14 +301,14 @@ const toggleNode = (key: string) => {
 
 .cmd-ring {
   fill: none;
-  stroke: #c9a84c;
+  stroke: #4ae87a;
   stroke-width: 2;
   opacity: 0.7;
 }
 
 .cmd-bg {
   fill: var(--color-bg-secondary);
-  stroke: #c9a84c;
+  stroke: #4ae87a;
   stroke-width: 0.5;
 }
 
@@ -376,7 +376,7 @@ const toggleNode = (key: string) => {
 }
 
 .dept-node:hover .dept-card {
-  stroke: #c9a84c;
+  stroke: #4ae87a;
   stroke-opacity: 0.5;
   filter: url(#orgGlow);
 }
@@ -415,7 +415,7 @@ const toggleNode = (key: string) => {
 }
 
 .branch-node:hover .branch-card {
-  stroke: #c9a84c;
+  stroke: #4ae87a;
   stroke-opacity: 0.4;
 }
 
@@ -424,8 +424,8 @@ const toggleNode = (key: string) => {
 }
 
 .branch-icon-circle {
-  fill: rgba(201, 168, 76, 0.1);
-  stroke: #c9a84c;
+  fill: rgba(74, 232, 122, 0.1);
+  stroke: #4ae87a;
   stroke-width: 0.5;
   stroke-opacity: 0.3;
 }
@@ -661,7 +661,7 @@ const toggleNode = (key: string) => {
   border-color: var(--color-accent);
   background: var(--color-accent-glow);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.1);
+  box-shadow: 0 4px 16px rgba(74, 232, 122, 0.1);
 }
 
 .branch-dot {

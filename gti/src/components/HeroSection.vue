@@ -105,8 +105,8 @@ const scrollToAbout = () => {
   bottom: 0;
   left: 0;
   background-image:
-    linear-gradient(rgba(201, 168, 76, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201, 168, 76, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(74, 232, 122, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 232, 122, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
   -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
@@ -119,8 +119,8 @@ const scrollToAbout = () => {
   bottom: 0;
   left: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 168, 76, 0.08), transparent),
-    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201, 168, 76, 0.05), transparent);
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(74, 232, 122, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(74, 232, 122, 0.05), transparent);
 }
 
 .hero-content {
@@ -276,7 +276,7 @@ const scrollToAbout = () => {
 .btn-primary:hover {
   background: var(--color-accent-light);
   color: var(--color-bg-primary);
-  box-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+  box-shadow: 0 0 30px rgba(74, 232, 122, 0.3);
 }
 
 .hero-scroll-indicator {

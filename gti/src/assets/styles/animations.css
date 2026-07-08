@@ -112,8 +112,8 @@
    ============================================ */
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(201, 168, 76, 0.2); }
-  50% { box-shadow: 0 0 20px rgba(201, 168, 76, 0.4); }
+  0%, 100% { box-shadow: 0 0 5px rgba(74, 232, 122, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(74, 232, 122, 0.4); }
 }
 
 @keyframes gradient-shift {
@@ -204,8 +204,8 @@
 
 /* Border glow */
 @keyframes border-glow {
-  0%, 100% { border-color: rgba(201, 168, 76, 0.15); }
-  50% { border-color: rgba(201, 168, 76, 0.4); }
+  0%, 100% { border-color: rgba(74, 232, 122, 0.15); }
+  50% { border-color: rgba(74, 232, 122, 0.4); }
 }
 
 /* Counter number animation */
@@ -294,8 +294,8 @@
 }
 
 .glow-hover:hover {
-  box-shadow: 0 0 30px rgba(201, 168, 76, 0.15),
-              0 0 60px rgba(201, 168, 76, 0.05);
+  box-shadow: 0 0 30px rgba(74, 232, 122, 0.15),
+              0 0 60px rgba(74, 232, 122, 0.05);
 }
 
 /* Underline grow from center */

@@ -142,9 +142,9 @@ const closeDetail = () => {
 
 .class-tab.active {
   border-color: var(--tab-color, var(--color-accent));
-  background: rgba(201, 168, 76, 0.08);
+  background: rgba(74, 232, 122, 0.08);
   color: var(--tab-color, var(--color-accent));
-  box-shadow: 0 0 20px rgba(201, 168, 76, 0.1);
+  box-shadow: 0 0 20px rgba(74, 232, 122, 0.1);
 }
 
 .tab-name {
@@ -191,7 +191,7 @@ const closeDetail = () => {
   right: 0;
   bottom: 0;
   background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-    rgba(201, 168, 76, 0.08) 0%, 
+    rgba(74, 232, 122, 0.08) 0%, 
     transparent 50%);
   opacity: 0;
   transition: opacity var(--duration-normal) ease;
@@ -203,7 +203,7 @@ const closeDetail = () => {
   border-color: var(--color-border-hover);
   transform: translateY(-6px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3),
-              0 0 30px rgba(201, 168, 76, 0.1);
+              0 0 30px rgba(74, 232, 122, 0.1);
 }
 
 .operator-card:hover::before {

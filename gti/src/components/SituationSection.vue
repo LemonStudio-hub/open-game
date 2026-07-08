@@ -47,7 +47,7 @@ const factionColors: Record<Faction, string> = {
   asara: '#4a9ee8',
   contested: '#e8a84a',
   unknown: '#5a5650',
-  gti: '#c9a84c',
+  gti: '#4ae87a',
 }
 
 const getFactionLabel = (faction: Faction) => t(`situation.factions.${faction}`)
@@ -105,7 +105,7 @@ const draw2dMap = () => {
 
   const gridSize = width / 20
   const gridPattern = defs.append('pattern').attr('id', 'tacGrid2d').attr('width', gridSize).attr('height', gridSize).attr('patternUnits', 'userSpaceOnUse')
-  gridPattern.append('path').attr('d', `M ${gridSize} 0 L 0 0 0 ${gridSize}`).attr('fill', 'none').attr('stroke', 'rgba(201,168,76,0.04)').attr('stroke-width', 0.5)
+  gridPattern.append('path').attr('d', `M ${gridSize} 0 L 0 0 0 ${gridSize}`).attr('fill', 'none').attr('stroke', 'rgba(74,232,122,0.04)').attr('stroke-width', 0.5)
 
   const glowFilter = defs.append('filter').attr('id', 'markerGlow2d')
   glowFilter.append('feGaussianBlur').attr('stdDeviation', 3).attr('result', 'blur')
@@ -122,17 +122,17 @@ const draw2dMap = () => {
   const terrainW = 100, terrainH = 80
   const terrain = generateTerrain(terrainW, terrainH)
   const thresholds = [0.1, 0.2, 0.35, 0.5, 0.65, 0.8]
-  const contourColors = ['rgba(74,158,232,0.03)', 'rgba(201,168,76,0.02)', 'rgba(201,168,76,0.035)', 'rgba(201,168,76,0.05)', 'rgba(201,168,76,0.07)', 'rgba(201,168,76,0.09)']
+  const contourColors = ['rgba(74,158,232,0.03)', 'rgba(74,232,122,0.02)', 'rgba(74,232,122,0.035)', 'rgba(74,232,122,0.05)', 'rgba(74,232,122,0.07)', 'rgba(74,232,122,0.09)']
   const contours = d3.contours().size([terrainW, terrainH]).thresholds(thresholds)
   const contourData = contours(terrain.flat())
   const proj = d3.geoIdentity().scale(width / terrainW)
   const pathGen = d3.geoPath().projection(proj)
-  svg.append('g').attr('class', 'terrain').selectAll('path').data(contourData).join('path').attr('d', pathGen as any).attr('fill', (_d, i) => contourColors[i] || 'transparent').attr('stroke', 'rgba(201,168,76,0.04)').attr('stroke-width', 0.3)
+  svg.append('g').attr('class', 'terrain').selectAll('path').data(contourData).join('path').attr('d', pathGen as any).attr('fill', (_d, i) => contourColors[i] || 'transparent').attr('stroke', 'rgba(74,232,122,0.04)').attr('stroke-width', 0.3)
 
   const peninsulaPath = 'M10,15 L18,10 L30,8 L42,10 L55,8 L68,10 L78,12 L88,18 L92,28 L90,38 L85,42 L90,45 L92,50 L88,55 L82,52 L78,55 L80,62 L78,68 L72,72 L60,75 L48,73 L38,70 L28,72 L18,68 L12,60 L8,50 L10,42 L8,35 L10,28 L8,22 Z'
-  svg.append('path').attr('d', peninsulaPath).attr('fill', 'none').attr('stroke', 'rgba(201,168,76,0.2)').attr('stroke-width', 1).attr('transform', `scale(${width / 100},${height / 80})`)
-  svg.append('path').attr('d', 'M80,44 L84,42 L88,44 L86,48 L82,48 Z').attr('fill', 'rgba(201,168,76,0.04)').attr('stroke', 'rgba(201,168,76,0.15)').attr('stroke-width', 0.8).attr('transform', `scale(${width / 100},${height / 80})`)
-  svg.append('path').attr('d', 'M38,70 L42,74 L48,76 L55,74 L60,75 L58,78 L50,80 L42,78 L38,74 Z').attr('fill', 'rgba(201,168,76,0.03)').attr('stroke', 'rgba(201,168,76,0.12)').attr('stroke-width', 0.8).attr('transform', `scale(${width / 100},${height / 80})`)
+  svg.append('path').attr('d', peninsulaPath).attr('fill', 'none').attr('stroke', 'rgba(74,232,122,0.2)').attr('stroke-width', 1).attr('transform', `scale(${width / 100},${height / 80})`)
+  svg.append('path').attr('d', 'M80,44 L84,42 L88,44 L86,48 L82,48 Z').attr('fill', 'rgba(74,232,122,0.04)').attr('stroke', 'rgba(74,232,122,0.15)').attr('stroke-width', 0.8).attr('transform', `scale(${width / 100},${height / 80})`)
+  svg.append('path').attr('d', 'M38,70 L42,74 L48,76 L55,74 L60,75 L58,78 L50,80 L42,78 L38,74 Z').attr('fill', 'rgba(74,232,122,0.03)').attr('stroke', 'rgba(74,232,122,0.12)').attr('stroke-width', 0.8).attr('transform', `scale(${width / 100},${height / 80})`)
 
   const zones = [
     { cx: 28, cy: 32, rx: 10, ry: 7, faction: 'havoc' as Faction },
@@ -157,29 +157,29 @@ const draw2dMap = () => {
   svg.append('path').attr('d', 'M38,62 Q42,65 48,66 Q52,67 58,68').attr('fill', 'none').attr('stroke', 'rgba(74,158,232,0.12)').attr('stroke-width', 0.8).attr('stroke-dasharray', '3,4').attr('stroke-linecap', 'round').attr('transform', `scale(${width / 100},${height / 80})`)
 
   const damG = svg.append('g').attr('transform', `translate(${sx(39)},${sy(43)}) scale(${width / 100})`)
-  damG.append('rect').attr('width', 6).attr('height', 1.5).attr('rx', 0.3).attr('fill', 'rgba(201,168,76,0.2)').attr('stroke', 'rgba(201,168,76,0.4)').attr('stroke-width', 0.15)
-  for (let i = 1; i <= 3; i++) damG.append('line').attr('x1', i * 1.5).attr('y1', 0).attr('x2', i * 1.5).attr('y2', 1.5).attr('stroke', 'rgba(201,168,76,0.15)').attr('stroke-width', 0.08)
+  damG.append('rect').attr('width', 6).attr('height', 1.5).attr('rx', 0.3).attr('fill', 'rgba(74,232,122,0.2)').attr('stroke', 'rgba(74,232,122,0.4)').attr('stroke-width', 0.15)
+  for (let i = 1; i <= 3; i++) damG.append('line').attr('x1', i * 1.5).attr('y1', 0).attr('x2', i * 1.5).attr('y2', 1.5).attr('stroke', 'rgba(74,232,122,0.15)').attr('stroke-width', 0.08)
 
-  svg.append('line').attr('x1', 0).attr('y1', sy(70)).attr('x2', width).attr('y2', sy(70)).attr('stroke', 'rgba(201,168,76,0.08)').attr('stroke-width', 0.8).attr('stroke-dasharray', '6,4')
-  svg.append('text').attr('x', 8).attr('y', sy(69.3)).attr('fill', 'rgba(201,168,76,0.15)').attr('font-size', 9).attr('font-family', 'monospace').text('EQUATOR 0°')
+  svg.append('line').attr('x1', 0).attr('y1', sy(70)).attr('x2', width).attr('y2', sy(70)).attr('stroke', 'rgba(74,232,122,0.08)').attr('stroke-width', 0.8).attr('stroke-dasharray', '6,4')
+  svg.append('text').attr('x', 8).attr('y', sy(69.3)).attr('fill', 'rgba(74,232,122,0.15)').attr('font-size', 9).attr('font-family', 'monospace').text('EQUATOR 0°')
 
-  for (let gx = 10; gx < 100; gx += 10) svg.append('text').attr('x', sx(gx)).attr('y', 12).attr('fill', 'rgba(201,168,76,0.1)').attr('font-size', 7).attr('font-family', 'monospace').attr('text-anchor', 'middle').text(String.fromCharCode(64 + gx / 10))
-  for (let gy = 10; gy < 80; gy += 10) svg.append('text').attr('x', 4).attr('y', sy(gy) + 3).attr('fill', 'rgba(201,168,76,0.1)').attr('font-size', 7).attr('font-family', 'monospace').text(gy / 10)
+  for (let gx = 10; gx < 100; gx += 10) svg.append('text').attr('x', sx(gx)).attr('y', 12).attr('fill', 'rgba(74,232,122,0.1)').attr('font-size', 7).attr('font-family', 'monospace').attr('text-anchor', 'middle').text(String.fromCharCode(64 + gx / 10))
+  for (let gy = 10; gy < 80; gy += 10) svg.append('text').attr('x', 4).attr('y', sy(gy) + 3).attr('fill', 'rgba(74,232,122,0.1)').attr('font-size', 7).attr('font-family', 'monospace').text(gy / 10)
 
   const compass = svg.append('g').attr('transform', `translate(${width - 35}, 35)`).attr('opacity', 0.4)
-  compass.append('circle').attr('r', 14).attr('fill', 'none').attr('stroke', 'rgba(201,168,76,0.2)').attr('stroke-width', 0.5)
-  compass.append('line').attr('y1', -12).attr('y2', 12).attr('stroke', 'rgba(201,168,76,0.3)').attr('stroke-width', 0.5)
-  compass.append('line').attr('x1', -12).attr('x2', 12).attr('stroke', 'rgba(201,168,76,0.3)').attr('stroke-width', 0.5)
-  compass.append('polygon').attr('points', '0,-10 -3,-2 3,-2').attr('fill', 'rgba(201,168,76,0.5)')
-  compass.append('text').attr('y', -14).attr('text-anchor', 'middle').attr('fill', 'rgba(201,168,76,0.6)').attr('font-size', 7).attr('font-family', 'monospace').text('N')
+  compass.append('circle').attr('r', 14).attr('fill', 'none').attr('stroke', 'rgba(74,232,122,0.2)').attr('stroke-width', 0.5)
+  compass.append('line').attr('y1', -12).attr('y2', 12).attr('stroke', 'rgba(74,232,122,0.3)').attr('stroke-width', 0.5)
+  compass.append('line').attr('x1', -12).attr('x2', 12).attr('stroke', 'rgba(74,232,122,0.3)').attr('stroke-width', 0.5)
+  compass.append('polygon').attr('points', '0,-10 -3,-2 3,-2').attr('fill', 'rgba(74,232,122,0.5)')
+  compass.append('text').attr('y', -14).attr('text-anchor', 'middle').attr('fill', 'rgba(74,232,122,0.6)').attr('font-size', 7).attr('font-family', 'monospace').text('N')
 
   const scaleBar = svg.append('g').attr('transform', `translate(20, ${height - 20})`).attr('opacity', 0.4)
-  scaleBar.append('line').attr('x2', 50).attr('stroke', 'rgba(201,168,76,0.4)').attr('stroke-width', 1)
-  scaleBar.append('line').attr('y1', -3).attr('y2', 3).attr('stroke', 'rgba(201,168,76,0.4)').attr('stroke-width', 0.8)
-  scaleBar.append('line').attr('x1', 50).attr('x2', 50).attr('y1', -3).attr('y2', 3).attr('stroke', 'rgba(201,168,76,0.4)').attr('stroke-width', 0.8)
-  scaleBar.append('text').attr('x', 25).attr('y', 12).attr('text-anchor', 'middle').attr('fill', 'rgba(201,168,76,0.4)').attr('font-size', 7).attr('font-family', 'monospace').text('50 km')
+  scaleBar.append('line').attr('x2', 50).attr('stroke', 'rgba(74,232,122,0.4)').attr('stroke-width', 1)
+  scaleBar.append('line').attr('y1', -3).attr('y2', 3).attr('stroke', 'rgba(74,232,122,0.4)').attr('stroke-width', 0.8)
+  scaleBar.append('line').attr('x1', 50).attr('x2', 50).attr('y1', -3).attr('y2', 3).attr('stroke', 'rgba(74,232,122,0.4)').attr('stroke-width', 0.8)
+  scaleBar.append('text').attr('x', 25).attr('y', 12).attr('text-anchor', 'middle').attr('fill', 'rgba(74,232,122,0.4)').attr('font-size', 7).attr('font-family', 'monospace').text('50 km')
 
-  svg.append('text').attr('x', width / 2).attr('y', height * 0.06).attr('text-anchor', 'middle').attr('fill', 'rgba(201,168,76,0.08)').attr('font-size', Math.max(16, width * 0.025)).attr('font-family', 'monospace').attr('letter-spacing', 4).text('AHSARAH PENINSULA')
+  svg.append('text').attr('x', width / 2).attr('y', height * 0.06).attr('text-anchor', 'middle').attr('fill', 'rgba(74,232,122,0.08)').attr('font-size', Math.max(16, width * 0.025)).attr('font-family', 'monospace').attr('letter-spacing', 4).text('AHSARAH PENINSULA')
   svg.append('text').attr('transform', `translate(${sx(28)},${sy(35)}) rotate(8)`).attr('fill', 'rgba(74,158,232,0.18)').attr('font-size', 8).attr('font-family', 'monospace').text('UMM RIVER')
 
   const markersGroup = svg.append('g').attr('class', 'markers')
@@ -200,7 +200,7 @@ const draw2dMap = () => {
 
     const labelY = cy - baseR * 2 - 4
     g.append('text').attr('x', cx).attr('y', labelY).attr('text-anchor', 'middle').attr('fill', color).attr('font-size', Math.max(9, width * 0.012)).attr('font-family', 'var(--font-body)').attr('font-weight', 500).attr('opacity', 0.8).text(getLocationLabel(loc))
-    g.append('text').attr('x', cx).attr('y', labelY + Math.max(10, width * 0.013)).attr('text-anchor', 'middle').attr('fill', 'rgba(201,168,76,0.3)').attr('font-size', Math.max(6, width * 0.008)).attr('font-family', 'monospace').text(loc.labelEn)
+    g.append('text').attr('x', cx).attr('y', labelY + Math.max(10, width * 0.013)).attr('text-anchor', 'middle').attr('fill', 'rgba(74,232,122,0.3)').attr('font-size', Math.max(6, width * 0.008)).attr('font-family', 'monospace').text(loc.labelEn)
 
     g.on('mouseenter', function (event: MouseEvent) {
       hoveredLocation.value = loc
@@ -238,7 +238,7 @@ let hoveredMarker: THREE.Object3D | null = null
 let threeInitialized = false
 
 const factionColorsThree: Record<Faction, THREE.Color> = {
-  havoc: new THREE.Color(0xe8534a), asara: new THREE.Color(0x4a9ee8), contested: new THREE.Color(0xe8a84a), unknown: new THREE.Color(0x5a5650), gti: new THREE.Color(0xc9a84c),
+  havoc: new THREE.Color(0xe8534a), asara: new THREE.Color(0x4a9ee8), contested: new THREE.Color(0xe8a84a), unknown: new THREE.Color(0x5a5650), gti: new THREE.Color(0x4ae87a),
 }
 
 const generateTerrainHeight = (ix: number, iz: number, segW: number, segH: number): number => {
@@ -349,7 +349,7 @@ const init3dScene = () => {
   dirLight.shadow.camera.left = -8; dirLight.shadow.camera.right = 8
   dirLight.shadow.camera.top = 8; dirLight.shadow.camera.bottom = -8
   scene.add(dirLight)
-  scene.add(new THREE.PointLight(0xc9a84c, 0.4, 20).translateY(3))
+  scene.add(new THREE.PointLight(0x4ae87a, 0.4, 20).translateY(3))
   scene.add(new THREE.HemisphereLight(0x223344, 0x111122, 0.4))
 
   const segW = 80, segH = 80
@@ -555,18 +555,18 @@ onUnmounted(() => {
 
 .heatmap-stats { display: flex; justify-content: center; gap: var(--space-lg); margin-bottom: var(--space-3xl); flex-wrap: wrap; }
 .stat-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-xs); padding: var(--space-sm) var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg-card); min-width: 90px; transition: all var(--transition-base); }
-.stat-item:hover { border-color: var(--stat-color, var(--color-accent)); box-shadow: 0 0 16px rgba(201,168,76,0.08); }
+.stat-item:hover { border-color: var(--stat-color, var(--color-accent)); box-shadow: 0 0 16px rgba(74,232,122,0.08); }
 .stat-count { font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; color: var(--stat-color, var(--color-accent)); line-height: 1; }
 .stat-label { font-size: 0.7rem; color: var(--color-text-muted); letter-spacing: 0.05em; white-space: nowrap; }
 
 .map-wrapper { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; position: relative; }
 
-.map-toolbar { display: flex; align-items: center; justify-content: space-between; padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-border); background: rgba(201,168,76,0.02); }
+.map-toolbar { display: flex; align-items: center; justify-content: space-between; padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--color-border); background: rgba(74,232,122,0.02); }
 .toolbar-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--color-text-muted); }
-.toolbar-center { display: flex; gap: 2px; background: rgba(201,168,76,0.05); border-radius: var(--radius-sm); padding: 2px; }
+.toolbar-center { display: flex; gap: 2px; background: rgba(74,232,122,0.05); border-radius: var(--radius-sm); padding: 2px; }
 .view-btn { display: flex; align-items: center; gap: var(--space-xs); padding: 6px 14px; background: transparent; border: 1px solid transparent; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--color-text-muted); cursor: pointer; transition: all var(--transition-fast); }
 .view-btn:hover { color: var(--color-text-primary); }
-.view-btn.active { background: rgba(201,168,76,0.12); border-color: var(--color-border); color: var(--color-accent); }
+.view-btn.active { background: rgba(74,232,122,0.12); border-color: var(--color-border); color: var(--color-accent); }
 .view-btn svg { opacity: 0.7; }
 .view-btn.active svg { opacity: 1; }
 .toolbar-status { display: flex; align-items: center; gap: var(--space-xs); font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: #4ae87a; }
@@ -590,7 +590,7 @@ onUnmounted(() => {
 .tooltip-en { display: block; font-family: var(--font-mono); font-size: 0.65rem; color: var(--color-text-muted); letter-spacing: 0.05em; margin-bottom: var(--space-xs); }
 .tooltip-desc { font-size: 0.75rem; color: var(--color-text-secondary); line-height: 1.5; }
 
-.map-legend { display: flex; align-items: center; justify-content: center; gap: var(--space-lg); padding: var(--space-md) var(--space-xl); border-top: 1px solid var(--color-border); background: rgba(201,168,76,0.02); flex-wrap: wrap; }
+.map-legend { display: flex; align-items: center; justify-content: center; gap: var(--space-lg); padding: var(--space-md) var(--space-xl); border-top: 1px solid var(--color-border); background: rgba(74,232,122,0.02); flex-wrap: wrap; }
 .legend-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--color-text-muted); }
 .legend-items { display: flex; gap: var(--space-md); flex-wrap: wrap; }
 .legend-item { display: flex; align-items: center; gap: var(--space-xs); }

@@ -145,7 +145,7 @@ useScrollReveal(sectionRef)
   font-family: var(--font-mono);
   font-size: 5rem;
   font-weight: 800;
-  color: rgba(201, 168, 76, 0.03);
+  color: rgba(74, 232, 122, 0.03);
   letter-spacing: 0.3em;
   white-space: nowrap;
   pointer-events: none;
@@ -201,7 +201,7 @@ useScrollReveal(sectionRef)
   gap: var(--space-xs);
   margin-bottom: var(--space-2xl);
   padding: var(--space-lg);
-  background: rgba(201, 168, 76, 0.03);
+  background: rgba(74, 232, 122, 0.03);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
 }
@@ -254,7 +254,7 @@ useScrollReveal(sectionRef)
 .preamble {
   margin-bottom: var(--space-2xl);
   padding-left: var(--space-lg);
-  border-left: 2px solid rgba(201, 168, 76, 0.15);
+  border-left: 2px solid rgba(74, 232, 122, 0.15);
 }
 
 .pre-para {
@@ -379,7 +379,7 @@ useScrollReveal(sectionRef)
 .stamp-border {
   width: 96px;
   height: 96px;
-  border: 2px solid rgba(201, 168, 76, 0.2);
+  border: 2px solid rgba(74, 232, 122, 0.2);
   border-radius: 50%;
   display: flex;
   flex-direction: column;

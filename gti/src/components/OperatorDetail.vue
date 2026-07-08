@@ -345,7 +345,7 @@ const hasProfile = () => {
 }
 
 .meta-item:hover {
-  background: rgba(201, 168, 76, 0.05);
+  background: rgba(74, 232, 122, 0.05);
 }
 
 .meta-label {

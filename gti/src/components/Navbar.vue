@@ -235,7 +235,7 @@ onUnmounted(() => {
 
 .lang-switch:hover {
   border-color: var(--color-accent);
-  background: rgba(201, 168, 76, 0.08);
+  background: rgba(74, 232, 122, 0.08);
 }
 
 .mobile-toggle {

@@ -104,7 +104,7 @@ const eventKeys = ['1993', '1993-2018', '2018', '2032', '2035'] as const
 
 .timeline-item.highlight .dot-inner {
   background: var(--color-accent);
-  box-shadow: 0 0 12px rgba(201, 168, 76, 0.4);
+  box-shadow: 0 0 12px rgba(74, 232, 122, 0.4);
   width: 10px;
   height: 10px;
 }

@@ -81,8 +81,8 @@ const toggleFaction = (key: string) => {
           <svg viewBox="0 0 600 500" class="relations-svg">
             <defs>
               <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.3" />
-                <stop offset="100%" stop-color="#c9a84c" stop-opacity="0" />
+                <stop offset="0%" stop-color="#4ae87a" stop-opacity="0.3" />
+                <stop offset="100%" stop-color="#4ae87a" stop-opacity="0" />
               </radialGradient>
 
               <filter id="glow">
@@ -99,9 +99,9 @@ const toggleFaction = (key: string) => {
               </linearGradient>
 
               <linearGradient v-for="f in factions" :key="`line-${f.key}`" :id="`line-${f.key}`">
-                <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.6" />
+                <stop offset="0%" stop-color="#4ae87a" stop-opacity="0.6" />
                 <stop offset="50%" :stop-color="f.color" stop-opacity="0.8" />
-                <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.6" />
+                <stop offset="100%" stop-color="#4ae87a" stop-opacity="0.6" />
               </linearGradient>
             </defs>
 
