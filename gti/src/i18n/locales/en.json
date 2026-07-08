@@ -9,7 +9,8 @@
       "structure": "Structure",
       "operators": "Operators",
       "operations": "Operations",
-      "relations": "Relations"
+      "relations": "Relations",
+      "wanted": "Wanted"
     },
     "langSwitch": "中"
   },
@@ -242,7 +243,15 @@
       }
     ],
     "branchesTitle": "Global Divisions",
-    "branches": ["North America", "Asia", "Oceania", "Africa"]
+    "branches": ["North America", "Asia", "Oceania", "Africa"],
+    "chart": {
+      "tier1": "Strategic Command",
+      "tier2": "Operational Bodies",
+      "tier3": "Global Deployment",
+      "directReport": "Direct Report",
+      "subordinate": "Subordinate",
+      "coverage": "Coverage"
+    }
   },
   "operators": {
     "label": "// OPERATORS",
@@ -394,28 +403,44 @@
   "operations": {
     "label": "// OPERATIONS",
     "title": "Major Operations",
-    "subtitle": "Key military operations in the Ahsarah region, 2035",
+    "subtitle": "Key military operations conducted by G.T.I. in the Ahsarah region",
     "status": {
       "success": "Success",
       "failure": "Failed",
-      "ongoing": "Ongoing"
+      "partial": "Partial Success"
     },
     "list": {
-      "diamond": {
-        "name": "Operation Diamond Hotel",
-        "description": "An intense operation to contest the Mandel Brick. GTI operators infiltrated behind enemy lines, ultimately ending in failure."
+      "crocodile": {
+        "name": "Operation Crocodile's Tears",
+        "description": "Intelligence reported a Havoc outpost in eastern Ahsarah. Operator Uluru's squad was dispatched for reconnaissance and strike. Upon entering the target area, the squad was ambushed by forces with precise knowledge of their routes, comms, and configuration — exposing systemic infiltration within GTI."
+      },
+      "nightchild": {
+        "name": "Operation Nightchild",
+        "description": "After Havoc launched a systemic attack on GTI communications, operator Nameless infiltrated Havoc Tower to restore the network. The entire operation was a trap set by Jacob Havoc. Nameless failed to restore communications and was caught in the ambush."
+      },
+      "tideprison": {
+        "name": "Tide Prison Riot",
+        "description": "GTI operators infiltrated Havoc-controlled Tide Prison as inmates to rescue the Raven, who possessed intel on Havoc's Skynet plan. However, the Raven used GTI's intervention to incite a massive riot. The squad was trapped in the chaos and suffered heavy losses."
+      },
+      "blazingsky": {
+        "name": "Operation Blazing Sky",
+        "description": "Following the Tide Prison disaster, Red Wolf and Zoya targeted Havoc's Skynet Mandel Brick. Upon arrival, they found the brick already taken by Silver Wing, an comrade-in-arms of Red Wolf's father. After a brief skirmish, Silver Wing stayed behind to cover their retreat and later joined GTI with the brick."
+      },
+      "zerodam": {
+        "name": "Zero Dam Crisis",
+        "description": "Intelligence revealed that Reiss had manipulated Sayid into planting explosives at Zero Dam. Operators Bit and Uluru rushed to disarm the bombs. Bit was captured by Sayid but说服 him that he was merely Reiss's pawn. Sayidabandoned the bombing plan, averting catastrophe."
       },
       "ascender": {
         "name": "Operation Ascender",
-        "description": "An attempt to prevent Havoc's rocket launch plan and implant GTI's self-developed \"Minerva\" program, ultimately ending in failure."
+        "description": "GTI launched an operation toblock Havoc's rocket launch at the Space Base and implant the Minerva program. Operators hacked the rocket systems,unlock safety locks, and held position for 270 seconds against waves of Havoc forces before extracting via the rocketpod."
       },
-      "echo": {
-        "name": "Operation Echo",
-        "description": "A complex espionage game surrounding a mole within GTI's leadership. Intelligence leaks led to the operation's failure."
+      "brave": {
+        "name": "Operation Brave",
+        "description": "Hudson Havocactivated the Dark Star Plan, sending an incomplete fusion device to a space station andintending activating the Scorched Earth protocol. GTI operators infiltrated the station, decoded three marked containers, and seized the Dark Star fuel cells, neutralizing the threat."
       },
       "ouroboros": {
         "name": "Operation Ouroboros",
-        "description": "A large-scale purge operation launched to recover the Mandel Brick, which failed to achieve its core objective."
+        "description": "After losing Havoc's support, Hamka began raiding GTI supply convoys. GTI dispatched a squad to the ancient city of Zalvatt to hunt him down. The squad infiltrated the fishing village, engaged in combat through the ruins, andeventually eliminated Hamka."
       }
     }
   },
@@ -423,24 +448,117 @@
     "label": "// RELATIONS",
     "title": "Faction Relations",
     "subtitle": "A complex landscape of international power games",
+    "centralNode": "G.T.I.",
+    "centralRole": "Independent Anti-Terror Force",
+    "threatLevel": "Threat Level",
+    "connectionLabel": "Relationship",
     "factions": {
       "havoc": {
         "name": "Havoc Group",
         "nameEn": "HAVOC",
         "relation": "Full Confrontation",
+        "threat": "Critical",
         "description": "The world's highest-valued tech corporation, combining terrorist activities with military expansion. GTI's primary target. Secretly develops high-value military technologies like the Mandel Brick, whose \"Babel Tower Plan\" poses a fundamental threat to global security."
       },
       "assara": {
         "name": "Ahsarah Guard",
         "nameEn": "ASSARA",
         "relation": "Three-Way Conflict",
+        "threat": "Moderate",
         "description": "Ahsarah's indigenous armed force, resisting both the Havoc Group's invasion and control, and firmly opposing external intervention in its territorial sovereignty. Forms a complex three-way power game with GTI."
       },
       "un": {
         "name": "United Nations",
         "nameEn": "UNITED NATIONS",
         "relation": "Nominal Affiliation",
+        "threat": "N/A",
         "description": "Established by Security Council authorization with legal basis, nominally responsible for budget framework management. Actual command operates independently, forming a unique \"principal-agent\" governance structure."
+      }
+    }
+  },
+  "wanted": {
+    "label": "// HIGH-VALUE TARGETS",
+    "title": "GTI Wanted List",
+    "subtitle": "Priority targets posing significant threats to regional stability and global security",
+    "threatLevels": {
+      "critical": "Critical",
+      "high": "High",
+      "moderate": "Moderate"
+    },
+    "lastSeen": "Last Known Location",
+    "affiliation": "Affiliation",
+    "list": {
+      "sayid": {
+        "name": "Sayid Ziaten",
+        "codename": "The Old Captain",
+        "affiliation": "Crimson Harpy",
+        "threat": "critical",
+        "locations": ["Zero Dam", "Babel Tower", "Space Base"],
+        "description": "Former captain of the Asara royal guard, leader of the Crimson Harpy armed group. Frequently uses flame crossbow bolts and is accompanied by soldiers."
+      },
+      "reiss": {
+        "name": "Reiss",
+        "codename": "Hell Black Shark",
+        "affiliation": "Red Rat Nest",
+        "threat": "critical",
+        "locations": ["Longbow Valley Radar Station", "Diamond Queen Hotel"],
+        "description": "Former Asara military commander, leader of the Red Rat Nest. Extremely strong in close combat."
+      },
+      "anais": {
+        "name": "Anais Desmoulins",
+        "codename": "The Old Lady",
+        "affiliation": "Havoc Security",
+        "threat": "critical",
+        "locations": ["Space Base"],
+        "description": "Havoc Security Director. A cyborg sniper with exceptional sniping capabilities."
+      },
+      "hudson": {
+        "name": "Hudson Havoc",
+        "codename": "The Young Master",
+        "affiliation": "Havoc Group",
+        "threat": "high",
+        "locations": ["Mobile"],
+        "description": "Son of Jacob Havoc, Minister of Havoc Efficiency. Accompanied by combat vehicles and an elite guard."
+      },
+      "ghroth": {
+        "name": "Ghroth",
+        "codename": "The Warden",
+        "affiliation": "Havoc Group",
+        "threat": "high",
+        "locations": ["Tide Prison"],
+        "description": "Former GTI member, warden of Tide Prison."
+      },
+      "raven": {
+        "name": "The Raven",
+        "codename": "The Fallen Prince",
+        "affiliation": "Prison Inmates",
+        "threat": "high",
+        "locations": ["Babel Tower", "Tide Prison"],
+        "description": "Former member of the Asara royal family, leader of the prison inmates. Highly mobile."
+      },
+      "jacob": {
+        "name": "Jacob Havoc",
+        "codename": "—",
+        "affiliation": "Havoc Group",
+        "threat": "critical",
+        "locations": ["Unknown"],
+        "description": "Founder of the Havoc Group, the mastermind behind the scenes, and the root cause of the Asara conflict."
+      },
+      "youssef": {
+        "name": "Youssef Fahim",
+        "codename": "—",
+        "affiliation": "Ahsarah Guard",
+        "threat": "moderate",
+        "locations": ["Ahsarah"],
+        "description": "Founder of the Asara Guard, who staged a coup to overthrow the old royal family, a key figure in the origin of the Asara civil war."
+      },
+      "hamka": {
+        "name": "Hamka",
+        "codename": "—",
+        "affiliation": "Asara Warlord",
+        "threat": "moderate",
+        "locations": ["Ahsarah"],
+        "description": "Former Asara military warlord, the murderer of Sayid's father."
       }
     }
   },

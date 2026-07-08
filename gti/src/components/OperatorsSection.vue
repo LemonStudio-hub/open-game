@@ -177,10 +177,42 @@ const closeDetail = () => {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
-  transition: all var(--transition-base);
+  transition: all var(--duration-normal) var(--ease-out-expo);
   position: relative;
   overflow: hidden;
   cursor: pointer;
+}
+
+.operator-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+    rgba(201, 168, 76, 0.08) 0%, 
+    transparent 50%);
+  opacity: 0;
+  transition: opacity var(--duration-normal) ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.operator-card:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3),
+              0 0 30px rgba(201, 168, 76, 0.1);
+}
+
+.operator-card:hover::before {
+  opacity: 1;
+}
+
+.operator-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .operator-card:hover {

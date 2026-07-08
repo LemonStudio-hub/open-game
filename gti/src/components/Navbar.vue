@@ -6,11 +6,23 @@ const { t, locale } = useI18n()
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
+const activeSection = ref('hero')
 
-const navItemKeys = ['about', 'history', 'resolution', 'situation', 'structure', 'operators', 'operations', 'relations'] as const
+const navItemKeys = ['about', 'history', 'resolution', 'situation', 'structure', 'operators', 'operations', 'relations', 'wanted'] as const
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 20
+
+  const sections = ['hero', ...navItemKeys]
+  const scrollPos = window.scrollY + 100
+
+  for (let i = sections.length - 1; i >= 0; i--) {
+    const section = document.getElementById(sections[i])
+    if (section && section.offsetTop <= scrollPos) {
+      activeSection.value = sections[i]
+      break
+    }
+  }
 }
 
 const scrollTo = (id: string) => {
@@ -29,6 +41,7 @@ const toggleLocale = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
+  handleScroll()
 })
 
 onUnmounted(() => {
@@ -58,6 +71,7 @@ onUnmounted(() => {
           v-for="key in navItemKeys"
           :key="key"
           class="nav-link"
+          :class="{ active: activeSection === key }"
           @click.prevent="scrollTo(key)"
         >
           {{ t(`nav.items.${key}`) }}
@@ -99,6 +113,7 @@ onUnmounted(() => {
 
 .navbar.scrolled {
   background-color: rgba(10, 12, 16, 0.85);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--color-border);
 }
@@ -187,6 +202,15 @@ onUnmounted(() => {
   width: 100%;
 }
 
+.nav-link.active {
+  color: var(--color-accent);
+}
+
+.nav-link.active::after {
+  width: 100%;
+  background: var(--color-accent);
+}
+
 .navbar-actions {
   display: flex;
   align-items: center;
@@ -259,6 +283,7 @@ onUnmounted(() => {
     right: 0;
     bottom: 0;
     background: rgba(10, 12, 16, 0.95);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     flex-direction: column;
     align-items: center;

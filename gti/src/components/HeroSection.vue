@@ -22,11 +22,13 @@ const scrollToAbout = () => {
     <div class="hero-content container">
       <div class="hero-badge reveal">
         <span class="badge-dot"></span>
-        <span>{{ t('hero.badge') }}</span>
+        <span class="badge-text">{{ t('hero.badge') }}</span>
       </div>
 
       <h1 class="hero-title reveal">
-        <span class="hero-title-line">G<span class="title-dot">.</span>T<span class="title-dot">.</span>I<span class="title-dot">.</span></span>
+        <span class="hero-title-line">
+          <span class="title-letter" style="--delay: 0">G</span><span class="title-dot">.</span><span class="title-letter" style="--delay: 1">T</span><span class="title-dot">.</span><span class="title-letter" style="--delay: 2">I</span><span class="title-dot">.</span>
+        </span>
         <span class="hero-title-sub">{{ t('hero.subtitle') }}</span>
       </h1>
 
@@ -89,23 +91,33 @@ const scrollToAbout = () => {
 
 .hero-bg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 0;
 }
 
 .hero-grid {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image:
     linear-gradient(rgba(201, 168, 76, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(201, 168, 76, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
 }
 
 .hero-gradient {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background:
     radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 168, 76, 0.08), transparent),
     radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201, 168, 76, 0.05), transparent);
@@ -152,6 +164,25 @@ const scrollToAbout = () => {
   letter-spacing: 0.15em;
   color: var(--color-text-primary);
   line-height: 1;
+}
+
+.title-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: titleReveal 0.8s var(--ease-out-expo) forwards;
+  animation-delay: calc(var(--delay) * 0.1s + 0.3s);
+}
+
+@keyframes titleReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .title-dot {
@@ -265,6 +296,7 @@ const scrollToAbout = () => {
 
 @media (max-width: 768px) {
   .hero {
+    min-height: 100vh;
     min-height: 100dvh;
   }
 

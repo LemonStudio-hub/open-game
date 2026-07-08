@@ -9,7 +9,8 @@
       "structure": "架构",
       "operators": "干员",
       "operations": "行动",
-      "relations": "势力"
+      "relations": "势力",
+      "wanted": "通缉"
     },
     "langSwitch": "EN"
   },
@@ -242,7 +243,15 @@
       }
     ],
     "branchesTitle": "全球分部",
-    "branches": ["北美分部", "亚洲分部", "大洋洲分部", "非洲分部"]
+    "branches": ["北美分部", "亚洲分部", "大洋洲分部", "非洲分部"],
+    "chart": {
+      "tier1": "战略指挥层",
+      "tier2": "作战机构",
+      "tier3": "全球部署",
+      "directReport": "直属汇报",
+      "subordinate": "下属机构",
+      "coverage": "覆盖范围"
+    }
   },
   "operators": {
     "label": "// OPERATORS",
@@ -394,28 +403,44 @@
   "operations": {
     "label": "// OPERATIONS",
     "title": "主要行动",
-    "subtitle": "2035年阿萨拉地区关键军事行动记录",
+    "subtitle": "G.T.I. 在阿萨拉地区执行的关键军事行动",
     "status": {
       "success": "成功",
       "failure": "失利",
-      "ongoing": "进行中"
+      "partial": "部分成功"
     },
     "list": {
-      "diamond": {
-        "name": "钻石酒店行动",
-        "description": "争夺曼德尔砖的激烈行动，GTI干员深入敌后展开角逐，最终以失利告终。"
+      "crocodile": {
+        "name": "鳄鱼之泪行动",
+        "description": "情报部门接获线报，阿萨拉东部存在哈夫克前沿据点。干员乌鲁鲁所在小队前往侦察打击，进入目标区域后即遭来源不明的武装袭击，敌方对我方行动路线及通信频率掌握极为精准，暴露出我方内部已被渗透。"
+      },
+      "nightchild": {
+        "name": "黑夜之子行动",
+        "description": "哈夫克对我方通讯网络发动系统性攻击，组织全境通讯陷入瘫痪。干员无名潜入哈夫克尖塔试图恢复通讯网络，却发现整个行动均为雅各布·哈夫克设下的圈套，无名落入伏击。"
+      },
+      "tideprison": {
+        "name": "潮汐监狱暴动",
+        "description": "情报显示前阿萨拉王室成员「渡鸦」被关押于哈夫克控制的潮汐监狱，掌握天网计划关键情报。我方干员以囚犯身份潜入接近渡鸦，却被其利用制造大规模暴动，行动小队被困于暴动中心，损失惨重。"
+      },
+      "blazingsky": {
+        "name": "烈火冲天行动",
+        "description": "潮汐监狱暴动后通讯断绝，红狼与佐娅锁定哈夫克天网曼德尔砖。抵达后发现已被银翼——红狼父亲旧友——抢先取走。银翼念及旧情留下断后掩护撤离，后携带曼德尔砖主动加入我方，通讯系统得以恢复。"
+      },
+      "zerodam": {
+        "name": "零号大坝危机",
+        "description": "我方截获情报——雷斯蛊惑赛伊德在零号大坝埋设多处炸弹，企图炸毁大坝淹没下游平民。比特与乌鲁鲁紧急前往拆弹，比特被赛伊德生擒后成功劝说其放弃炸坝计划，赛伊德意识到自己只是雷斯的棋子。"
       },
       "ascender": {
         "name": "飞升者行动",
-        "description": "阻止哈夫克火箭发射计划，试图植入GTI自主开发的\"密涅瓦\"（Minerva）程序，最终以失败告终。"
+        "description": "情报显示哈夫克在航天基地进行火箭发射计划。我方干员前往阻止发射并植入「密涅瓦」程序，破译火箭系统、解除安全锁，坚守阵地约270秒后通过火箭舱完成撤离。行动后报告指出哈夫克可能正在研究气象武器。"
       },
-      "echo": {
-        "name": "回响行动",
-        "description": "围绕GTI高层内鬼展开的复杂谍战博弈，情报泄露导致行动失败。"
+      "brave": {
+        "name": "勇敢者行动",
+        "description": "哈德森·哈夫克启动「暗星计划」，将未完成的聚变装置送上空间站并意图启动「焦土计划」炸毁航天基地。我方干员潜入哈夫克空间站，破译三个标记容器，夺取暗星燃料单元，暗星计划覆灭。"
       },
       "ouroboros": {
         "name": "衔尾蛇行动",
-        "description": "为追回曼德尔砖发起的大规模肃清行动，未能达成核心目标。"
+        "description": "失去哈夫克支持的哈姆克频繁抢劫我方物资车队。我方派遣小队前往阿萨拉东部扎尔瓦特古城追捕哈姆克，小队在渔村潜入侦查、古城追捕交火，最终在哈姆克老巢将其击毙。"
       }
     }
   },
@@ -423,24 +448,117 @@
     "label": "// RELATIONS",
     "title": "势力关系",
     "subtitle": "错综复杂的国际博弈格局",
+    "centralNode": "G.T.I.",
+    "centralRole": "独立反恐机动力量",
+    "threatLevel": "威胁等级",
+    "connectionLabel": "关系",
     "factions": {
       "havoc": {
         "name": "哈夫克集团",
         "nameEn": "HAVOC",
         "relation": "全面对抗",
+        "threat": "极高",
         "description": "全球市值最高的科技企业，兼具恐怖活动与军事扩张属性，GTI核心打击目标。秘密研发曼德尔砖等高价值军事技术，其\"巴别塔计划\"对全球安全构成根本性威胁。"
       },
       "assara": {
         "name": "阿萨拉卫队",
         "nameEn": "ASSARA",
         "relation": "三方混战",
+        "threat": "中等",
         "description": "阿萨拉本土武装力量，既反抗哈夫克集团的侵略与控制，又坚决抗拒外部势力介入其领土主权。与GTI形成复杂的三方博弈格局。"
       },
       "un": {
         "name": "联合国",
         "nameEn": "UNITED NATIONS",
         "relation": "名义隶属",
+        "threat": "无",
         "description": "安理会授权成立并提供法理依据，名义上负责预算框架管理。实际指挥独立运作，形成独特的\"委托-代理\"治理结构。"
+      }
+    }
+  },
+  "wanted": {
+    "label": "// 高价值目标",
+    "title": "G.T.I. 通缉名单",
+    "subtitle": "对区域稳定与全球安全构成重大威胁的优先打击目标",
+    "threatLevels": {
+      "critical": "极高",
+      "high": "高",
+      "moderate": "中等"
+    },
+    "lastSeen": "已知出没地点",
+    "affiliation": "所属势力",
+    "list": {
+      "sayid": {
+        "name": "赛伊德·齐亚腾",
+        "codename": "老赛",
+        "affiliation": "赤枭",
+        "threat": "critical",
+        "locations": ["零号大坝", "巴别塔", "航天基地"],
+        "description": "阿萨拉皇家卫队前队长，赤枭武装组织首领。常用火焰弩箭，有士兵随行。"
+      },
+      "reiss": {
+        "name": "雷斯",
+        "codename": "地狱黑鲨",
+        "affiliation": "红鼠窝",
+        "threat": "critical",
+        "locations": ["长弓溪谷雷达站", "钻石皇后酒店"],
+        "description": "阿萨拉前军事指挥官，红鼠窝首领。近战能力极强。"
+      },
+      "anais": {
+        "name": "阿娜伊斯·德穆兰",
+        "codename": "老太",
+        "affiliation": "哈夫克安保",
+        "threat": "critical",
+        "locations": ["航天基地"],
+        "description": "哈夫克安保总监。改造人狙击手，狙击能力出众。"
+      },
+      "hudson": {
+        "name": "哈德森·哈夫克",
+        "codename": "公子哥",
+        "affiliation": "哈夫克集团",
+        "threat": "high",
+        "locations": ["机动目标"],
+        "description": "雅各布·哈夫克之子，哈夫克效率部长。有战斗载具和精锐卫队随行。"
+      },
+      "ghroth": {
+        "name": "格赫罗斯",
+        "codename": "典狱长",
+        "affiliation": "哈夫克集团",
+        "threat": "high",
+        "locations": ["潮汐监狱"],
+        "description": "前GTI成员，潮汐监狱典狱长。"
+      },
+      "raven": {
+        "name": "渡鸦",
+        "codename": "堕落的王子",
+        "affiliation": "囚犯势力",
+        "threat": "high",
+        "locations": ["巴别塔", "潮汐监狱"],
+        "description": "阿萨拉王室前成员，囚犯领袖。机动性极高。"
+      },
+      "jacob": {
+        "name": "雅各布·哈夫克",
+        "codename": "—",
+        "affiliation": "哈夫克集团",
+        "threat": "critical",
+        "locations": ["未知"],
+        "description": "哈夫克集团创始人，幕后操纵者，阿萨拉冲突的根源。"
+      },
+      "youssef": {
+        "name": "尤瑟夫·法西姆",
+        "codename": "—",
+        "affiliation": "阿萨拉卫队",
+        "threat": "moderate",
+        "locations": ["阿萨拉"],
+        "description": "阿萨拉卫队创始人，发动政变推翻旧王室，阿萨拉内战起源的关键人物。"
+      },
+      "hamka": {
+        "name": "哈姆克",
+        "codename": "—",
+        "affiliation": "阿萨拉军阀",
+        "threat": "moderate",
+        "locations": ["阿萨拉"],
+        "description": "阿萨拉前军事军阀，杀害赛伊德父亲的凶手。"
       }
     }
   },

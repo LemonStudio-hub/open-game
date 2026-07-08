@@ -145,25 +145,35 @@ const hasProfile = () => {
 <style scoped>
 .detail-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 1000;
   background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-xl);
-  animation: fadeIn 200ms ease;
+  animation: overlayIn 300ms var(--ease-out-expo);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes overlayIn {
+  from { opacity: 0; -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); }
+  to { opacity: 1; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes panelIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(40px) scale(0.95);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+  }
 }
 
 .detail-panel {
@@ -175,7 +185,7 @@ const hasProfile = () => {
   max-height: 85vh;
   overflow-y: auto;
   position: relative;
-  animation: slideUp 300ms ease;
+  animation: panelIn 500ms var(--ease-spring);
 }
 
 .detail-close {
@@ -192,13 +202,19 @@ const hasProfile = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-fast);
+  transition: all var(--duration-normal) var(--ease-out-expo);
   z-index: 1;
 }
 
 .detail-close:hover {
   color: var(--color-text-primary);
   border-color: var(--color-border-hover);
+  transform: rotate(90deg) scale(1.1);
+  background: var(--color-bg-card-hover);
+}
+
+.detail-close:active {
+  transform: rotate(90deg) scale(0.95);
 }
 
 .detail-close svg {
@@ -271,6 +287,35 @@ const hasProfile = () => {
   padding: var(--space-xs) var(--space-md);
   border-radius: var(--radius-sm);
   font-weight: 700;
+  overflow: hidden;
+  animation: badgeIn 500ms var(--ease-spring) 200ms both;
+}
+
+.detail-class-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: badgeShine 3s ease-in-out infinite;
+}
+
+@keyframes badgeIn {
+  from { 
+    opacity: 0; 
+    transform: translateX(10px) scale(0.9);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes badgeShine {
+  0%, 100% { left: -100%; }
+  50% { left: 100%; }
 }
 
 .detail-body {
@@ -294,6 +339,13 @@ const hasProfile = () => {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) ease;
+}
+
+.meta-item:hover {
+  background: rgba(201, 168, 76, 0.05);
 }
 
 .meta-label {
@@ -353,6 +405,13 @@ const hasProfile = () => {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-lg);
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+.skill-item:hover {
+  border-color: var(--color-border-hover);
+  transform: translateX(4px);
+  background: var(--color-bg-card-hover);
 }
 
 .skill-name {

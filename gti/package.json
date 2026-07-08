@@ -3,6 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "browserslist": [
+    ">= 0.5%",
+    "last 2 major versions",
+    "not dead",
+    "Chrome >= 63",
+    "Firefox >= 57",
+    "Safari >= 11",
+    "Edge >= 79",
+    "iOS >= 11"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",

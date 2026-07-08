@@ -9,6 +9,7 @@ import StructureSection from './components/StructureSection.vue'
 import OperatorsSection from './components/OperatorsSection.vue'
 import OperationsSection from './components/OperationsSection.vue'
 import RelationsSection from './components/RelationsSection.vue'
+import WantedSection from './components/WantedSection.vue'
 import FooterSection from './components/FooterSection.vue'
 </script>
 
@@ -24,6 +25,7 @@ import FooterSection from './components/FooterSection.vue'
     <OperatorsSection />
     <OperationsSection />
     <RelationsSection />
+    <WantedSection />
   </main>
   <FooterSection />
 </template>

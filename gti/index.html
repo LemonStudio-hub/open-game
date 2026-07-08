@@ -3,11 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>G.T.I. — 全球反恐特勤组</title>
     <meta name="description" content="G.T.I.（Global Terrorism Intervention）全球反恐特勤组 — 独立于联合国维和体系之外的全球性反恐机动力量" />
+    <meta name="theme-color" content="#0a0c10" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Preconnect to font servers -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload critical font -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" />
+    </noscript>
+
+    <!-- Critical CSS for fast first paint -->
+    <style>
+      body {
+        margin: 0;
+        background-color: #0a0c10;
+        color: #e8e6e3;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      }
+      #app {
+        min-height: 100vh;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>

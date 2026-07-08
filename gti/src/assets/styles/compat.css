@@ -1,0 +1,138 @@
+/* ============================================
+   BROWSER COMPATIBILITY FALLBACKS
+   ============================================ */
+
+/* Fallback for CSS custom properties */
+.no-cssvariables .section {
+  padding: 8rem 0;
+}
+
+.no-cssvariables .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Flexbox gap fallback */
+@supports not (gap: 1px) {
+  .class-tabs,
+  .hero-stats,
+  .operators-grid,
+  .relations-grid,
+  .branch-grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .class-tabs > *,
+  .hero-stats > *,
+  .operators-grid > *,
+  .relations-grid > *,
+  .branch-grid > * {
+    margin: 0.5rem;
+  }
+}
+
+/* Grid fallback */
+@supports not (display: grid) {
+  .structure-grid,
+  .detail-meta-grid,
+  .structure-details {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .structure-grid > * {
+    flex: 1 1 300px;
+    margin: 0.5rem;
+  }
+}
+
+/* Backdrop-filter fallback */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .navbar.scrolled {
+    background-color: rgba(10, 12, 16, 0.95);
+  }
+
+  .detail-overlay {
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  .navbar-links.open {
+    background: rgba(10, 12, 16, 0.98);
+  }
+}
+
+/* :focus-visible fallback for older browsers */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-accent, #c9a84c);
+  outline-offset: 2px;
+}
+
+/* Smooth scroll fallback */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Font loading optimization */
+.fonts-loading * {
+  opacity: 0;
+}
+
+.fonts-loaded * {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .hero-scroll-indicator,
+  .detail-overlay {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .section {
+    padding: 2rem 0;
+    break-inside: avoid;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .divider {
+    background: CanvasText;
+  }
+
+  .section-title {
+    -webkit-text-fill-color: CanvasText;
+    background: none;
+  }
+
+  .faction-card,
+  .operator-card,
+  .detail-card {
+    border-color: CanvasText;
+  }
+}
+
+/* Reduced data usage */
+@media (prefers-reduced-data: reduce) {
+  .hero-grid,
+  .hero-gradient {
+    display: none;
+  }
+}

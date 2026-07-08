@@ -579,7 +579,7 @@ onUnmounted(() => {
 .map-container-3d :deep(canvas) { display: block; }
 .canvas-hint { position: absolute; bottom: var(--space-md); left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.6rem; color: var(--color-text-muted); opacity: 0.4; pointer-events: none; z-index: 5; }
 
-.map-tooltip { position: absolute; pointer-events: none; z-index: 10; background: rgba(10,12,16,0.95); backdrop-filter: blur(16px); border: 1px solid var(--tooltip-color, var(--color-border)); border-radius: var(--radius-md); padding: var(--space-md); width: max-content; max-width: 260px; transform: translate(20px, -50%); box-shadow: 0 4px 24px rgba(0,0,0,0.6); }
+.map-tooltip { position: absolute; pointer-events: none; z-index: 10; background: rgba(10,12,16,0.95); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 1px solid var(--tooltip-color, var(--color-border)); border-radius: var(--radius-md); padding: var(--space-md); width: max-content; max-width: 260px; transform: translate(20px, -50%); box-shadow: 0 4px 24px rgba(0,0,0,0.6); }
 .tooltip-enter-active, .tooltip-leave-active { transition: opacity 0.15s ease; }
 .tooltip-enter-from, .tooltip-leave-to { opacity: 0; }
 .tooltip-header { display: flex; align-items: center; gap: var(--space-xs); margin-bottom: var(--space-xs); }
