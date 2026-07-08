@@ -1,0 +1,15 @@
+# robots.txt for G.T.I. Archives
+# https://gti-website-3sr.pages.dev/
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://gti-website-3sr.pages.dev/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Disallow admin or private paths (if any)
+# Disallow: /admin/
+# Disallow: /api/

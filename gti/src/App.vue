@@ -15,7 +15,7 @@ import FooterSection from './components/FooterSection.vue'
 
 <template>
   <Navbar />
-  <main>
+  <main role="main" aria-label="G.T.I. 主要内容">
     <HeroSection />
     <AboutSection />
     <HistorySection />
