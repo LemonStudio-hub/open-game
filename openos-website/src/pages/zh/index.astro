@@ -1,0 +1,204 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.vue';
+import HeroTerminal from '../../components/HeroTerminal.vue';
+import Features from '../../components/Features.vue';
+import Architecture from '../../components/Architecture.vue';
+import CodeExample from '../../components/CodeExample.vue';
+import Footer from '../../components/Footer.vue';
+import { useTranslations } from '../../i18n';
+
+const locale = 'zh';
+const t = useTranslations(locale);
+---
+
+<Layout title="OpenOS - 现代操作系统" lang="zh">
+  <Navbar locale={locale} client:load />
+
+  <!-- 主视觉区域 -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="gradient-text">{t.hero.title}</span>
+        </h1>
+        <p class="hero-subtitle">{t.hero.subtitle}</p>
+        <p class="hero-description">{t.hero.description}</p>
+        <div class="hero-actions">
+          <a href="#features" class="btn btn-primary">
+            {t.hero.getStarted}
+          </a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            {t.hero.viewGithub}
+          </a>
+        </div>
+      </div>
+      <div class="hero-terminal">
+        <HeroTerminal client:visible />
+      </div>
+    </div>
+  </section>
+
+  <!-- 特性区域 -->
+  <Features locale={locale} client:visible />
+
+  <!-- 架构区域 -->
+  <Architecture locale={locale} client:visible />
+
+  <!-- 代码示例区域 -->
+  <CodeExample locale={locale} client:visible />
+
+  <!-- 页脚 -->
+  <Footer locale={locale} />
+</Layout>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 0 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero .container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .hero-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius-lg);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+    color: white;
+  }
+
+  .btn-secondary {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-bg-card-hover);
+    border-color: var(--color-border-hover);
+    color: var(--color-text-primary);
+  }
+
+  .hero-terminal {
+    max-width: 600px;
+  }
+
+  @media (max-width: 1024px) {
+    .hero .container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+
+    .hero-terminal {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 6rem 0 2rem;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+  }
+</style>
